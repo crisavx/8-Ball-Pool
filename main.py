@@ -169,7 +169,7 @@ def run(window, width, height):
     space.gravity = (0, 0)
     space.damping = 0.6
 
-    cue_ball = create_cue_ball(space, BALL_RADIUS, 10, (WIDTH/2 - 229 , HEIGHT/2 - 15))
+    cue_ball = create_cue_ball(space, BALL_RADIUS, BALL_MASS, (WIDTH/2 - 229 , HEIGHT/2))
     create_table(space, width, height)
     create_object_balls(space)
 
@@ -193,21 +193,24 @@ def run(window, width, height):
                 #cue_ball.body_type = pymunk.Body.DYNAMIC
                 #cue_ball.body.apply_impulse_at_local_point((10000, 0), (0, 0))
                 angle = calc_angle(*line)
-                force = calc_distance_formula(*line) * 5
+                force = calc_distance_formula(*line) * 50
                 force_x = math.cos(angle) * force
                 force_y = math.sin(angle) * force
                 cue_ball.body.apply_impulse_at_local_point((force_x, force_y), (0, 0))
-                cue_ball.body.angle = angle
+
+
+                #H cue_ball.body.angle = angle
+
                 #velo = cue_ball._get_surface_velocity
                 #while velo > 0:
                 #    cue_ball.body.angle = 0
 
-                winner_text = "ball: " + str((cue_ball.body.angle * 180)/math.pi) + "line: " + str((angle* 180)/math.pi)
-                draw_winner(winner_text)
+                #H winner_text = "ball: " + str((cue_ball.body.angle * 180)/math.pi) + "line: " + str((angle* 180)/math.pi)
+                #H draw_winner(winner_text)
 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    cue_ball.body.angle = 0.7853982
+                    cue_ball.body.angle = 0
                     
                 
 
