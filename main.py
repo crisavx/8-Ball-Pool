@@ -14,10 +14,9 @@ WINNER_FONT = pygame.font.SysFont('comicsans', 20)
 
 def draw_winner(text):
     draw_text = WINNER_FONT.render(text, 1, WHITE)
-    WINDOW.blit(draw_text, (WIDTH/2 - draw_text.get_width() /
-             2, HEIGHT/2 - draw_text.get_height()/2))
+    WINDOW.blit(draw_text, (100, 50))
     pygame.display.update()
-    pygame.time.delay(5000)
+    #pygame.time.delay(5000)
 
 def calc_distance_formula(p1, p2): #RETURNS DISTANCE BETWEEN TWO POINTS
     return math.sqrt((p2[1] - p1[1])**2 + (p2[0] - p1[0])**2)
@@ -183,6 +182,18 @@ def run(window, width, height):
 
     while run:  
         line = [(cue_ball.body.position), pygame.mouse.get_pos()]
+        angle = calc_angle(*line)
+        angle_deg = (angle * 180) / math.pi
+        if angle_deg < 0:
+          angle_deg = angle_deg + 360
+        
+        #angle_deg = 45
+
+        cue_ball.body.angle = angle
+        force = calc_distance_formula(*line) * 20
+        force_x = math.cos(angle_deg) * force
+        force_y = math.sin(angle_deg) * force
+
         #EVENT CHECKING LOOP
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -192,23 +203,25 @@ def run(window, width, height):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 #cue_ball.body_type = pymunk.Body.DYNAMIC
                 #cue_ball.body.apply_impulse_at_local_point((10000, 0), (0, 0))
-                angle = calc_angle(*line)
-                force = calc_distance_formula(*line) * 5
-                force_x = math.cos(angle) * force
-                force_y = math.sin(angle) * force
-                cue_ball.body.apply_impulse_at_local_point((force_x, force_y), (0, 0))
-                cue_ball.body.angle = angle
+                #angle = calc_angle(*line)
+                #force = calc_distance_formula(*line) * 5
+                #force_x = math.cos(angle) * force
+                #force_y = math.sin(angle) * force
+                cue_ball.body.apply_impulse_at_local_point((force, 0))
+                #cue_ball.body.angle = angle
                 #velo = cue_ball._get_surface_velocity
                 #while velo > 0:
                 #    cue_ball.body.angle = 0
+                velo = 0
+                #winner_text = "ball: " + str((cue_ball.body.angle * 180)/math.pi) + "line: " + str((angle* 180)/math.pi)
+                #draw_winner(winner_text)
 
-                winner_text = "ball: " + str((cue_ball.body.angle * 180)/math.pi) + "line: " + str((angle* 180)/math.pi)
-                draw_winner(winner_text)
-
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    cue_ball.body.angle = 0.7853982
-                    
+            if event.type == pygame.KEYDOWN:
+              if event.key == pygame.K_SPACE:
+                  #cue_ball.body.angle = 0.7853982
+                  cue_ball.body.apply_impulse_at_local_point(
+                      (1000, 0))
+                  
                 
 
                 #while cue_ball._get_surface_velocity > 0:
@@ -217,6 +230,8 @@ def run(window, width, height):
                 
 
         draw(WINDOW, space, draw_options, line)
+        winner_text = "Angle: " + str(round(angle_deg,2)) + ", FX: " + str(round(force_x,2)) + ", FY: " + str(round(force_y,2)) + ", Ball angle: " + str(round((cue_ball.body.angle * 180)/math.pi,2)) + ", Line angle: " + str(round((angle* 180)/math.pi,2))
+        draw_winner(winner_text)
         space.step(DELTA_TIME)
         clock.tick(FPS)
 
