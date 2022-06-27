@@ -106,7 +106,6 @@ def start_game():
     print("Player 1 - Shoot!")
 
 def draw_pocketed_balls(space): #CALL THIS FUNCTION IN HANDLER FUNCTION, HAVE PRESET LOCATIONS FOR EACH BALL(ID)
-
     pass
 
 
@@ -132,7 +131,6 @@ def create_cushions(space):
         cushion_shape.id = 99999 #ID SET TO A HIGH NUMBER TO ENSURE CUSHIONS DONT DETECT COLLISIONS
         space.add(cushion_body, cushion_shape)
     
-    #(14, -4), ((0,0), (60,0), (60, 40)), 0),
     cushion_triangles = [
         #POSITION       #VERTICES               #ANGLE
         ((74, -9), ((0,0), (45,0), (0, 40)), degrees2_radians(90)), #TOP-LEFT
@@ -166,9 +164,6 @@ def create_cushions(space):
         space.add(triangle_body, triangle_shape)
 
 def create_object_balls(space):
-    #object_balls = [] #ARRAY OF BALL 'SHAPES'
-    #solid_balls = []
-    #striped_balls = []
     
     for i in range (0, 15):
         object_ball_body = pymunk.Body()
@@ -304,7 +299,7 @@ def handle_pocket_collisions(space):
             if ball in object_balls: #ONLY REMOVE BALL FROM ARRAY IF BALL IS ACTUALLY IN ARRAY. (CUE BALL ISNT IN ARRAY, SO DONT TRY TO REMOVE)
                 object_balls.remove(ball)
                 pocketed_balls.append(ball)
-            if ball.id <= 777:  #IF SOLID BALL GETS POCKETED
+            if ball.id <= 777 and not 1:  #IF SOLID BALL GETS POCKETED
                 solid_balls.remove(ball)    #REMOVE SOLID BALL FROM LIST
 
                 if ball.id == 111:
