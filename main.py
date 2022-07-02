@@ -143,19 +143,19 @@ def run(display):
                     line_on = False
                     POOL_SHOT.play()
 
-                    timer_check_pocketed = Timer(7, check_ball_pocketed)
+                    timer_check_pocketed = Timer(6, check_ball_pocketed)
                     timer_check_pocketed.start()
 
-                    timer_reset_pocketed = Timer(7.1, update_ball_pocketed)
+                    timer_reset_pocketed = Timer(6.1, update_ball_pocketed)
                     timer_reset_pocketed.start()
 
-                    timer = Timer(7.5, check_turn)
+                    timer = Timer(6.5, check_turn)
                     timer.start()
 
-                    timer_reset_line = Timer(7.5, reset_line)
+                    timer_reset_line = Timer(6.5, reset_line)
                     timer_reset_line.start()
 
-                    timer_reset_feed = Timer(7.5, reset_feed)
+                    timer_reset_feed = Timer(6.5, reset_feed)
                     timer_reset_feed.start()
 
 
