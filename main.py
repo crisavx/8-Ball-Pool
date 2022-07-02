@@ -737,6 +737,55 @@ def handle_pocket_collisions(space):
         #COLLISION DETECTED / BALL POCKETED
         if arbiter.shapes[1].id == 2 and not (ball.id == 1): #OUTISDE ID NO. IS THE COLLISION DETECTOR    AND: IGNORE CUE BALL POCKET TEMP
             space.remove(ball) #ball.body,
+            if ball.id == 111:
+                print("You made the 1-Ball!")
+                feed = "You made the 1-Ball!"
+            elif ball.id == 222:
+                print("You made the 2-Ball!")
+                feed = "You made the 2-Ball!"
+            elif ball.id == 333:
+                print("You made the 3-Ball!")
+                feed = "You made the 3-Ball!"
+            elif ball.id == 444:
+                print("You made the 4-Ball!")
+                feed = "You made the 4-Ball!"
+            elif ball.id == 555:
+                print("You made the 5-Ball!")
+                feed = "You made the 5-Ball!"
+            elif ball.id == 666:
+                print("You made the 6-Ball!")
+                feed = "You made the 6-Ball!"
+            elif ball.id == 777:
+                print("You made the 7-Ball!")
+                feed = "You made the 7-Ball!"
+            elif ball.id == 888:
+                print("You made the 8-Ball!")
+                feed = "You made the 8-Ball!"
+            elif ball.id == 999:
+                print("You made the 9-Ball!")
+                feed = "You made the 9-Ball!"
+            elif ball.id == 101010:
+                print("You made the 10-Ball!")
+                feed = "You made the 10-Ball!"
+            elif ball.id == 111111:
+                print("You made the 11-Ball!")
+                feed = "You made the 11-Ball!"
+            elif ball.id == 121212:
+                print("You made the 12-Ball!")
+                feed = "You made the 12-Ball!"
+            elif ball.id == 131313:
+                print("You made the 13-Ball!")
+                feed = "You made the 13-Ball!"
+            elif ball.id == 141414:
+                print("You made the 14-Ball!")
+                feed = "You made the 14-Ball!"
+            elif ball.id == 151515:
+                print("You made the 15-Ball!")
+                feed = "You made the 15-Ball!"
+            
+            
+
+            """
             #space.remove(display_ball) #ball.body,
             ball_pocketed = True
             pocketed_balls.append(ball)
@@ -1007,7 +1056,7 @@ def handle_pocket_collisions(space):
                     feed = "You made the 15-Ball!"
                     stripes_remaining.remove(ball)
                     space.remove(fifteen_ball_body, fifteen_ball_shape)
-                
+                """
         return True
 
     handler = space.add_default_collision_handler()
