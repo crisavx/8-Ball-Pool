@@ -1,6 +1,6 @@
 #from re import T
 #from turtle import TurtleScreen
-from email import feedparser
+#from email import feedparser
 from properties import *
 import pygame, pymunk, pymunk.pygame_util, math#, pyglet
 from threading import Timer
@@ -143,19 +143,19 @@ def run(display):
                     line_on = False
                     POOL_SHOT.play()
 
-                    timer_check_pocketed = Timer(6, check_ball_pocketed)
+                    timer_check_pocketed = Timer(5.5, check_ball_pocketed)
                     timer_check_pocketed.start()
 
-                    timer_reset_pocketed = Timer(6.1, update_ball_pocketed)
+                    timer_reset_pocketed = Timer(5.6, update_ball_pocketed)
                     timer_reset_pocketed.start()
 
-                    timer = Timer(6.5, check_turn)
+                    timer = Timer(6, check_turn)
                     timer.start()
 
-                    timer_reset_line = Timer(6.5, reset_line)
+                    timer_reset_line = Timer(6, reset_line)
                     timer_reset_line.start()
 
-                    timer_reset_feed = Timer(6.5, reset_feed)
+                    timer_reset_feed = Timer(6, reset_feed)
                     timer_reset_feed.start()
 
 
@@ -371,7 +371,7 @@ def create_cushions(space):
         triangle_body.angle = angle
         triangle_shape = pymunk.Poly(triangle_body, vertices)
         triangle_shape.color = pygame.Color(NAVY)
-        triangle_shape.elasticity = CUSHION_ELASTICITY
+        triangle_shape.elasticity = 0.2
         triangle_shape.friction = CUSHION_FRICTION
         triangle_shape.id = 3331397
         space.add(triangle_body, triangle_shape)
