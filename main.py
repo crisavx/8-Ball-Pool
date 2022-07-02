@@ -118,7 +118,7 @@ def run(display):
         #draw_cushions(space)
         #create_cushions(space)
         #space.add(cue_ball_shape, cue_ball_body)
-        shooting_line = [pygame.mouse.get_pos(), (cue_ball.body.position) ]
+        shooting_line = [(cue_ball.body.position), pygame.mouse.get_pos()]
         angle = calc_angle(*shooting_line)
         angle_deg = degrees2_radians(angle)
         if angle_deg < 0:
@@ -139,7 +139,7 @@ def run(display):
             #SHOOT CUE BALL
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1: #MOUSE BUTTON 1 IS CLICKED
-                    cue_ball.body.apply_impulse_at_local_point((-force, 0))
+                    cue_ball.body.apply_impulse_at_local_point((force, 0))
                     line_on = False
                     POOL_SHOT.play()
 
