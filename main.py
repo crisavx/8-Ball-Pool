@@ -1,8 +1,12 @@
 #from re import T
 #from turtle import TurtleScreen
 #from email import feedparser
+from eight_ball import *
 from properties import *
-import pygame, pymunk, pymunk.pygame_util, math#, pyglet
+import pygame
+import pymunk
+import pymunk.pygame_util
+import math  # , pyglet
 from threading import Timer
 import os
 
@@ -18,16 +22,16 @@ pygame.display.set_caption("8-Ball Pool by Cristian Lopez")
 #global cue_ball_shape
 
 #cue_ball_img = pyglet.image.load(os.path.join('cueballT.png'))
-#cue_ball_sprite = pygame.image.load(os.path.join('cueballT.png')
+# cue_ball_sprite = pygame.image.load(os.path.join('cueballT.png')
 #cue_ball_sprite = pyglet.sprite.Sprite(cue_ball_img, x = cue_ball_body.position.x, y = cue_ball_body.position.y)
 
-#ASSETS
+# ASSETS
 
-#AUDIO
+# AUDIO
 POOL_SHOT = pygame.mixer.Sound(os.path.join('pool_shot.mp3'))
 POOL_POCKET = pygame.mixer.Sound(os.path.join('pool_pocket.mp3'))
 POOL_BALL_CONTACT = pygame.mixer.Sound(os.path.join('pool_ball_contact.mp3'))
-#PICS
+# PICS
 BACKGROUND = pygame.image.load(os.path.join('pool_table.png'))
 CUSHIONS = pygame.image.load(os.path.join('cushions.png'))
 
@@ -35,10 +39,12 @@ CUSHIONS = pygame.image.load(os.path.join('cushions.png'))
 def run(display):
     #global cue_ball_sprite, cue_ball_img
     #global cue_ball_body
-    
+
     run = True
 
-    
+    global game_mode
+    game_mode = "free"
+
     clock = pygame.time.Clock()
 
     space = pymunk.Space()
@@ -60,9 +66,7 @@ def run(display):
     global cue_ball
     cue_ball = create_cue_ball(space)
 
-
     global timer
-
 
     global player_one_is_solids
     player_one_is_solids = None
@@ -106,7 +110,7 @@ def run(display):
 
     global feed
     feed = ""
-    
+
     create_cushions(space)
     handle_pocket_collisions(space)
     display_object_balls(space)
@@ -114,9 +118,9 @@ def run(display):
     draw_options = pymunk.pygame_util.DrawOptions(display)
 
     while run:
-        
-        #draw_cushions(space)
-        #create_cushions(space)
+
+        # draw_cushions(space)
+        # create_cushions(space)
         #space.add(cue_ball_shape, cue_ball_body)
         shooting_line = [(cue_ball.body.position), pygame.mouse.get_pos()]
         angle = calc_angle(*shooting_line)
@@ -126,19 +130,19 @@ def run(display):
 
         force = calc_distance(*shooting_line) * 50
 
-        #EVENT CHECKING LOOP
+        # EVENT CHECKING LOOP
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
                 break
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_q: #'Q' --> QUIT
+                if event.key == pygame.K_q:  # 'Q' --> QUIT
                     run = False
                     break
 
-            #SHOOT CUE BALL
+            # SHOOT CUE BALL
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1: #MOUSE BUTTON 1 IS CLICKED
+                if event.button == 1:  # MOUSE BUTTON 1 IS CLICKED
                     cue_ball.body.apply_impulse_at_local_point((force, 0))
                     line_on = False
                     POOL_SHOT.play()
@@ -158,7 +162,6 @@ def run(display):
                     timer_reset_feed = Timer(6, reset_feed)
                     timer_reset_feed.start()
 
-
         if line_on == True:
             cue_ball.body.angle = angle
             pygame.event.set_allowed(pygame.MOUSEBUTTONDOWN)
@@ -172,33 +175,35 @@ def run(display):
 
     pygame.quit()
 
+
 def reset_feed():
     global feed
     feed = ""
+
 
 def reset_line():
     global line_on
     line_on = True
 
+
 def draw_no_line(space, display, draw_options):
     #global solid_txt, stripe_txt
-    #display.fill(GRAY)
+    # display.fill(GRAY)
     #display.blit(CUSHIONS, ((0,0)))
-    display.blit(BACKGROUND, ((0,0)))
+    display.blit(BACKGROUND, ((0, 0)))
 
-    #for ball in stripes_remaining:
+    # for ball in stripes_remaining:
     #    display.blit(display, (250,250), ball)
-    #cue_ball_sprite.draw()
+    # cue_ball_sprite.draw()
 
     draw_text = FONT.render(message, 1, WHITE)
     stripe_text = FONT2.render(stripe_txt, 1, WHITE)
     solid_text = FONT2.render(solid_txt, 1, WHITE)
     feed_text = FONT3.render(feed, 1, WHITE)
     display.blit(draw_text, (WIDTH/2 - 135, 13))
-    display.blit(stripe_text,(WIDTH - 162, 22))
+    display.blit(stripe_text, (WIDTH - 162, 22))
     display.blit(solid_text, (15, 22))
     display.blit(feed_text, (WIDTH / 2 - 200, HEIGHT - 65))
-    
 
     space.debug_draw(draw_options)
     pygame.display.update()
@@ -207,23 +212,24 @@ def draw_no_line(space, display, draw_options):
 def draw_line(space, display, draw_options):
     #global solid_txt, stripe_txt
     #global cue_ball_sprite, cue_ball_img
-    #display.fill(GRAY)
+    # display.fill(GRAY)
     #display.blit(CUSHIONS, ((0,0)))
-    display.blit(BACKGROUND, ((0,0)))
+    display.blit(BACKGROUND, ((0, 0)))
 
-    #cue_ball_sprite.draw()
+    # cue_ball_sprite.draw()
 
-    pygame.draw.line(display, BLACK, shooting_line[0], shooting_line[1], 3), #SHOOTING LINE
+    # SHOOTING LINE
+    pygame.draw.line(display, BLACK, shooting_line[0], shooting_line[1], 3),
 
-    #for ball in stripes_remaining:
-        #display.blit(ball, (250,250))
+    # for ball in stripes_remaining:
+    #display.blit(ball, (250,250))
 
     draw_text = FONT.render(message, 1, WHITE)
     stripe_text = FONT2.render(stripe_txt, 1, WHITE)
     solid_text = FONT2.render(solid_txt, 1, WHITE)
     feed_text = FONT3.render(feed, 1, WHITE)
     display.blit(draw_text, (WIDTH/2 - 135, 13))
-    display.blit(stripe_text,(WIDTH - 162, 22))
+    display.blit(stripe_text, (WIDTH - 162, 22))
     display.blit(solid_text, (15, 22))
     display.blit(feed_text, (WIDTH / 2 - 200, HEIGHT - 65))
 
@@ -231,92 +237,105 @@ def draw_line(space, display, draw_options):
     pygame.display.update()
 
 
-#GAME
+# GAME
 
 
 def update_ball_pocketed():
     global ball_pocketed
     ball_pocketed = False
 
+
 def check_ball_pocketed():
     global turn
     global message
     global stripe_txt, solid_txt
     global run
-    #turn = 0    #EVEN --> P1 TURN;  ODD --> P2 TURN
-    if ball_pocketed == False: #NO BALL POCKETED, UPDATE TURN
+    # turn = 0    #EVEN --> P1 TURN;  ODD --> P2 TURN
+    if ball_pocketed == False:  # NO BALL POCKETED, UPDATE TURN
         #global turn
-        turn+=1
+        turn += 1
 
-    else: #BALL GETS POCKETED
-        if turn % 2 == 0:   #PLAYER ONE TURN
+    else:  # BALL GETS POCKETED
+        if turn % 2 == 0:  # PLAYER ONE TURN
             if player_one_is_solids:
                 for ball in pocketed_balls:
-                    if ball.id <= 777 and not (ball.id == 1): #IF SOLID GETS MADE, AND NOT THE CUE BALL
+                    # IF SOLID GETS MADE, AND NOT THE CUE BALL
+                    if ball.id <= 777 and not (ball.id == 1):
                         pass
-                    elif ball.id == 888 and (len(solids_remaining) > 0): #IF 8 BALL GETS MADE ILLEGALLY
+                    # IF 8 BALL GETS MADE ILLEGALLY
+                    elif ball.id == 888 and (len(solids_remaining) > 0):
                         print("PLAYER 1, YOU LOSE")
                         message = "PLAYER 1, YOU LOSE"
-                    elif ball.id == 888 and (len(solids_remaining) == 0) and not (ball.id == 1):    #IF 8 BALL GETS MADE LEGALLY
+                    # IF 8 BALL GETS MADE LEGALLY
+                    elif ball.id == 888 and (len(solids_remaining) == 0) and not (ball.id == 1):
                         print("PLAYER 1, YOU WIN")
                         message = "PLAYER 1, YOU WIN"
-                    elif ball.id >= 999 or ball.id == 1:   #IF STRIPE GETS MADE OR CUE BALL
-                        turn+=1
+                    elif ball.id >= 999 or ball.id == 1:  # IF STRIPE GETS MADE OR CUE BALL
+                        turn += 1
             if player_one_is_stripes:
                 for ball in pocketed_balls:
-                    if ball.id >= 999 and not (ball.id == 1): #IF STRIPED GETS MADE, AND NOT THE CUE BALL
+                    # IF STRIPED GETS MADE, AND NOT THE CUE BALL
+                    if ball.id >= 999 and not (ball.id == 1):
                         pass
-                    elif ball.id == 888 and (len(stripes_remaining) > 0): #IF 8 BALL GETS MADE ILLEGALLY
+                    # IF 8 BALL GETS MADE ILLEGALLY
+                    elif ball.id == 888 and (len(stripes_remaining) > 0):
                         print("PLAYER 1, YOU LOSE")
                         message = "PLAYER 1, YOU LOSE"
-                    elif ball.id == 888 and (len(stripes_remaining) == 0) and not (ball.id == 1):    #IF 8 BALL GETS MADE LEGALLY
+                    # IF 8 BALL GETS MADE LEGALLY
+                    elif ball.id == 888 and (len(stripes_remaining) == 0) and not (ball.id == 1):
                         print("PLAYER 1, YOU WIN")
                         message = "PLAYER 1, YOU WIN"
-                    elif ball.id <= 777 or ball.id == 1:   #IF SOLID GETS MADE
-                        turn+=1
-        else:   #PLAYER TWO TURN
+                    elif ball.id <= 777 or ball.id == 1:  # IF SOLID GETS MADE
+                        turn += 1
+        else:  # PLAYER TWO TURN
             if player_two_is_solids:
                 for ball in pocketed_balls:
-                    if ball.id <= 777 and not (ball.id == 1): #IF SOLID GETS MADE, AND NOT CUE BALL
+                    # IF SOLID GETS MADE, AND NOT CUE BALL
+                    if ball.id <= 777 and not (ball.id == 1):
                         pass
-                    elif ball.id == 888 and (len(solids_remaining) > 0): #IF 8 BALL GETS MADE ILLEGALLY
+                    # IF 8 BALL GETS MADE ILLEGALLY
+                    elif ball.id == 888 and (len(solids_remaining) > 0):
                         print("PLAYER 2, YOU LOSE")
                         message = "PLAYER 2, YOU LOSE"
-                    elif ball.id == 888 and (len(solids_remaining) == 0) and not (ball.id == 1): #IF 8 BALL GETS MADE LEGALLY
+                    # IF 8 BALL GETS MADE LEGALLY
+                    elif ball.id == 888 and (len(solids_remaining) == 0) and not (ball.id == 1):
                         print("PLAYER 2, YOU WIN")
                         message = "PLAYER 2, YOU WIN"
-                    elif ball.id >= 999 or ball.id == 1: #IF STRIPE GETS MADE OR CUE BALL
-                        turn+=1
+                    elif ball.id >= 999 or ball.id == 1:  # IF STRIPE GETS MADE OR CUE BALL
+                        turn += 1
             if player_two_is_stripes:
                 for ball in pocketed_balls:
-                    if ball.id >= 999 and not (ball.id == 1):   #IF IF STRIPE GETS MADE, AND NOT THE CUE BALL
+                    # IF IF STRIPE GETS MADE, AND NOT THE CUE BALL
+                    if ball.id >= 999 and not (ball.id == 1):
                         pass
-                    elif ball.id == 888 and (len(stripes_remaining) > 0):    #IF 8 BALL GETS MADE ILLEGALLY
+                    # IF 8 BALL GETS MADE ILLEGALLY
+                    elif ball.id == 888 and (len(stripes_remaining) > 0):
                         print("PLAYER 2, YOU LOSE")
                         message = "PLAYER 2, YOU LOSE"
-                    elif ball.id == 888 and (len(stripes_remaining) == 0) and not (ball.id == 1):    #IF 8 BALL GETS MADE LEGALLY
+                    # IF 8 BALL GETS MADE LEGALLY
+                    elif ball.id == 888 and (len(stripes_remaining) == 0) and not (ball.id == 1):
                         print("PLAYER 2, YOU WIN")
                         message = "PLAYER 2, YOU WIN"
-                    elif ball.id >= 777 or ball.id == 1:   #IF SOLID GETS MADE OR CUE BALL
-                        turn+=1
+                    elif ball.id >= 777 or ball.id == 1:  # IF SOLID GETS MADE OR CUE BALL
+                        turn += 1
 
-    
+
 def check_turn():
     global message
 
-    if turn % 2 == 0:   #IF PLAYER ONE TURN
+    if turn % 2 == 0:  # IF PLAYER ONE TURN
         print("Player 1 - Shoot!")
         message = "Player 1 - Shoot!"
 
-    else:   #IF PLAYER TWO TURN
+    else:  # IF PLAYER TWO TURN
         print("Player 2 - Shoot!")
         message = "Player 2 - Shoot!"
-   
 
-#GAME OBJECTS
-#def draw_cushions(space):
+
+# GAME OBJECTS
+# def draw_cushions(space):
     #global cushions
-    #for position, size in cushions:
+    # for position, size in cushions:
         #cushion_body.position = position
     #space.add(cushion_body, cushion_shape)
 
@@ -325,48 +344,59 @@ def create_cushions(space):
     #global cushion_shape
     #global cushions
     cushions = [
-        #position,          #size
-        [(428, 117), (370, 48)], #UP-LEFT
-        [(856, 117), (370, 48)], #UP-RIGHT
-        [(428, HEIGHT - 121), (370, 48)], #DOWN-LEFT
-        [(856, HEIGHT - 121), (370, 48)], #DOWN-RIGHT
-        [(184, HEIGHT/2 - 2), (48, HEIGHT/2 + 5)], #LEFT
-        [(1285 - 186, HEIGHT/2 - 2), (48, HEIGHT/2 + 6)] #RIGHT
+        # position,          #size
+        [(428, 117), (370, 48)],  # UP-LEFT
+        [(856, 117), (370, 48)],  # UP-RIGHT
+        [(428, HEIGHT - 121), (370, 48)],  # DOWN-LEFT
+        [(856, HEIGHT - 121), (370, 48)],  # DOWN-RIGHT
+        [(184, HEIGHT/2 - 2), (48, HEIGHT/2 + 5)],  # LEFT
+        [(1285 - 186, HEIGHT/2 - 2), (48, HEIGHT/2 + 6)]  # RIGHT
 
     ]
     for position, size in cushions:
-        cushion_body = pymunk.Body(body_type = pymunk.Body.STATIC)
+        cushion_body = pymunk.Body(body_type=pymunk.Body.STATIC)
         cushion_body.position = position
         cushion_shape = pymunk.Poly.create_box(cushion_body, size)
         cushion_shape.color = pygame.Color(NAVY)
         cushion_shape.elasticity = CUSHION_ELASTICITY
         cushion_shape.friction = CUSHION_FRICTION
-        cushion_shape.id = 3331397 #ID SET TO A HIGH NUMBER TO ENSURE CUSHIONS DONT DETECT COLLISIONS
+        # ID SET TO A HIGH NUMBER TO ENSURE CUSHIONS DONT DETECT COLLISIONS
+        cushion_shape.id = 3331397
         space.add(cushion_body, cushion_shape)
-    
+
     cushion_triangles = [
-        #POSITION       #VERTICES               #ANGLE
-        ((242, 96), ((0,0), (45,0), (0, 40)), degrees2_radians(90)), #TOP-LEFT
-        ((168, 175), ((0,0), (45,0), (0, 40)), degrees2_radians(270)), #TOP-LEFT
+        # POSITION       #VERTICES               #ANGLE
+        ((242, 96), ((0, 0), (45, 0), (0, 40)), degrees2_radians(90)),  # TOP-LEFT
+        ((168, 175), ((0, 0), (45, 0), (0, 40)), degrees2_radians(270)),  # TOP-LEFT
 
-        ((WIDTH/2 - 26, 140), ((0,0), (45,0), (45, 15)), degrees2_radians(270)), #TOP-MIDDLE-RIGHT
-        ((WIDTH/2 + 30, 94), ((0,0), (45,0), (0, 15)), degrees2_radians(90)), #TOP-MIDDLE-LEFT
-        
-        ((WIDTH - 238, 100), ((0,0), (45,0), (0, 40)), degrees2_radians(0)), #TOP-LEFT
-        ((WIDTH - 160, 174), ((0,0), (45,0), (0, 40)), degrees2_radians(180)), #TOP-RIGHT
+        ((WIDTH/2 - 26, 140), ((0, 0), (45, 0), (45, 15)),
+         degrees2_radians(270)),  # TOP-MIDDLE-RIGHT
+        ((WIDTH/2 + 30, 94), ((0, 0), (45, 0), (0, 15)),
+         degrees2_radians(90)),  # TOP-MIDDLE-LEFT
 
-        ((163, HEIGHT - 179), ((0,0), (45,0), (0, 40)), degrees2_radians(0)), #BOTTOM-LEFT
-        ((242, HEIGHT - 105), ((0,0), (45,0), (0, 40)), degrees2_radians(180)), #BOTTOM-RIGHT
+        ((WIDTH - 238, 100), ((0, 0), (45, 0), (0, 40)),
+         degrees2_radians(0)),  # TOP-LEFT
+        ((WIDTH - 160, 174), ((0, 0), (45, 0), (0, 40)),
+         degrees2_radians(180)),  # TOP-RIGHT
 
-        ((WIDTH/2 - 26, HEIGHT - 98), ((0,0), (45,0), (0, 15)), degrees2_radians(270)), #BOTTOM-MIDDLE-LEFT
-        ((WIDTH/2 + 30, HEIGHT - 144), ((0,0), (45,0), (45, 15)), degrees2_radians(90)), #BOTTOM-MIDDLE-RIGHT
+        ((163, HEIGHT - 179), ((0, 0), (45, 0), (0, 40)),
+         degrees2_radians(0)),  # BOTTOM-LEFT
+        ((242, HEIGHT - 105), ((0, 0), (45, 0), (0, 40)),
+         degrees2_radians(180)),  # BOTTOM-RIGHT
 
-        ((WIDTH - 163, HEIGHT - 179), ((0,0), (45,0), (0, 40)), degrees2_radians(90)), #BOTTOM-LEFT
-        ((WIDTH - 238, HEIGHT - 100), ((0,0), (45,0), (0, 40)), degrees2_radians(270)) #BOTTOM-RIGHT
+        ((WIDTH/2 - 26, HEIGHT - 98), ((0, 0), (45, 0), (0, 15)),
+         degrees2_radians(270)),  # BOTTOM-MIDDLE-LEFT
+        ((WIDTH/2 + 30, HEIGHT - 144), ((0, 0), (45, 0), (45, 15)),
+         degrees2_radians(90)),  # BOTTOM-MIDDLE-RIGHT
+
+        ((WIDTH - 163, HEIGHT - 179), ((0, 0), (45, 0), (0, 40)),
+         degrees2_radians(90)),  # BOTTOM-LEFT
+        ((WIDTH - 238, HEIGHT - 100), ((0, 0), (45, 0), (0, 40)),
+         degrees2_radians(270))  # BOTTOM-RIGHT
     ]
 
     for position, vertices, angle in cushion_triangles:
-        triangle_body = pymunk.Body(body_type = pymunk.Body.STATIC)
+        triangle_body = pymunk.Body(body_type=pymunk.Body.STATIC)
         triangle_body.position = position
         triangle_body.angle = angle
         triangle_shape = pymunk.Poly(triangle_body, vertices)
@@ -375,6 +405,7 @@ def create_cushions(space):
         triangle_shape.friction = CUSHION_FRICTION
         triangle_shape.id = 3331397
         space.add(triangle_body, triangle_shape)
+
 
 def display_object_balls(space):
     global one_ball_body, one_ball_shape
@@ -471,7 +502,7 @@ def display_object_balls(space):
     nine_ball_shape.color = pygame.Color(LIGHT_YELLOW)
     nine_ball_shape.id = 999
     space.add(nine_ball_shape, nine_ball_body)
-    
+
     ten_ball_body = pymunk.Body()
     ten_ball_body.position = (889, 30)
     ten_ball_shape = pymunk.Circle(ten_ball_body, BALL_RADIUS)
@@ -531,7 +562,7 @@ def display_object_balls(space):
     fifteen_ball_shape.color = pygame.Color(LIGHT_BURGUNDY)
     fifteen_ball_shape.id = 151515
     space.add(fifteen_ball_shape, fifteen_ball_body)
-    
+
 
 def create_object_balls(space):
     global solid_balls, striped_balls
@@ -542,7 +573,7 @@ def create_object_balls(space):
     global stripes_remaining
     stripes_remaining = []
 
-    for ball in range (0, 15):
+    for ball in range(0, 15):
 
         object_ball_body = pymunk.Body()
         #object_ball_body2 = pymunk.Body()
@@ -552,112 +583,114 @@ def create_object_balls(space):
         object_ball_shape.elasticity = BALL_ELASTICITY
         object_ball_shape.friction = BALL_FRICTION
 
-        #SOLIDS
-        if ball == 0:  #1-BALL
+        # SOLIDS
+        if ball == 0:  # 1-BALL
             object_ball_shape.color = pygame.Color(YELLOW)
             #object_ball_shape2.color = pygame.Color(YELLOW)
-            object_ball_body.position = (WIDTH/2 + 175 , HEIGHT/2)
+            object_ball_body.position = (WIDTH/2 + 175, HEIGHT/2)
             #object_ball_body2.position = (WIDTH/2 , HEIGHT/2)
             object_ball_shape.id = 111
             solid_balls.append(object_ball_shape)
             solids_remaining.append(object_ball_shape)
-            
-        elif ball == 1: #2-BALL
+
+        elif ball == 1:  # 2-BALL
             object_ball_shape.color = pygame.Color(BLUE)
             object_ball_body.position = (WIDTH/2 + 204, HEIGHT/2 - 18)
             object_ball_shape.id = 222
             solid_balls.append(object_ball_shape)
             solids_remaining.append(object_ball_shape)
-        elif ball == 2: #3-BALL
+        elif ball == 2:  # 3-BALL
             object_ball_shape.color = pygame.Color(RED)
-            object_ball_body.position = (WIDTH/2 + 291, HEIGHT/2 + 72) 
+            object_ball_body.position = (WIDTH/2 + 291, HEIGHT/2 + 72)
             object_ball_shape.id = 333
             solid_balls.append(object_ball_shape)
             solids_remaining.append(object_ball_shape)
-        elif ball == 3: #4-BALL
+        elif ball == 3:  # 4-BALL
             object_ball_shape.color = pygame.Color(PURPLE)
-            object_ball_body.position = (WIDTH/2 + 291, HEIGHT/2) 
+            object_ball_body.position = (WIDTH/2 + 291, HEIGHT/2)
             object_ball_shape.id = 444
             solid_balls.append(object_ball_shape)
             solids_remaining.append(object_ball_shape)
-        elif ball == 4: #5-BALL
+        elif ball == 4:  # 5-BALL
             object_ball_shape.color = pygame.Color(ORANGE)
             object_ball_body.position = (WIDTH/2 + 233, HEIGHT/2 + 36)
             object_ball_shape.id = 555
             solid_balls.append(object_ball_shape)
             solids_remaining.append(object_ball_shape)
-        elif ball == 5: #6-BALL
+        elif ball == 5:  # 6-BALL
             object_ball_shape.color = pygame.Color(GREEN)
             object_ball_body.position = (WIDTH/2 + 262, HEIGHT/2 - 54)
             object_ball_shape.id = 666
             solid_balls.append(object_ball_shape)
             solids_remaining.append(object_ball_shape)
-        elif ball == 6: #7-BALL
+        elif ball == 6:  # 7-BALL
             object_ball_shape.color = pygame.Color(BURGUNDY)
             object_ball_body.position = (WIDTH/2 + 262, HEIGHT/2 + 18)
             object_ball_shape.id = 777
             solid_balls.append(object_ball_shape)
             solids_remaining.append(object_ball_shape)
-        elif ball == 7: #8-BALL
+        elif ball == 7:  # 8-BALL
             object_ball_shape.color = pygame.Color(BLACK)
             object_ball_body.position = (WIDTH/2 + 233, HEIGHT/2)
             object_ball_shape.id = 888
-        
-        #STRIPES
-        elif ball == 8: #9-BALL
+
+        # STRIPES
+        elif ball == 8:  # 9-BALL
             object_ball_shape.color = pygame.Color(LIGHT_YELLOW)
             object_ball_body.position = (WIDTH/2 + 262, HEIGHT/2 - 18)
             object_ball_shape.id = 999
             striped_balls.append(object_ball_shape)
             stripes_remaining.append(object_ball_shape)
-        elif ball == 9: #10-BALL
+        elif ball == 9:  # 10-BALL
             object_ball_shape.color = pygame.Color(LIGHT_BLUE)
             object_ball_body.position = (WIDTH/2 + 262, HEIGHT/2 + 54)
             object_ball_shape.id = 101010
             striped_balls.append(object_ball_shape)
             stripes_remaining.append(object_ball_shape)
-        elif ball == 10: #11-BALL
+        elif ball == 10:  # 11-BALL
             object_ball_shape.color = pygame.Color(LIGHT_RED)
             object_ball_body.position = (WIDTH/2 + 204, HEIGHT/2 + 18)
             object_ball_shape.id = 111111
             striped_balls.append(object_ball_shape)
             stripes_remaining.append(object_ball_shape)
-        elif ball == 11: #12-BALL
+        elif ball == 11:  # 12-BALL
             object_ball_shape.color = pygame.Color(LIGHT_PURPLE)
             object_ball_body.position = (WIDTH/2 + 291, HEIGHT/2 - 36)
             object_ball_shape.id = 121212
             striped_balls.append(object_ball_shape)
             stripes_remaining.append(object_ball_shape)
-        elif ball == 12: #13-BALL
-            object_ball_shape.color = pygame.Color(LIGHT_ORANGE) 
-            object_ball_body.position = (WIDTH/2 + 233, HEIGHT/2 - 36) 
+        elif ball == 12:  # 13-BALL
+            object_ball_shape.color = pygame.Color(LIGHT_ORANGE)
+            object_ball_body.position = (WIDTH/2 + 233, HEIGHT/2 - 36)
             object_ball_shape.id = 131313
             striped_balls.append(object_ball_shape)
             stripes_remaining.append(object_ball_shape)
-        elif ball == 13: #14-BALL
+        elif ball == 13:  # 14-BALL
             object_ball_shape.color = pygame.Color(LIGHT_GREEN)
             object_ball_body.position = (WIDTH/2 + 291, HEIGHT/2 + 36)
             object_ball_shape.id = 141414
             striped_balls.append(object_ball_shape)
             stripes_remaining.append(object_ball_shape)
-        else: #15-BALL
+        else:  # 15-BALL
             object_ball_shape.color = pygame.Color(LIGHT_BURGUNDY)
-            object_ball_body.position = (WIDTH/2 + 291, HEIGHT/2 - 72) 
+            object_ball_body.position = (WIDTH/2 + 291, HEIGHT/2 - 72)
             object_ball_shape.id = 151515
             striped_balls.append(object_ball_shape)
             stripes_remaining.append(object_ball_shape)
 
         object_balls.append(object_ball_shape)
-        space.add(object_ball_shape, object_ball_body)#, object_ball_body2, object_ball_shape2 )
-    
+        # , object_ball_body2, object_ball_shape2 )
+        space.add(object_ball_shape, object_ball_body)
+
     return object_balls
+
 
 def create_cue_ball(space):
     #global cue_ball_sprite, cue_ball_img
-    
+
     global cue_ball_body
     cue_ball_body = pymunk.Body()
-    cue_ball_body.position = (WIDTH/2 - 229 , HEIGHT/2)
+    cue_ball_body.position = (WIDTH/2 - 229, HEIGHT/2)
     cue_ball_shape = pymunk.Circle(cue_ball_body, BALL_RADIUS)
     cue_ball_shape.color = pygame.Color(WHITE)
     cue_ball_shape.mass = BALL_MASS
@@ -672,37 +705,40 @@ def create_cue_ball(space):
     return cue_ball_shape
 
 
-#HANDLE COLLISIONS
+# HANDLE COLLISIONS
 def handle_pocket_collisions(space):
-    #pocket hit box
+    # pocket hit box
     pocket_segments = [
-        #POSITION       #ANGLE        #START POINT    #END POINT
+        # POSITION       #ANGLE        #START POINT    #END POINT
         #((27, 39), degrees2_radians(90), (0, 0), (15, 0)),
         #((40, 27), degrees2_radians(0), (0, 0), (15, 0)),
-        ((188, 138), degrees2_radians(-45), (0, 0), (25, 0)), 
+        ((188, 138), degrees2_radians(-45), (0, 0), (25, 0)),
 
-        ((WIDTH/2 - 10, 120), degrees2_radians(0), (0, 0), (25, 0)),  
+        ((WIDTH/2 - 10, 120), degrees2_radians(0), (0, 0), (25, 0)),
 
         #((WIDTH - 51, 27), degrees2_radians(0), (0, 0), (15, 0)),
         #((WIDTH - 24, 39), degrees2_radians(90), (0, 0), (15, 0)),
-        ((WIDTH - 203, 123), degrees2_radians(45), (0, 0), (25, 0)), 
+        ((WIDTH - 203, 123), degrees2_radians(45), (0, 0), (25, 0)),
 
         #((25, HEIGHT - 55), degrees2_radians(90), (0, 0), (15, 0)),
         #((37, HEIGHT - 27), degrees2_radians(0), (0, 0), (15, 0)),
-        ((190, HEIGHT - 145), degrees2_radians(45), (0, 0), (25, 0)), 
+        ((190, HEIGHT - 145), degrees2_radians(45), (0, 0), (25, 0)),
 
-        ((WIDTH/2 - 10, HEIGHT - 122), degrees2_radians(0), (0, 0), (25, 0)), 
+        ((WIDTH/2 - 10, HEIGHT - 122), degrees2_radians(0), (0, 0), (25, 0)),
 
         #((WIDTH - 58, HEIGHT - 25), degrees2_radians(0), (0, 0), (15, 0)),
         #((WIDTH - 25, HEIGHT - 51), degrees2_radians(90), (0, 0), (15, 0))
-        ((WIDTH - 205, HEIGHT - 128), degrees2_radians(-45), (0, 0), (25, 0)) 
+        ((WIDTH - 205, HEIGHT - 128), degrees2_radians(-45), (0, 0), (25, 0))
     ]
     for position, angle, start_point, end_point in pocket_segments:
-        pocket_segment_moment = pymunk.moment_for_segment(1, start_point, end_point, 2)
-        pocket_segment_body = pymunk.Body(1, pocket_segment_moment, body_type = pymunk.Body.STATIC)
+        pocket_segment_moment = pymunk.moment_for_segment(
+            1, start_point, end_point, 2)
+        pocket_segment_body = pymunk.Body(
+            1, pocket_segment_moment, body_type=pymunk.Body.STATIC)
         pocket_segment_body.position = position
         pocket_segment_body.angle = angle
-        pocket_segment_shape = pymunk.Segment(pocket_segment_body, start_point, end_point, 4)
+        pocket_segment_shape = pymunk.Segment(
+            pocket_segment_body, start_point, end_point, 4)
         pocket_segment_shape.id = 2
         pocket_segment_shape.color = pygame.Color(BLACK)
         space.add(pocket_segment_body, pocket_segment_shape)
@@ -719,71 +755,67 @@ def handle_pocket_collisions(space):
         global message
         global solid_txt, stripe_txt
         global feed
-        
+
         ball = arbiter.shapes[0]
 
-
-
-        if arbiter.shapes[1].id <= 151515: #(1 or ball.id <= 151515):
+        if arbiter.shapes[1].id <= 151515:  # (1 or ball.id <= 151515):
             #message = "BALL CONTACT"
             POOL_BALL_CONTACT.play()
 
-        #if arbiter.shapes[1].id == 3331397:
+        # if arbiter.shapes[1].id == 3331397:
             #message = "RAIL CONTACT"
-            #pass
+            # pass
 
-        
-        
-        #COLLISION DETECTED / BALL POCKETED
-        if arbiter.shapes[1].id == 2 and not (ball.id == 1): #OUTISDE ID NO. IS THE COLLISION DETECTOR    AND: IGNORE CUE BALL POCKET TEMP
-            space.remove(ball) #ball.body,
-            if ball.id == 111:
-                print("You made the 1-Ball!")
-                feed = "You made the 1-Ball!"
-            elif ball.id == 222:
-                print("You made the 2-Ball!")
-                feed = "You made the 2-Ball!"
-            elif ball.id == 333:
-                print("You made the 3-Ball!")
-                feed = "You made the 3-Ball!"
-            elif ball.id == 444:
-                print("You made the 4-Ball!")
-                feed = "You made the 4-Ball!"
-            elif ball.id == 555:
-                print("You made the 5-Ball!")
-                feed = "You made the 5-Ball!"
-            elif ball.id == 666:
-                print("You made the 6-Ball!")
-                feed = "You made the 6-Ball!"
-            elif ball.id == 777:
-                print("You made the 7-Ball!")
-                feed = "You made the 7-Ball!"
-            elif ball.id == 888:
-                print("You made the 8-Ball!")
-                feed = "You made the 8-Ball!"
-            elif ball.id == 999:
-                print("You made the 9-Ball!")
-                feed = "You made the 9-Ball!"
-            elif ball.id == 101010:
-                print("You made the 10-Ball!")
-                feed = "You made the 10-Ball!"
-            elif ball.id == 111111:
-                print("You made the 11-Ball!")
-                feed = "You made the 11-Ball!"
-            elif ball.id == 121212:
-                print("You made the 12-Ball!")
-                feed = "You made the 12-Ball!"
-            elif ball.id == 131313:
-                print("You made the 13-Ball!")
-                feed = "You made the 13-Ball!"
-            elif ball.id == 141414:
-                print("You made the 14-Ball!")
-                feed = "You made the 14-Ball!"
-            elif ball.id == 151515:
-                print("You made the 15-Ball!")
-                feed = "You made the 15-Ball!"
-            
-            
+        if game_mode == 'free':
+            # COLLISION DETECTED / BALL POCKETED
+            # OUTISDE ID NO. IS THE COLLISION DETECTOR    AND: IGNORE CUE BALL POCKET TEMP
+            if arbiter.shapes[1].id == 2 and not (ball.id == 1):
+                space.remove(ball)  # ball.body,
+                if ball.id == 111:
+                    print("You made the 1-Ball!")
+                    feed = "You made the 1-Ball!"
+                elif ball.id == 222:
+                    print("You made the 2-Ball!")
+                    feed = "You made the 2-Ball!"
+                elif ball.id == 333:
+                    print("You made the 3-Ball!")
+                    feed = "You made the 3-Ball!"
+                elif ball.id == 444:
+                    print("You made the 4-Ball!")
+                    feed = "You made the 4-Ball!"
+                elif ball.id == 555:
+                    print("You made the 5-Ball!")
+                    feed = "You made the 5-Ball!"
+                elif ball.id == 666:
+                    print("You made the 6-Ball!")
+                    feed = "You made the 6-Ball!"
+                elif ball.id == 777:
+                    print("You made the 7-Ball!")
+                    feed = "You made the 7-Ball!"
+                elif ball.id == 888:
+                    print("You made the 8-Ball!")
+                    feed = "You made the 8-Ball!"
+                elif ball.id == 999:
+                    print("You made the 9-Ball!")
+                    feed = "You made the 9-Ball!"
+                elif ball.id == 101010:
+                    print("You made the 10-Ball!")
+                    feed = "You made the 10-Ball!"
+                elif ball.id == 111111:
+                    print("You made the 11-Ball!")
+                    feed = "You made the 11-Ball!"
+                elif ball.id == 121212:
+                    print("You made the 12-Ball!")
+                    feed = "You made the 12-Ball!"
+                elif ball.id == 131313:
+                    print("You made the 13-Ball!")
+                    feed = "You made the 13-Ball!"
+                elif ball.id == 141414:
+                    print("You made the 14-Ball!")
+                    feed = "You made the 14-Ball!"
+                elif ball.id == 151515:
+                    print("You made the 15-Ball!")
+                    feed = "You made the 15-Ball!"
 
             """
             #space.remove(display_ball) #ball.body,
@@ -1057,21 +1089,31 @@ def handle_pocket_collisions(space):
                     stripes_remaining.remove(ball)
                     space.remove(fifteen_ball_body, fifteen_ball_shape)
                 """
+        elif game_mode == '8ball':
+            eight_ball_pocket_rules(arbiter,space, data)
         return True
 
     handler = space.add_default_collision_handler()
     handler.begin = collision_detected
 
-#MATH FUNCTIONS
-def degrees2_radians(degree): #CONVERTS DEGREES TO RADIANS
+# MATH FUNCTIONS
+
+
+def degrees2_radians(degree):  # CONVERTS DEGREES TO RADIANS
     pi = math.pi
     radians = degree * (pi / 180)
-    
+
     return radians
-def calc_angle(point_one, point_two):     #RETURNS ANGLE BETWEEN TWO POINTS
+
+
+def calc_angle(point_one, point_two):  # RETURNS ANGLE BETWEEN TWO POINTS
     return math.atan2(point_two[1] - point_one[1], point_two[0] - point_one[0])
-def calc_distance(point_one, point_two): #RETURNS DISTANCE BETWEEN TWO POINTS, DISTANCE FORMULA
+
+
+# RETURNS DISTANCE BETWEEN TWO POINTS, DISTANCE FORMULA
+def calc_distance(point_one, point_two):
     return math.sqrt((point_two[1] - point_one[1])**2 + (point_two[0] - point_one[0])**2)
+
 
 if __name__ == "__main__":
     run(display)
