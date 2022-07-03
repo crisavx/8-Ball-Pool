@@ -1,5 +1,6 @@
 from eight_ball import *
 import eight_ball as eight
+import table as t
 
 from properties import *
 import pygame, pymunk, pymunk.pygame_util, math#, pyglet
@@ -44,7 +45,7 @@ def run(display):
     
     eight.create_object_balls(space)
     cue_ball = eight.create_cue_ball(space)
-    eight.create_cushions(space)
+    t.create_cushions(space)
     eight.handle_pocket_collisions(space)
     eight.display_object_balls(space)
 
