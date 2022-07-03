@@ -1,12 +1,9 @@
-from main import *
 import main as m
-from table import *
-#from main import degrees2_radians
-#from main import space
 from properties import *
-import pygame, pymunk, pymunk.pygame_util, math#, pyglet
-from threading import Timer
-import os
+from main import *
+from properties import *
+import pygame, pymunk, pymunk.pygame_util, math
+
 
 global message
 message = "Player 1 - Shoot!"
@@ -34,16 +31,8 @@ player_two_is_solids = None
 global player_two_is_stripes
 player_two_is_stripes = None
 
-
-
 global pocketed_balls
 pocketed_balls = []
-
-
-FONT = pygame.font.SysFont('arial-bold', 50)
-FONT2 = pygame.font.SysFont('arial-bold', 26)
-FONT3 = pygame.font.SysFont('arial-bold', 60)
-
 
 def reset_feed():
     global feed
@@ -125,7 +114,7 @@ def check_turn():
         message = ("Player 2 - Shoot!")
 
 #HANDLE COLLISIONS
-def handle_pocket_collisions(space):
+def handle_pocket_rules(space):
     #pocket hit box
     pocket_segments = [
         #POSITION       #ANGLE        #START POINT    #END POINT
@@ -658,6 +647,7 @@ def create_object_balls(space):
         object_balls.append(object_ball_shape)
         space.add(object_ball_shape, object_ball_body)
 
+
 def display_object_balls(space):
     global one_ball_body, one_ball_shape
     global two_ball_body, two_ball_shape
@@ -813,8 +803,6 @@ def display_object_balls(space):
     fifteen_ball_shape.color = pygame.Color(LIGHT_BURGUNDY)
     fifteen_ball_shape.id = 151515
     space.add(fifteen_ball_shape, fifteen_ball_body)
-
-
 
 #MATH FUNCTIONS
 def degrees2_radians(degree): #CONVERTS DEGREES TO RADIANS

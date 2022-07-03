@@ -1,13 +1,9 @@
 from properties import *
 from eight_ball import *
 from main import *
+from properties import *
+
 import pygame, pymunk, pymunk.pygame_util, math
-
-#global solids_remaining
-#solids_remaining = []
-
-#global stripes_remaining
-#stripes_remaining = []
 
 def create_cushions(space):
     cushions = [
@@ -67,8 +63,6 @@ def degrees2_radians(degree): #CONVERTS DEGREES TO RADIANS
     radians = degree * (pi / 180)
     return radians
 
-
-    
 def create_cue_ball(space):
     global cue_ball_body
     cue_ball_body = pymunk.Body()

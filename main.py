@@ -1,9 +1,10 @@
+from properties import *
 from eight_ball import *
+from main import *
+from properties import *
 import eight_ball as eight
 import table as t
-
-from properties import *
-import pygame, pymunk, pymunk.pygame_util, math#, pyglet
+import pygame, pymunk, pymunk.pygame_util, math
 from threading import Timer
 import os
 
@@ -12,7 +13,6 @@ pygame.init()
 display = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("8-Ball Pool by Cristian Lopez")
 
-#ASSETS
 
 FONT = pygame.font.SysFont('arial-bold', 50)
 FONT2 = pygame.font.SysFont('arial-bold', 26)
@@ -24,7 +24,7 @@ POOL_POCKET = pygame.mixer.Sound(os.path.join('pool_pocket.mp3'))
 POOL_BALL_CONTACT = pygame.mixer.Sound(os.path.join('pool_ball_contact.mp3'))
 #PICS
 BACKGROUND = pygame.image.load(os.path.join('pool_table.png'))
-CUSHIONS = pygame.image.load(os.path.join('cushions.png'))
+
 
 
 def run(display):
@@ -46,7 +46,7 @@ def run(display):
     eight.create_object_balls(space)
     cue_ball = t.create_cue_ball(space)
     t.create_cushions(space)
-    eight.handle_pocket_collisions(space)
+    eight.handle_pocket_rules(space)
     eight.display_object_balls(space)
 
     draw_options = pymunk.pygame_util.DrawOptions(display)
