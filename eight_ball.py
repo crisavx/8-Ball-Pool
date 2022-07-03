@@ -6,21 +6,6 @@ import pygame, pymunk, pymunk.pygame_util, math#, pyglet
 from threading import Timer
 import os
 
-
-#global POOL_SHOT
-#global POOL_POCKET
-#global POOL_BALL_CONTACT
-
-
-#object_balls = create_object_balls(space)
-
-
-#cue_ball = create_cue_ball(space)
-
-
-#global feed
-#feed = ""
-
 global message
 message = "Player 1 - Shoot!"
 
@@ -33,7 +18,7 @@ global feed
 feed = ""
 
 global turn
-turn = 0
+turn = 0  #EVEN --> P1 TURN;  ODD --> P2 TURN
 
 global ball_pocketed
 ball_pocketed = False
@@ -63,35 +48,10 @@ FONT = pygame.font.SysFont('arial-bold', 50)
 FONT2 = pygame.font.SysFont('arial-bold', 26)
 FONT3 = pygame.font.SysFont('arial-bold', 60)
 
-#create_cushions(space)
-#handle_pocket_collisions(space)
-#display_object_balls(space)
-
-#create_object_balls(space)
-
-def starting_stage():
-    pass
 
 def reset_feed():
     global feed
     feed = ""
-
-def draw_messages(space, display, draw_options):
-    #display.blit(BACKGROUND, ((0,0)))
-    draw_text = FONT.render(message, 1, WHITE)
-    stripe_text = FONT2.render(stripe_txt, 1, WHITE)
-    solid_text = FONT2.render(solid_txt, 1, WHITE)
-    feed_text = FONT3.render(feed, 1, WHITE)
-    display.blit(draw_text, (WIDTH/2 - 135, 13))
-    display.blit(stripe_text,(WIDTH - 162, 22))
-    display.blit(solid_text, (15, 22))
-    display.blit(feed_text, (WIDTH / 2 - 200, HEIGHT - 65))
-
-    space.debug_draw(draw_options)
-    pygame.display.update()
-
-#def draw_feed(space, display, draw_options):
-
 
 
 def update_ball_pocketed():
@@ -102,10 +62,7 @@ def check_ball_pocketed():
     global turn
     global message
     global stripe_txt, solid_txt
-    #global run
-    #turn = 0    #EVEN --> P1 TURN;  ODD --> P2 TURN
     if ball_pocketed == False: #NO BALL POCKETED, UPDATE TURN
-        #global turn
         turn+=1
 
     else: #BALL GETS POCKETED
@@ -167,7 +124,6 @@ def check_turn():
     if turn % 2 == 0:   #IF PLAYER ONE TURN
         print("Player 1 - Shoot!")
         message = ("Player 1 - Shoot!")
-
     else:   #IF PLAYER TWO TURN
         print("Player 2 - Shoot!")
         message = ("Player 2 - Shoot!")
@@ -238,7 +194,6 @@ def handle_pocket_collisions(space):
         #COLLISION DETECTED / BALL POCKETED
         if arbiter.shapes[1].id == 2 and not (ball.id == 1): #OUTISDE ID NO. IS THE COLLISION DETECTOR    AND: IGNORE CUE BALL POCKET TEMP
             space.remove(ball) #ball.body,
-            #space.remove(display_ball) #ball.body,
             ball_pocketed = True
             pocketed_balls.append(ball)
             POOL_POCKET.play()
@@ -596,12 +551,7 @@ def handle_pocket_collisions(space):
     handler = space.add_default_collision_handler()
     handler.begin = collision_detected
 
-
-
 def create_cushions(space):
-    #global cushion_body
-    #global cushion_shape
-    #global cushions
     cushions = [
         #position,          #size
         [(428, 117), (370, 48)], #UP-LEFT
@@ -654,7 +604,6 @@ def create_cushions(space):
         triangle_shape.id = 3331397
         space.add(triangle_body, triangle_shape)
 
-#"""
 def display_object_balls(space):
     global one_ball_body, one_ball_shape
     global two_ball_body, two_ball_shape
@@ -810,26 +759,16 @@ def display_object_balls(space):
     fifteen_ball_shape.color = pygame.Color(LIGHT_BURGUNDY)
     fifteen_ball_shape.id = 151515
     space.add(fifteen_ball_shape, fifteen_ball_body)
-    
-#"""
+
 def create_object_balls(space):
-    global solid_balls, striped_balls
+    global solid_balls, striped_balls, solids_remaining, stripes_remaining, object_balls
     solid_balls = []
     striped_balls = []
-    global solids_remaining
-    
-    global stripes_remaining
-
-    global object_balls
     object_balls = []
     
-
     for ball in range (0, 15):
-
         object_ball_body = pymunk.Body()
-        #object_ball_body2 = pymunk.Body()
         object_ball_shape = pymunk.Circle(object_ball_body, BALL_RADIUS)
-        #object_ball_shape2 = pymunk.Circle(object_ball_body2, BALL_RADIUS)
         object_ball_shape.mass = BALL_MASS
         object_ball_shape.elasticity = BALL_ELASTICITY
         object_ball_shape.friction = BALL_FRICTION
@@ -837,13 +776,10 @@ def create_object_balls(space):
         #SOLIDS
         if ball == 0:  #1-BALL
             object_ball_shape.color = pygame.Color(YELLOW)
-            #object_ball_shape2.color = pygame.Color(YELLOW)
             object_ball_body.position = (WIDTH/2 + 175 , HEIGHT/2)
-            #object_ball_body2.position = (WIDTH/2 , HEIGHT/2)
             object_ball_shape.id = 111
             solid_balls.append(object_ball_shape)
             solids_remaining.append(object_ball_shape)
-            
         elif ball == 1: #2-BALL
             object_ball_shape.color = pygame.Color(BLUE)
             object_ball_body.position = (WIDTH/2 + 204, HEIGHT/2 - 18)
@@ -930,13 +866,9 @@ def create_object_balls(space):
             stripes_remaining.append(object_ball_shape)
 
         object_balls.append(object_ball_shape)
-        space.add(object_ball_shape, object_ball_body)#, object_ball_body2, object_ball_shape2 )
+        space.add(object_ball_shape, object_ball_body)
     
-    #return object_balls
-
 def create_cue_ball(space):
-    #global cue_ball_sprite, cue_ball_img
-    
     global cue_ball_body
     cue_ball_body = pymunk.Body()
     cue_ball_body.position = (WIDTH/2 - 229 , HEIGHT/2)
@@ -947,26 +879,11 @@ def create_cue_ball(space):
     cue_ball_shape.friction = BALL_FRICTION
     cue_ball_shape.id = 1
 
-    #cue_ball_img = pyglet.image.load(os.path.join('cueballT.png'))
-    #cue_ball_sprite = pyglet.sprite.Sprite(cue_ball_img, x = cue_ball_body.position.x, y = cue_ball_body.position.y)
-
     space.add(cue_ball_shape, cue_ball_body)
     return cue_ball_shape
-
-#def start_timer_check_pocketed():
-    #timer_check_pocketed = Timer(5.5, check_ball_pocketed)
-    #timer_check_pocketed.start()
-
-#def 
-
 
 #MATH FUNCTIONS
 def degrees2_radians(degree): #CONVERTS DEGREES TO RADIANS
     pi = math.pi
     radians = degree * (pi / 180)
-    
     return radians
-def calc_angle(point_one, point_two):     #RETURNS ANGLE BETWEEN TWO POINTS
-    return math.atan2(point_two[1] - point_one[1], point_two[0] - point_one[0])
-def calc_distance(point_one, point_two): #RETURNS DISTANCE BETWEEN TWO POINTS, DISTANCE FORMULA
-    return math.sqrt((point_two[1] - point_one[1])**2 + (point_two[0] - point_one[0])**2)
