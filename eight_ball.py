@@ -21,13 +21,16 @@ import os
 #global feed
 #feed = ""
 
-#global message
-#message = "Player 1 - Shoot!xxxx"
+global message
+message = "Player 1 - Shoot!"
 
-#global solid_txt
-#solid_txt = ""
-#global stripe_txt
-#stripe_txt = ""
+global solid_txt
+solid_txt = ""
+global stripe_txt
+stripe_txt = ""
+
+global feed
+feed = ""
 
 global turn
 turn = 0
@@ -55,6 +58,11 @@ solids_remaining = []
 global stripes_remaining
 stripes_remaining = []
 
+
+FONT = pygame.font.SysFont('arial-bold', 50)
+FONT2 = pygame.font.SysFont('arial-bold', 26)
+FONT3 = pygame.font.SysFont('arial-bold', 60)
+
 #create_cushions(space)
 #handle_pocket_collisions(space)
 #display_object_balls(space)
@@ -63,6 +71,27 @@ stripes_remaining = []
 
 def starting_stage():
     pass
+
+def reset_feed():
+    global feed
+    feed = ""
+
+def draw_messages(space, display, draw_options):
+    #display.blit(BACKGROUND, ((0,0)))
+    draw_text = FONT.render(message, 1, WHITE)
+    stripe_text = FONT2.render(stripe_txt, 1, WHITE)
+    solid_text = FONT2.render(solid_txt, 1, WHITE)
+    feed_text = FONT3.render(feed, 1, WHITE)
+    display.blit(draw_text, (WIDTH/2 - 135, 13))
+    display.blit(stripe_text,(WIDTH - 162, 22))
+    display.blit(solid_text, (15, 22))
+    display.blit(feed_text, (WIDTH / 2 - 200, HEIGHT - 65))
+
+    space.debug_draw(draw_options)
+    pygame.display.update()
+
+#def draw_feed(space, display, draw_options):
+
 
 
 def update_ball_pocketed():
@@ -87,10 +116,10 @@ def check_ball_pocketed():
                         pass
                     elif ball.id == 888 and (len(solids_remaining) > 0): #IF 8 BALL GETS MADE ILLEGALLY
                         print("PLAYER 1, YOU LOSE")
-                        update_message("PLAYER 1, YOU LOSE")
+                        message = ("PLAYER 1, YOU LOSE")
                     elif ball.id == 888 and (len(solids_remaining) == 0) and not (ball.id == 1):    #IF 8 BALL GETS MADE LEGALLY
                         print("PLAYER 1, YOU WIN")
-                        update_message("PLAYER 1, YOU WIN")
+                        message = ("PLAYER 1, YOU WIN")
                     elif ball.id >= 999 or ball.id == 1:   #IF STRIPE GETS MADE OR CUE BALL
                         turn+=1
             if player_one_is_stripes:
@@ -99,10 +128,10 @@ def check_ball_pocketed():
                         pass
                     elif ball.id == 888 and (len(stripes_remaining) > 0): #IF 8 BALL GETS MADE ILLEGALLY
                         print("PLAYER 1, YOU LOSE")
-                        message = "PLAYER 1, YOU LOSE"
+                        message = ("PLAYER 1, YOU LOSE")
                     elif ball.id == 888 and (len(stripes_remaining) == 0) and not (ball.id == 1):    #IF 8 BALL GETS MADE LEGALLY
                         print("PLAYER 1, YOU WIN")
-                        message = "PLAYER 1, YOU WIN"
+                        message = ("PLAYER 1, YOU WIN")
                     elif ball.id <= 777 or ball.id == 1:   #IF SOLID GETS MADE
                         turn+=1
         else:   #PLAYER TWO TURN
@@ -112,10 +141,10 @@ def check_ball_pocketed():
                         pass
                     elif ball.id == 888 and (len(solids_remaining) > 0): #IF 8 BALL GETS MADE ILLEGALLY
                         print("PLAYER 2, YOU LOSE")
-                        message = "PLAYER 2, YOU LOSE"
+                        message = ("PLAYER 2, YOU LOSE")
                     elif ball.id == 888 and (len(solids_remaining) == 0) and not (ball.id == 1): #IF 8 BALL GETS MADE LEGALLY
                         print("PLAYER 2, YOU WIN")
-                        message = "PLAYER 2, YOU WIN"
+                        message = ("PLAYER 2, YOU WIN")
                     elif ball.id >= 999 or ball.id == 1: #IF STRIPE GETS MADE OR CUE BALL
                         turn+=1
             if player_two_is_stripes:
@@ -124,10 +153,10 @@ def check_ball_pocketed():
                         pass
                     elif ball.id == 888 and (len(stripes_remaining) > 0):    #IF 8 BALL GETS MADE ILLEGALLY
                         print("PLAYER 2, YOU LOSE")
-                        message = "PLAYER 2, YOU LOSE"
+                        message = ("PLAYER 2, YOU LOSE")
                     elif ball.id == 888 and (len(stripes_remaining) == 0) and not (ball.id == 1):    #IF 8 BALL GETS MADE LEGALLY
                         print("PLAYER 2, YOU WIN")
-                        message = "PLAYER 2, YOU WIN"
+                        message = ("PLAYER 2, YOU WIN")
                     elif ball.id >= 777 or ball.id == 1:   #IF SOLID GETS MADE OR CUE BALL
                         turn+=1
 
@@ -137,11 +166,11 @@ def check_turn():
 
     if turn % 2 == 0:   #IF PLAYER ONE TURN
         print("Player 1 - Shoot!")
-        update_message("Player 1 - Shoot!")
+        message = ("Player 1 - Shoot!")
 
     else:   #IF PLAYER TWO TURN
         print("Player 2 - Shoot!")
-        update_message("Player 2 - Shoot!")
+        message = ("Player 2 - Shoot!")
 
 #HANDLE COLLISIONS
 def handle_pocket_collisions(space):
@@ -187,7 +216,7 @@ def handle_pocket_collisions(space):
         global player_two_is_stripes
         global solids_remaining
         global stripes_remaining
-        global message
+        #global message
         global solid_txt, stripe_txt
         global feed
         
@@ -227,44 +256,44 @@ def handle_pocket_collisions(space):
                         print("Player 2 (Stripes)")
 
                         if ball.id == 111:
-                            print("You made the 1-Ball!")
-                            feed = "You made the 1-Ball!"
+                            print("Player 1, you made the 1-Ball!")
+                            feed = "Player 1, you made the 1-Ball!"
                             solids_remaining.remove(ball)
-                            #space.remove(one_ball_body, one_ball_shape)
+                            space.remove(one_ball_body, one_ball_shape)
                         elif ball.id == 222:
-                            print("You made the 2-Ball!")
-                            feed = "You made the 2-Ball!"
+                            print("Player 1, you made the 2-Ball!")
+                            feed = "Player 1, you made the 2-Ball!"
                             solids_remaining.remove(ball)
-                            #space.remove(two_ball_body, two_ball_shape)
+                            space.remove(two_ball_body, two_ball_shape)
                         elif ball.id == 333:
-                            print("You made the 3-Ball!")
-                            feed = "You made the 3-Ball!"
+                            print("Player 1, you made the 3-Ball!")
+                            feed = "Player 1, you made the 3-Ball!"
                             solids_remaining.remove(ball)
-                            #space.remove(three_ball_body, three_ball_shape)
+                            space.remove(three_ball_body, three_ball_shape)
                         elif ball.id == 444:
-                            print("You made the 4-Ball!")
-                            feed = "You made the 4-Ball!"
+                            print("Player 1, you made the 4-Ball!")
+                            feed = "Player 1, you made the 4-Ball!"
                             solids_remaining.remove(ball)
-                            #space.remove(four_ball_body, four_ball_shape)
+                            space.remove(four_ball_body, four_ball_shape)
                         elif ball.id == 555:
-                            print("You made the 5-Ball!")
-                            feed = "You made the 5-Ball!"
+                            print("Player 1, you made the 5-Ball!")
+                            feed = "Player 1, you made the 5-Ball!"
                             solids_remaining.remove(ball)
-                            #space.remove(five_ball_body, five_ball_shape)
+                            space.remove(five_ball_body, five_ball_shape)
                         elif ball.id == 666:
-                            print("You made the 6-Ball!")
-                            feed = "You made the 6-Ball!"
+                            print("Player 1, you made the 6-Ball!")
+                            feed = "Player 1, you made the 6-Ball!"
                             solids_remaining.remove(ball)
-                            #space.remove(six_ball_body, six_ball_shape)
+                            space.remove(six_ball_body, six_ball_shape)
                         elif ball.id == 777:
-                            print("You made the 7-Ball!")
-                            feed = "You made the 7-Ball!"
+                            print("Player 1, you made the 7-Ball!")
+                            feed = "Player 1, you made the 7-Ball!"
                             solids_remaining.remove(ball)
-                            #space.remove(seven_ball_body, seven_ball_shape)
+                            space.remove(seven_ball_body, seven_ball_shape)
 
                         elif ball.id == 888:
-                            print("You made the 8-Ball!")
-                            feed = "You made the 8-Ball!"
+                            print("Player 1, you made the 8-Ball!")
+                            feed = "Player 1, you made the 8-Ball!"
 
 
                     elif ball.id >= 999: 
@@ -279,40 +308,40 @@ def handle_pocket_collisions(space):
                         print("Player 1 (Stripes)")
 
                         if ball.id == 999:
-                            print("You made the 9-Ball!")
-                            feed = "You made the 9-Ball!"
+                            print("Player 1, you made the 9-Ball!")
+                            feed = "Player 1, you made the 9-Ball!"
                             stripes_remaining.remove(ball)
-                            #space.remove(nine_ball_body, nine_ball_shape)
+                            space.remove(nine_ball_body, nine_ball_shape)
                         elif ball.id == 101010:
-                            print("You made the 10-Ball!")
-                            feed = "You made the 10-Ball!"
+                            print("Player 1, you made the 10-Ball!")
+                            feed = "Player 1, you made the 10-Ball!"
                             stripes_remaining.remove(ball)
-                            #space.remove(ten_ball_body, ten_ball_shape)
+                            space.remove(ten_ball_body, ten_ball_shape)
                         elif ball.id == 111111:
-                            print("You made the 11-Ball!")
-                            feed = "You made the 11-Ball!"
+                            print("Player 1, you made the 11-Ball!")
+                            feed = "Player 1, you made the 11-Ball!"
                             stripes_remaining.remove(ball)
-                            #space.remove(eleven_ball_body, eleven_ball_shape)
+                            space.remove(eleven_ball_body, eleven_ball_shape)
                         elif ball.id == 121212:
-                            print("You made the 12-Ball!")
-                            feed = "You made the 12-Ball!"
+                            print("Player 1, you made the 12-Ball!")
+                            feed = "Player 1, you made the 12-Ball!"
                             stripes_remaining.remove(ball)
-                            #space.remove(twelve_ball_body, twelve_ball_shape)
+                            space.remove(twelve_ball_body, twelve_ball_shape)
                         elif ball.id == 131313:
-                            print("You made the 13-Ball!")
-                            feed = "You made the 13-Ball!"
+                            print("Player 1, you made the 13-Ball!")
+                            feed = "Player 1, you made the 13-Ball!"
                             stripes_remaining.remove(ball)
-                            #space.remove(thirteen_ball_body, thirteen_ball_shape)
+                            space.remove(thirteen_ball_body, thirteen_ball_shape)
                         elif ball.id == 141414:
-                            print("You made the 14-Ball!")
-                            feed = "You made the 14-Ball!"
+                            print("Player 1, you made the 14-Ball!")
+                            feed = "Player 1, you made the 14-Ball!"
                             stripes_remaining.remove(ball)
-                            #space.remove(fourteen_ball_body, fourteen_ball_shape)
+                            space.remove(fourteen_ball_body, fourteen_ball_shape)
                         elif ball.id == 151515:
-                            print("You made the 15-Ball!")
-                            feed = "You made the 15-Ball!"
+                            print("Player 1, you made the 15-Ball!")
+                            feed = "Player 1, you made the 15-Ball!"
                             stripes_remaining.remove(ball)
-                            #space.remove(fifteen_ball_body, fifteen_ball_shape)
+                            space.remove(fifteen_ball_body, fifteen_ball_shape)
 
                 else:   #PLAYER 2 TURN
                     if ball.id <= 777:
@@ -327,44 +356,44 @@ def handle_pocket_collisions(space):
                         print("Player 1 (Stripes)")
 
                         if ball.id == 111:
-                            print("You made the 1-Ball!")
-                            feed = "You made the 1-Ball!"
+                            print("Player 2, you made the 1-Ball!")
+                            feed = "Player 2, you made the 1-Ball!"
                             solids_remaining.remove(ball)
-                            #space.remove(one_ball_body, one_ball_shape)
+                            space.remove(one_ball_body, one_ball_shape)
                         elif ball.id == 222:
-                            print("You made the 2-Ball!")
-                            feed = "You made the 2-Ball!"
+                            print("Player 2, you made the 2-Ball!")
+                            feed = "Player 2, you made the 2-Ball!"
                             solids_remaining.remove(ball)
-                            #space.remove(two_ball_body, two_ball_shape)
+                            space.remove(two_ball_body, two_ball_shape)
                         elif ball.id == 333:
-                            print("You made the 3-Ball!")
-                            feed = "You made the 3-Ball!"
+                            print("Player 2, you made the 3-Ball!")
+                            feed = "Player 2, you made the 3-Ball!"
                             solids_remaining.remove(ball)
-                            #space.remove(three_ball_body, three_ball_shape)
+                            space.remove(three_ball_body, three_ball_shape)
                         elif ball.id == 444:
-                            print("You made the 4-Ball!")
-                            feed = "You made the 4-Ball!"
+                            print("Player 2, you made the 4-Ball!")
+                            feed = "Player 2, you made the 4-Ball!"
                             solids_remaining.remove(ball)
-                            #space.remove(four_ball_body, four_ball_shape)
+                            space.remove(four_ball_body, four_ball_shape)
                         elif ball.id == 555:
-                            print("You made the 5-Ball!")
-                            feed = "You made the 5-Ball!"
+                            print("Player 2, you made the 5-Ball!")
+                            feed = "Player 2, you made the 5-Ball!"
                             solids_remaining.remove(ball)
-                            #space.remove(five_ball_body, five_ball_shape)
+                            space.remove(five_ball_body, five_ball_shape)
                         elif ball.id == 666:
-                            print("You made the 6-Ball!")
-                            feed = "You made the 6-Ball!"
+                            print("Player 2, you made the 6-Ball!")
+                            feed = "Player 2, you made the 6-Ball!"
                             solids_remaining.remove(ball)
-                            #space.remove(six_ball_body, six_ball_shape)
+                            space.remove(six_ball_body, six_ball_shape)
                         elif ball.id == 777:
-                            print("You made the 7-Ball!")
-                            feed = "You made the 7-Ball!"
+                            print("Player 2, you made the 7-Ball!")
+                            feed = "Player 2, you made the 7-Ball!"
                             solids_remaining.remove(ball)
-                            #space.remove(seven_ball_body, seven_ball_shape)
+                            space.remove(seven_ball_body, seven_ball_shape)
 
                         elif ball.id == 888:
-                            print("You made the 8-Ball!")
-                            feed = "You made the 8-Ball!"
+                            print("Player 2, you made the 8-Ball!")
+                            feed = "Player 2, you made the 8-Ball!"
 
                     elif ball.id >= 999: 
                         player_two_is_solids = False
@@ -378,116 +407,190 @@ def handle_pocket_collisions(space):
                         print("Player 2 (Stripes)")
 
                         if ball.id == 999:
-                            print("You made the 9-Ball!")
-                            feed = "You made the 9-Ball!"
+                            print("Player 2, you made the 9-Ball!")
+                            feed = "Player 2, you made the 9-Ball!"
                             stripes_remaining.remove(ball)
-                            #space.remove(nine_ball_body, nine_ball_shape)
+                            space.remove(nine_ball_body, nine_ball_shape)
                         elif ball.id == 101010:
-                            print("You made the 10-Ball!")
-                            feed = "You made the 10-Ball!"
+                            print("Player 2, you made the 10-Ball!")
+                            feed = "Player 2, you made the 10-Ball!"
                             stripes_remaining.remove(ball)
-                            #space.remove(ten_ball_body, ten_ball_shape)
+                            space.remove(ten_ball_body, ten_ball_shape)
                         elif ball.id == 111111:
-                            print("You made the 11-Ball!")
-                            feed = "You made the 11-Ball!"
+                            print("Player 2, you made the 11-Ball!")
+                            feed = "Player 2, you made the 11-Ball!"
                             stripes_remaining.remove(ball)
-                            #space.remove(eleven_ball_body, eleven_ball_shape)
+                            space.remove(eleven_ball_body, eleven_ball_shape)
                         elif ball.id == 121212:
-                            print("You made the 12-Ball!")
-                            feed = "You made the 12-Ball!"
+                            print("Player 2, you made the 12-Ball!")
+                            feed = "Player 2, you made the 12-Ball!"
                             stripes_remaining.remove(ball)
-                            #space.remove(twelve_ball_body, twelve_ball_shape)
+                            space.remove(twelve_ball_body, twelve_ball_shape)
                         elif ball.id == 131313:
-                            print("You made the 13-Ball!")
-                            feed = "You made the 13-Ball!"
+                            print("Player 2, you made the 13-Ball!")
+                            feed = "Player 2, you made the 13-Ball!"
                             stripes_remaining.remove(ball)
-                            #space.remove(thirteen_ball_body, thirteen_ball_shape)
+                            space.remove(thirteen_ball_body, thirteen_ball_shape)
                         elif ball.id == 141414:
-                            print("You made the 14-Ball!")
-                            feed = "You made the 14-Ball!"
+                            print("Player 2, you made the 14-Ball!")
+                            feed = "Player 2, you made the 14-Ball!"
                             stripes_remaining.remove(ball)
-                            #space.remove(fourteen_ball_body, fourteen_ball_shape)
+                            space.remove(fourteen_ball_body, fourteen_ball_shape)
                         elif ball.id == 151515:
-                            print("You made the 15-Ball!")
-                            feed = "You made the 15-Ball!"
+                            print("Player 2, you made the 15-Ball!")
+                            feed = "Player 2, you made the 15-Ball!"
                             stripes_remaining.remove(ball)
-                            #space.remove(fifteen_ball_body, fifteen_ball_shape)
+                            space.remove(fifteen_ball_body, fifteen_ball_shape)
 
             else:
-                if ball.id == 111:
-                    print("You made the 1-Ball!")
-                    feed = "You made the 1-Ball!"
-                    solids_remaining.remove(ball)
-                    #space.remove(one_ball_body, one_ball_shape)
-                elif ball.id == 222:
-                    print("You made the 2-Ball!")
-                    feed = "You made the 2-Ball!"
-                    solids_remaining.remove(ball)
-                    #space.remove(two_ball_body, two_ball_shape)
-                elif ball.id == 333:
-                    print("You made the 3-Ball!")
-                    feed = "You made the 3-Ball!"
-                    solids_remaining.remove(ball)
-                    #space.remove(three_ball_body, three_ball_shape)
-                elif ball.id == 444:
-                    print("You made the 4-Ball!")
-                    feed = "You made the 4-Ball!"
-                    solids_remaining.remove(ball)
-                    #space.remove(four_ball_body, four_ball_shape)
-                elif ball.id == 555:
-                    print("You made the 5-Ball!")
-                    feed = "You made the 5-Ball!"
-                    solids_remaining.remove(ball)
-                    #space.remove(five_ball_body, five_ball_shape)
-                elif ball.id == 666:
-                    print("You made the 6-Ball!")
-                    feed = "You made the 6-Ball!"
-                    solids_remaining.remove(ball)
-                    #space.remove(six_ball_body, six_ball_shape)
-                elif ball.id == 777:
-                    print("You made the 7-Ball!")
-                    feed = "You made the 7-Ball!"
-                    solids_remaining.remove(ball)
-                    #space.remove(seven_ball_body, seven_ball_shape)
-                elif ball.id == 888:
-                    print("You made the 8-Ball!")
-                    feed = "You made the 8-Ball!"
-                elif ball.id == 999:
-                    print("You made the 9-Ball!")
-                    feed = "You made the 9-Ball!"
-                    stripes_remaining.remove(ball)
-                    #space.remove(nine_ball_body, nine_ball_shape)
-                elif ball.id == 101010:
-                    print("You made the 10-Ball!")
-                    feed = "You made the 10-Ball!"
-                    stripes_remaining.remove(ball)
-                    #space.remove(ten_ball_body, ten_ball_shape)
-                elif ball.id == 111111:
-                    print("You made the 11-Ball!")
-                    feed = "You made the 11-Ball!"
-                    stripes_remaining.remove(ball)
-                    #space.remove(eleven_ball_body, eleven_ball_shape)
-                elif ball.id == 121212:
-                    print("You made the 12-Ball!")
-                    feed = "You made the 12-Ball!"
-                    stripes_remaining.remove(ball)
-                    #space.remove(twelve_ball_body, twelve_ball_shape)
-                elif ball.id == 131313:
-                    print("You made the 13-Ball!")
-                    feed = "You made the 13-Ball!"
-                    stripes_remaining.remove(ball)
-                    #space.remove(thirteen_ball_body, thirteen_ball_shape)
-                elif ball.id == 141414:
-                    print("You made the 14-Ball!")
-                    feed = "You made the 14-Ball!"
-                    stripes_remaining.remove(ball)
-                    #space.remove(fourteen_ball_body, fourteen_ball_shape)
-                elif ball.id == 151515:
-                    print("You made the 15-Ball!")
-                    feed = "You made the 15-Ball!"
-                    stripes_remaining.remove(ball)
-                    #space.remove(fifteen_ball_body, fifteen_ball_shape)
-                
+                if turn % 2 == 0:
+                    if ball.id == 111:
+                        print("Player 1, you made the 1-Ball!")
+                        feed = "Player 1, you made the 1-Ball!"
+                        solids_remaining.remove(ball)
+                        space.remove(one_ball_body, one_ball_shape)
+                    elif ball.id == 222:
+                        print("Player 1, you made the 2-Ball!")
+                        feed = "Player 1, you made the 2-Ball!"
+                        solids_remaining.remove(ball)
+                        space.remove(two_ball_body, two_ball_shape)
+                    elif ball.id == 333:
+                        print("Player 1, you made the 3-Ball!")
+                        feed = "Player 1, you made the 3-Ball!"
+                        solids_remaining.remove(ball)
+                        space.remove(three_ball_body, three_ball_shape)
+                    elif ball.id == 444:
+                        print("Player 1, you made the 4-Ball!")
+                        feed = "Player 1, you made the 4-Ball!"
+                        solids_remaining.remove(ball)
+                        space.remove(four_ball_body, four_ball_shape)
+                    elif ball.id == 555:
+                        print("Player 1, you made the 5-Ball!")
+                        feed = "Player 1, you made the 5-Ball!"
+                        solids_remaining.remove(ball)
+                        space.remove(five_ball_body, five_ball_shape)
+                    elif ball.id == 666:
+                        print("Player 1, you made the 6-Ball!")
+                        feed = "Player 1, you made the 6-Ball!"
+                        solids_remaining.remove(ball)
+                        space.remove(six_ball_body, six_ball_shape)
+                    elif ball.id == 777:
+                        print("Player 1, you made the 7-Ball!")
+                        feed = "Player 1, you made the 7-Ball!"
+                        solids_remaining.remove(ball)
+                        space.remove(seven_ball_body, seven_ball_shape)
+                    elif ball.id == 888:
+                        print("Player 1, you made the 8-Ball!")
+                        feed = "Player 1, you made the 8-Ball!"
+                    elif ball.id == 999:
+                        print("Player 1, you made the 9-Ball!")
+                        feed = "Player 1, you made the 9-Ball!"
+                        stripes_remaining.remove(ball)
+                        space.remove(nine_ball_body, nine_ball_shape)
+                    elif ball.id == 101010:
+                        print("Player 1, you made the 10-Ball!")
+                        feed = "Player 1, you made the 10-Ball!"
+                        stripes_remaining.remove(ball)
+                        space.remove(ten_ball_body, ten_ball_shape)
+                    elif ball.id == 111111:
+                        print("Player 1, you made the 11-Ball!")
+                        feed = "Player 1, you made the 11-Ball!"
+                        stripes_remaining.remove(ball)
+                        space.remove(eleven_ball_body, eleven_ball_shape)
+                    elif ball.id == 121212:
+                        print("Player 1, you made the 12-Ball!")
+                        feed = "Player 1, you made the 12-Ball!"
+                        stripes_remaining.remove(ball)
+                        space.remove(twelve_ball_body, twelve_ball_shape)
+                    elif ball.id == 131313:
+                        print("Player 1, you made the 13-Ball!")
+                        feed = "Player 1, you made the 13-Ball!"
+                        stripes_remaining.remove(ball)
+                        space.remove(thirteen_ball_body, thirteen_ball_shape)
+                    elif ball.id == 141414:
+                        print("Player 1, you made the 14-Ball!")
+                        feed = "Player 1, you made the 14-Ball!"
+                        stripes_remaining.remove(ball)
+                        space.remove(fourteen_ball_body, fourteen_ball_shape)
+                    elif ball.id == 151515:
+                        print("Player 1, you made the 15-Ball!")
+                        feed = "Player 1, you made the 15-Ball!"
+                        stripes_remaining.remove(ball)
+                        space.remove(fifteen_ball_body, fifteen_ball_shape)
+                else:
+                    if ball.id == 111:
+                        print("Player 2, you made the 1-Ball!")
+                        feed = "Player 2, you made the 1-Ball!"
+                        solids_remaining.remove(ball)
+                        space.remove(one_ball_body, one_ball_shape)
+                    elif ball.id == 222:
+                        print("Player 2, you made the 2-Ball!")
+                        feed = "Player 2, you made the 2-Ball!"
+                        solids_remaining.remove(ball)
+                        space.remove(two_ball_body, two_ball_shape)
+                    elif ball.id == 333:
+                        print("Player 2, you made the 3-Ball!")
+                        feed = "Player 2, you made the 3-Ball!"
+                        solids_remaining.remove(ball)
+                        space.remove(three_ball_body, three_ball_shape)
+                    elif ball.id == 444:
+                        print("Player 2, you made the 4-Ball!")
+                        feed = "Player 2, you made the 4-Ball!"
+                        solids_remaining.remove(ball)
+                        space.remove(four_ball_body, four_ball_shape)
+                    elif ball.id == 555:
+                        print("Player 2, you made the 5-Ball!")
+                        feed = "Player 2, you made the 5-Ball!"
+                        solids_remaining.remove(ball)
+                        space.remove(five_ball_body, five_ball_shape)
+                    elif ball.id == 666:
+                        print("Player 2, you made the 6-Ball!")
+                        feed = "Player 2, you made the 6-Ball!"
+                        solids_remaining.remove(ball)
+                        space.remove(six_ball_body, six_ball_shape)
+                    elif ball.id == 777:
+                        print("Player 2, you made the 7-Ball!")
+                        feed = "Player 2, you made the 7-Ball!"
+                        solids_remaining.remove(ball)
+                        space.remove(seven_ball_body, seven_ball_shape)
+                    elif ball.id == 888:
+                        print("Player 2, you made the 8-Ball!")
+                        feed = "Player 2, you made the 8-Ball!"
+                    elif ball.id == 999:
+                        print("Player 2, you made the 9-Ball!")
+                        feed = "Player 2, you made the 9-Ball!"
+                        stripes_remaining.remove(ball)
+                        space.remove(nine_ball_body, nine_ball_shape)
+                    elif ball.id == 101010:
+                        print("Player 2, you made the 10-Ball!")
+                        feed = "Player 2, you made the 10-Ball!"
+                        stripes_remaining.remove(ball)
+                        space.remove(ten_ball_body, ten_ball_shape)
+                    elif ball.id == 111111:
+                        print("Player 2, you made the 11-Ball!")
+                        feed = "Player 2, you made the 11-Ball!"
+                        stripes_remaining.remove(ball)
+                        space.remove(eleven_ball_body, eleven_ball_shape)
+                    elif ball.id == 121212:
+                        print("Player 2, you made the 12-Ball!")
+                        feed = "Player 2, you made the 12-Ball!"
+                        stripes_remaining.remove(ball)
+                        space.remove(twelve_ball_body, twelve_ball_shape)
+                    elif ball.id == 131313:
+                        print("Player 2, you made the 13-Ball!")
+                        feed = "Player 2, you made the 13-Ball!"
+                        stripes_remaining.remove(ball)
+                        space.remove(thirteen_ball_body, thirteen_ball_shape)
+                    elif ball.id == 141414:
+                        print("Player 2, you made the 14-Ball!")
+                        feed = "Player 2, you made the 14-Ball!"
+                        stripes_remaining.remove(ball)
+                        space.remove(fourteen_ball_body, fourteen_ball_shape)
+                    elif ball.id == 151515:
+                        print("Player 2, you made the 15-Ball!")
+                        feed = "Player 2, you made the 15-Ball!"
+                        stripes_remaining.remove(ball)
+                        space.remove(fifteen_ball_body, fifteen_ball_shape)
         return True
 
     handler = space.add_default_collision_handler()
@@ -551,7 +654,7 @@ def create_cushions(space):
         triangle_shape.id = 3331397
         space.add(triangle_body, triangle_shape)
 
-"""
+#"""
 def display_object_balls(space):
     global one_ball_body, one_ball_shape
     global two_ball_body, two_ball_shape
@@ -708,7 +811,7 @@ def display_object_balls(space):
     fifteen_ball_shape.id = 151515
     space.add(fifteen_ball_shape, fifteen_ball_body)
     
-"""
+#"""
 def create_object_balls(space):
     global solid_balls, striped_balls
     solid_balls = []

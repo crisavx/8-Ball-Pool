@@ -2,6 +2,7 @@
 #from turtle import TurtleScreen
 #from email import feedparser
 from eight_ball import *
+import eight_ball as eight
 #from eight_ball import create_object_balls
 #from eight_ball import create_cue_ball
 from properties import *
@@ -14,7 +15,8 @@ pygame.init()
 display = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("8-Ball Pool by Cristian Lopez")
 
-
+#global message
+#message = "Player 1 - Shoot!"
 
 
 #global cue_ball_body
@@ -44,6 +46,9 @@ CUSHIONS = pygame.image.load(os.path.join('cushions.png'))
 def run(display):
     #global cue_ball_sprite, cue_ball_img
     #global cue_ball_body
+
+    #global message
+    #message = "Player 1 - Shoot!"
     
     run = True
 
@@ -67,14 +72,14 @@ def run(display):
     
 
 
-    global timer
+    #global timer
 
 
     global cue_ball
     #object_balls = create_object_balls(space)
-    create_object_balls(space)
+    eight.create_object_balls(space)
     
-    cue_ball = create_cue_ball(space)
+    cue_ball = eight.create_cue_ball(space)
 
     
     #stripes_remaining = []
@@ -87,25 +92,32 @@ def run(display):
     FONT3 = pygame.font.SysFont('arial-bold', 60)
 
     print("Player 1 - Shoot!")
-    global message
-    message = "Player 1 - Shoot!"
+    #global message
+    #message = "Player 1 - Shoot!"
 
-    global solid_txt
-    solid_txt = ""
-    global stripe_txt
-    stripe_txt = ""
+    #global solid_txt
+    #solid_txt = ""
+    #global stripe_txt
+    #stripe_txt = ""
 
-    global feed
-    feed = ""
+    #global feed
+    #feed = ""
     
-    create_cushions(space)
-    handle_pocket_collisions(space)
+    eight.create_cushions(space)
+    eight.handle_pocket_collisions(space)
+    eight.display_object_balls(space)
     #display_object_balls(space)
+    
 
 
     draw_options = pymunk.pygame_util.DrawOptions(display)
 
+    
+
     while run:
+
+        #create_cushions(space)
+        #handle_pocket_collisions(space)
         
         #draw_cushions(space)
         #create_cushions(space)
@@ -135,20 +147,20 @@ def run(display):
                     line_on = False
                     POOL_SHOT.play()
 
-                    timer_check_pocketed = Timer(5.5, check_ball_pocketed)
+                    timer_check_pocketed = Timer(5.5, eight.check_ball_pocketed)
                     timer_check_pocketed.start()
                     #start_timer_check_pocketed()
 
-                    timer_reset_pocketed = Timer(5.6, update_ball_pocketed)
+                    timer_reset_pocketed = Timer(5.6, eight.update_ball_pocketed)
                     timer_reset_pocketed.start()
 
-                    timer = Timer(6, check_turn)
+                    timer = Timer(6, eight.check_turn)
                     timer.start()
 
                     timer_reset_line = Timer(6, reset_line)
                     timer_reset_line.start()
 
-                    timer_reset_feed = Timer(6, reset_feed)
+                    timer_reset_feed = Timer(6, eight.reset_feed)
                     timer_reset_feed.start()
 
 
@@ -156,18 +168,20 @@ def run(display):
             cue_ball.body.angle = angle
             pygame.event.set_allowed(pygame.MOUSEBUTTONDOWN)
             draw_line(space, display, draw_options)
+            eight.draw_messages(space, display, draw_options)
         elif line_on == False:
             pygame.event.set_blocked(pygame.MOUSEBUTTONDOWN)
             draw_no_line(space, display, draw_options)
+            #eight.draw_messages(space, display, draw_options)
+            #draw_feed(space, display, draw_options)
+            #draw_message(space, display, draw_options)
 
         space.step(DELTA_TIME)
         clock.tick(FPS)
 
     pygame.quit()
 
-def reset_feed():
-    global feed
-    feed = ""
+
 
 def reset_line():
     global line_on
@@ -183,14 +197,14 @@ def draw_no_line(space, display, draw_options):
     #    display.blit(display, (250,250), ball)
     #cue_ball_sprite.draw()
 
-    draw_text = FONT.render(message, 1, WHITE)
-    stripe_text = FONT2.render(stripe_txt, 1, WHITE)
-    solid_text = FONT2.render(solid_txt, 1, WHITE)
-    feed_text = FONT3.render(feed, 1, WHITE)
+    draw_text = FONT.render(eight.message, 1, WHITE)
+    stripe_text = FONT2.render(eight.stripe_txt, 1, WHITE)
+    solid_text = FONT2.render(eight.solid_txt, 1, WHITE)
+    feed_text = FONT3.render(eight.feed, 1, WHITE)
     display.blit(draw_text, (WIDTH/2 - 135, 13))
     display.blit(stripe_text,(WIDTH - 162, 22))
     display.blit(solid_text, (15, 22))
-    display.blit(feed_text, (WIDTH / 2 - 200, HEIGHT - 65))
+    display.blit(feed_text, (WIDTH / 2 - 275, HEIGHT - 65))
     
 
     space.debug_draw(draw_options)
@@ -211,22 +225,19 @@ def draw_line(space, display, draw_options):
     #for ball in stripes_remaining:
         #display.blit(ball, (250,250))
 
-    draw_text = FONT.render(message, 1, WHITE)
-    stripe_text = FONT2.render(stripe_txt, 1, WHITE)
-    solid_text = FONT2.render(solid_txt, 1, WHITE)
-    feed_text = FONT3.render(feed, 1, WHITE)
+    draw_text = FONT.render(eight.message, 1, WHITE)
+    stripe_text = FONT2.render(eight.stripe_txt, 1, WHITE)
+    solid_text = FONT2.render(eight.solid_txt, 1, WHITE)
+    feed_text = FONT3.render(eight.feed, 1, WHITE)
     display.blit(draw_text, (WIDTH/2 - 135, 13))
     display.blit(stripe_text,(WIDTH - 162, 22))
     display.blit(solid_text, (15, 22))
-    display.blit(feed_text, (WIDTH / 2 - 200, HEIGHT - 65))
+    display.blit(feed_text, (WIDTH / 2 - 275, HEIGHT - 65))
 
     space.debug_draw(draw_options)
     pygame.display.update()
 
 
-def update_message(text):
-    global message
-    message = text
 
 #MATH FUNCTIONS
 def degrees2_radians(degree): #CONVERTS DEGREES TO RADIANS
