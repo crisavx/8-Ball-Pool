@@ -3,6 +3,12 @@ from eight_ball import *
 from main import *
 import pygame, pymunk, pymunk.pygame_util, math
 
+#global solids_remaining
+#solids_remaining = []
+
+#global stripes_remaining
+#stripes_remaining = []
+
 def create_cushions(space):
     cushions = [
         #position,          #size
@@ -60,3 +66,19 @@ def degrees2_radians(degree): #CONVERTS DEGREES TO RADIANS
     pi = math.pi
     radians = degree * (pi / 180)
     return radians
+
+
+    
+def create_cue_ball(space):
+    global cue_ball_body
+    cue_ball_body = pymunk.Body()
+    cue_ball_body.position = (WIDTH/2 - 229 , HEIGHT/2)
+    cue_ball_shape = pymunk.Circle(cue_ball_body, BALL_RADIUS)
+    cue_ball_shape.color = pygame.Color(WHITE)
+    cue_ball_shape.mass = BALL_MASS
+    cue_ball_shape.elasticity = BALL_ELASTICITY
+    cue_ball_shape.friction = BALL_FRICTION
+    cue_ball_shape.id = 1
+
+    space.add(cue_ball_shape, cue_ball_body)
+    return cue_ball_shape

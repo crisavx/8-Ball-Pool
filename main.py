@@ -44,7 +44,7 @@ def run(display):
     print("Player 1 - Shoot!")
     
     eight.create_object_balls(space)
-    cue_ball = eight.create_cue_ball(space)
+    cue_ball = t.create_cue_ball(space)
     t.create_cushions(space)
     eight.handle_pocket_collisions(space)
     eight.display_object_balls(space)
