@@ -12,14 +12,26 @@ solid_txt = ""
 global stripe_txt
 stripe_txt = ""
 
+global ball_in_pocket
+ball_in_pocket = False
+global pocketed_balls
+pocketed_balls = []
+
+
 global feed
 feed = ""
 
 global turn
 turn = 0  #EVEN --> P1 TURN;  ODD --> P2 TURN
 
+global stripes_player
+global solids_player
+stripes_player= ""
+solids_player = ""
+
 #HANDLE COLLISIONS
 def handle_pocket_rules(space):
+    global ball_in_pocket
     #pocket hit box
     pocket_segments = [
         #POSITION       #ANGLE        #START POINT    #END POINT
@@ -54,8 +66,14 @@ def handle_pocket_rules(space):
         space.add(pocket_segment_body, pocket_segment_shape)
 
     def collision_detected(arbiter, space, data):
-        global solid_txt, stripe_txt
+        global solid_txt
+        global stripe_txt
         global feed
+        global solids_player
+        global stripes_player
+        
+        #global decided
+        #decided = False
 
         ball = arbiter.shapes[0]
 
@@ -70,14 +88,85 @@ def handle_pocket_rules(space):
         #COLLISION DETECTED / BALL POCKETED
         if arbiter.shapes[1].id == 2 and not (ball.id == 1): #OUTISDE ID NO. IS THE COLLISION DETECTOR    AND: IGNORE CUE BALL POCKET TEMP
             space.remove(ball) #ball.body,
+            #ball_in_pocket = True
+            pocketed_balls.append(ball)
             main.POOL_POCKET.play()
+            if ball.id == 111:
+                print('1ball')
+            elif ball.id == 222:
+                print('2ball')
+            elif ball.id == 333:
+                print('3ball')
+            elif ball.id == 444:
+                print('4ball')
+            elif ball.id == 555:
+                print('5ball')
+            elif ball.id == 666:
+                print('6ball')
+            elif ball.id == 777:
+                print('7ball')
+            elif ball.id == 888:
+                print('8ball')
+            if ball.id == 999:
+                print('9ball')
+            elif ball.id == 101010:
+                print('10ball')
+            elif ball.id == 111111:
+                print('11ball')
+            elif ball.id == 121212:
+                print('12ball')
+            elif ball.id == 131313:
+                print('13ball')
+            elif ball.id == 141414:
+                print('14ball')
+            elif ball.id == 151515:
+                print('15ball')
+            
 
+            #RULES-SEQUENCE
+
+            if solids_player == "": #START, IF GROUPS ARE NOT SET
+                if is_even(turn):   #IF PLAYER ONE TURN
+                    for ball_pkt in pocketed_balls:
+                        if ball_pkt.id <= 777:
+                            solids_player = "Player 1"
+                            stripes_player = "player 2"
+                            print("1Solids = " + solids_player + "\nStripes = " + stripes_player)
+                        elif ball_pkt.id >= 999:   #STRIPES
+                            solids_player = "Player 2"
+                            stripes_player = "Player 1"
+                            print("2Solids = " + solids_player + "\nStripes = " + stripes_player)
+
+                else:   #IF PLAYER TWO
+                    for ball_pkt in pocketed_balls:
+                        if ball_pkt.id <= 777:    #SOLIDS
+                            solids_player = "Player 2"
+                            stripes_player = "player 1"
+                            print("3Solids = " + solids_player + "\nStripes = " + stripes_player)
+                        elif ball_pkt.id >= 999:   #STRIPES
+                            solids_player = "Player 1"
+                            stripes_player = "Player 2"
+                            print("4Solids = " + solids_player + "\nStripes = " + stripes_player)
+            else:
+                pass
+                #print("AAAAAAAA")
+                #if is_even(turn):   #IF PLAYER ONE TURN
+                #    if solids_player == "Player 1":
+
+                #    if stripes_player == "Player 1":
+                #        pass
 
             
         return True
 
     handler = space.add_default_collision_handler()
     handler.begin = collision_detected
+
+def is_even(input):
+    if input % 2 == 0:
+        return True
+    else:
+        return False
 
 def reset_feed():
     global feed
@@ -88,13 +177,14 @@ def update_ball_pocketed():
     global ball_pocketed
     ball_pocketed = False
 
-def check_ball_pocketed():
-    global turn
-    global message
-    global stripe_txt, solid_txt
-    if ball_pocketed == False: #NO BALL POCKETED, UPDATE TURN
-        turn+=1
+#def check_ball_pocketed():
+    #global turn
+    #global message
+    #global stripe_txt, solid_txt
+    #if ball_in_pocket == False: #NO BALL POCKETED, UPDATE TURN
+        #turn+=1
 
+    """
     else: #BALL GETS POCKETED
         if turn % 2 == 0:   #PLAYER ONE TURN
             if player_one_is_solids:
@@ -146,6 +236,7 @@ def check_ball_pocketed():
                         message = ("PLAYER 2, YOU WIN")
                     elif ball.id >= 777 or ball.id == 1:   #IF SOLID GETS MADE OR CUE BALL
                         turn+=1
+    """
 
     
 def check_turn():

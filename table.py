@@ -4,6 +4,13 @@ import main as main
 
 import pygame, pymunk, pymunk.pygame_util
 
+global solids_remaining
+global stripes_remaining
+
+solids_remaining = []
+stripes_remaining = []
+
+
 def create_cushions(space):
     cushions = [
         #position,          #size
@@ -62,8 +69,6 @@ def create_object_balls(space):
     solid_balls = []
     striped_balls = []
     object_balls = []
-    solids_remaining = []
-    stripes_remaining = []
 
     global one_ball_body, one_ball_shape
     global two_ball_body, two_ball_shape
@@ -90,6 +95,7 @@ def create_object_balls(space):
     one_ball_shape.color = pygame.Color(YELLOW)
     one_ball_shape.id = 111
     object_balls.append(one_ball_shape)
+    solids_remaining.append(one_ball_shape)
     space.add(one_ball_shape, one_ball_body)
     
 
@@ -102,6 +108,7 @@ def create_object_balls(space):
     two_ball_shape.color = pygame.Color(BLUE)
     two_ball_shape.id = 222
     object_balls.append(two_ball_shape)
+    solids_remaining.append(two_ball_shape)
     space.add(two_ball_shape, two_ball_body)
 
     three_ball_body = pymunk.Body()
@@ -113,6 +120,7 @@ def create_object_balls(space):
     three_ball_shape.color = pygame.Color(RED)
     three_ball_shape.id = 333
     object_balls.append(three_ball_shape)
+    solids_remaining.append(three_ball_shape)
     space.add(three_ball_shape, three_ball_body)
 
     four_ball_body = pymunk.Body()
@@ -124,6 +132,7 @@ def create_object_balls(space):
     four_ball_shape.color = pygame.Color(PURPLE)
     four_ball_shape.id = 444
     object_balls.append(four_ball_shape)
+    solids_remaining.append(four_ball_shape)
     space.add(four_ball_shape, four_ball_body)
 
     five_ball_body = pymunk.Body()
@@ -135,6 +144,7 @@ def create_object_balls(space):
     five_ball_shape.color = pygame.Color(ORANGE)
     five_ball_shape.id = 555
     object_balls.append(five_ball_shape)
+    solids_remaining.append(five_ball_shape)
     space.add(five_ball_shape, five_ball_body)
 
     six_ball_body = pymunk.Body()
@@ -146,6 +156,7 @@ def create_object_balls(space):
     six_ball_shape.color = pygame.Color(GREEN)
     six_ball_shape.id = 666
     object_balls.append(six_ball_shape)
+    solids_remaining.append(six_ball_shape)
     space.add(six_ball_shape, six_ball_body)
 
     seven_ball_body = pymunk.Body()
@@ -157,6 +168,7 @@ def create_object_balls(space):
     seven_ball_shape.color = pygame.Color(BURGUNDY)
     seven_ball_shape.id = 777
     object_balls.append(seven_ball_shape)
+    solids_remaining.append(seven_ball_shape)
     space.add(seven_ball_shape, seven_ball_body)
 
     eight_ball_body = pymunk.Body()
@@ -179,6 +191,7 @@ def create_object_balls(space):
     nine_ball_shape.color = pygame.Color(LIGHT_YELLOW)
     nine_ball_shape.id = 999
     object_balls.append(nine_ball_shape)
+    stripes_remaining.append(nine_ball_shape)
     space.add(nine_ball_shape, nine_ball_body)
 
     ten_ball_body = pymunk.Body()
@@ -190,6 +203,7 @@ def create_object_balls(space):
     ten_ball_shape.color = pygame.Color(LIGHT_BLUE)
     ten_ball_shape.id = 101010
     object_balls.append(ten_ball_shape)
+    stripes_remaining.append(ten_ball_shape)
     space.add(ten_ball_shape, ten_ball_body)
 
     eleven_ball_body = pymunk.Body()
@@ -201,6 +215,7 @@ def create_object_balls(space):
     eleven_ball_shape.color = pygame.Color(LIGHT_RED)
     eleven_ball_shape.id = 111111
     object_balls.append(eleven_ball_shape)
+    stripes_remaining.append(eleven_ball_shape)
     space.add(eleven_ball_shape, eleven_ball_body)
 
     twelve_ball_body = pymunk.Body()
@@ -212,6 +227,7 @@ def create_object_balls(space):
     twelve_ball_shape.color = pygame.Color(LIGHT_PURPLE)
     twelve_ball_shape.id = 121212
     object_balls.append(twelve_ball_shape)
+    stripes_remaining.append(twelve_ball_shape)
     space.add(twelve_ball_shape, twelve_ball_body)
 
     thirteen_ball_body = pymunk.Body()
@@ -223,6 +239,7 @@ def create_object_balls(space):
     thirteen_ball_shape.color = pygame.Color(LIGHT_ORANGE)
     thirteen_ball_shape.id = 131313
     object_balls.append(thirteen_ball_shape)
+    stripes_remaining.append(thirteen_ball_shape)
     space.add(thirteen_ball_shape, thirteen_ball_body)
 
     fourteen_ball_body = pymunk.Body()
@@ -245,6 +262,7 @@ def create_object_balls(space):
     fifteen_ball_shape.color = pygame.Color(LIGHT_BURGUNDY)
     fifteen_ball_shape.id = 151515
     object_balls.append(fifteen_ball_shape)
+    stripes_remaining.append(fifteen_ball_shape)
     space.add(fifteen_ball_shape, fifteen_ball_body)
     
 def create_cue_ball(space):
