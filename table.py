@@ -1,7 +1,6 @@
-from properties import *
-from eight_ball import *
+from constants import *
 from main import *
-from properties import *
+import main as main
 
 import pygame, pymunk, pymunk.pygame_util, math
 
@@ -28,23 +27,23 @@ def create_cushions(space):
     
     cushion_triangles = [
         #POSITION       #VERTICES               #ANGLE
-        ((242, 96), ((0,0), (45,0), (0, 40)), degrees2_radians(90)), #TOP-LEFT
-        ((168, 175), ((0,0), (45,0), (0, 40)), degrees2_radians(270)), #TOP-LEFT
+        ((242, 96), ((0,0), (45,0), (0, 40)), main.degrees2_radians(90)), #TOP-LEFT
+        ((168, 175), ((0,0), (45,0), (0, 40)), main.degrees2_radians(270)), #TOP-LEFT
 
-        ((WIDTH/2 - 26, 140), ((0,0), (45,0), (45, 15)), degrees2_radians(270)), #TOP-MIDDLE-RIGHT
-        ((WIDTH/2 + 30, 94), ((0,0), (45,0), (0, 15)), degrees2_radians(90)), #TOP-MIDDLE-LEFT
+        ((WIDTH/2 - 26, 140), ((0,0), (45,0), (45, 15)), main.degrees2_radians(270)), #TOP-MIDDLE-RIGHT
+        ((WIDTH/2 + 30, 94), ((0,0), (45,0), (0, 15)), main.degrees2_radians(90)), #TOP-MIDDLE-LEFT
         
-        ((WIDTH - 238, 100), ((0,0), (45,0), (0, 40)), degrees2_radians(0)), #TOP-LEFT
-        ((WIDTH - 160, 174), ((0,0), (45,0), (0, 40)), degrees2_radians(180)), #TOP-RIGHT
+        ((WIDTH - 238, 100), ((0,0), (45,0), (0, 40)), main.degrees2_radians(0)), #TOP-LEFT
+        ((WIDTH - 160, 174), ((0,0), (45,0), (0, 40)), main.degrees2_radians(180)), #TOP-RIGHT
 
-        ((163, HEIGHT - 179), ((0,0), (45,0), (0, 40)), degrees2_radians(0)), #BOTTOM-LEFT
-        ((242, HEIGHT - 105), ((0,0), (45,0), (0, 40)), degrees2_radians(180)), #BOTTOM-RIGHT
+        ((163, HEIGHT - 179), ((0,0), (45,0), (0, 40)), main.degrees2_radians(0)), #BOTTOM-LEFT
+        ((242, HEIGHT - 105), ((0,0), (45,0), (0, 40)), main.degrees2_radians(180)), #BOTTOM-RIGHT
 
-        ((WIDTH/2 - 26, HEIGHT - 98), ((0,0), (45,0), (0, 15)), degrees2_radians(270)), #BOTTOM-MIDDLE-LEFT
-        ((WIDTH/2 + 30, HEIGHT - 144), ((0,0), (45,0), (45, 15)), degrees2_radians(90)), #BOTTOM-MIDDLE-RIGHT
+        ((WIDTH/2 - 26, HEIGHT - 98), ((0,0), (45,0), (0, 15)), main.degrees2_radians(270)), #BOTTOM-MIDDLE-LEFT
+        ((WIDTH/2 + 30, HEIGHT - 144), ((0,0), (45,0), (45, 15)), main.degrees2_radians(90)), #BOTTOM-MIDDLE-RIGHT
 
-        ((WIDTH - 163, HEIGHT - 179), ((0,0), (45,0), (0, 40)), degrees2_radians(90)), #BOTTOM-LEFT
-        ((WIDTH - 238, HEIGHT - 100), ((0,0), (45,0), (0, 40)), degrees2_radians(270)) #BOTTOM-RIGHT
+        ((WIDTH - 163, HEIGHT - 179), ((0,0), (45,0), (0, 40)), main.degrees2_radians(90)), #BOTTOM-LEFT
+        ((WIDTH - 238, HEIGHT - 100), ((0,0), (45,0), (0, 40)), main.degrees2_radians(270)) #BOTTOM-RIGHT
     ]
 
     for position, vertices, angle in cushion_triangles:
@@ -58,10 +57,7 @@ def create_cushions(space):
         triangle_shape.id = 3331397
         space.add(triangle_body, triangle_shape)
 
-def degrees2_radians(degree): #CONVERTS DEGREES TO RADIANS
-    pi = math.pi
-    radians = degree * (pi / 180)
-    return radians
+
 
 def create_cue_ball(space):
     global cue_ball_body

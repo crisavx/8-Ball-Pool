@@ -25,6 +25,22 @@ POOL_POCKET = pygame.mixer.Sound(os.path.join('pool_pocket.mp3'))
 POOL_BALL_CONTACT = pygame.mixer.Sound(os.path.join('pool_ball_contact.mp3'))
 #PICS
 BACKGROUND = pygame.image.load(os.path.join('pool_table.png'))
+cue_ball_img = pygame.image.load('cue_ball.png')
+one_ball_img = pygame.image.load('one_ball.png')
+two_ball_img = pygame.image.load('two_ball.png')
+three_ball_img = pygame.image.load('three_ball.png')
+four_ball_img = pygame.image.load('four_ball.png')
+five_ball_img = pygame.image.load('five_ball.png')
+six_ball_img = pygame.image.load('six_ball.png')
+seven_ball_img = pygame.image.load('seven_ball.png')
+eight_ball_img = pygame.image.load('eight_ball.png')
+nine_ball_img = pygame.image.load('nine_ball.png')
+ten_ball_img = pygame.image.load('ten_ball.png')
+eleven_ball_img = pygame.image.load('eleven_ball.png')
+twelve_ball_img = pygame.image.load('twelve_ball.png')
+thirteen_ball_img = pygame.image.load('thirteen_ball.png')
+fourteen_ball_img = pygame.image.load('fourteen_ball.png')
+fifteen_ball_img = pygame.image.load('fifteen_ball.png')
 
 
 
@@ -134,7 +150,7 @@ def draw_no_line(space, display, draw_options):
         display.blit(solid_text, (15, 22))
         display.blit(feed_text, (WIDTH / 2 - 275, HEIGHT - 65))
     
-
+    display.blit(cue_ball_img, (table.cue_ball_body.position.x - 12, table.cue_ball_body.position.y - 12))
     space.debug_draw(draw_options)
     pygame.display.update()
 
@@ -152,6 +168,9 @@ def draw_line(space, display, draw_options):
         display.blit(stripe_text,(WIDTH - 162, 22))
         display.blit(solid_text, (15, 22))
         display.blit(feed_text, (WIDTH / 2 - 275, HEIGHT - 65))
+
+    display.blit(cue_ball_img, (table.cue_ball_body.position.x - 12, table.cue_ball_body.position.y - 12))
+    display.blit(one_ball_img, (table.one_ball_body.position.x - 12, table.one_ball_body.position.y - 12))
 
     
 
