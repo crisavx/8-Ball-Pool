@@ -1,8 +1,10 @@
 from properties import *
 from eight_ball import *
+from free_play import *
 from main import *
 from properties import *
 import eight_ball as eight
+import free_play as fp
 import table as t
 import pygame, pymunk, pymunk.pygame_util, math
 from threading import Timer
@@ -41,13 +43,23 @@ def run(display):
     global line_on
     line_on = True
 
+    global game_mode
+    game_mode = "eight ball"
+    #game_mode = "free play"
+
     print("Player 1 - Shoot!")
     
-    eight.create_object_balls(space)
+    
     cue_ball = t.create_cue_ball(space)
     t.create_cushions(space)
-    eight.handle_pocket_rules(space)
-    eight.display_object_balls(space)
+
+    if game_mode == "eight ball":
+        eight.create_object_balls(space)
+        eight.handle_pocket_rules(space)
+        eight.display_object_balls(space)
+    elif game_mode == "free play":
+        fp.create_object_balls(space)
+        fp.handle_pocket_rules(space)
 
     draw_options = pymunk.pygame_util.DrawOptions(display)
 
@@ -113,14 +125,15 @@ def reset_line():
 def draw_no_line(space, display, draw_options):
     display.blit(BACKGROUND, ((0,0)))
 
-    draw_text = FONT.render(eight.message, 1, WHITE)
-    stripe_text = FONT2.render(eight.stripe_txt, 1, WHITE)
-    solid_text = FONT2.render(eight.solid_txt, 1, WHITE)
-    feed_text = FONT3.render(eight.feed, 1, WHITE)
-    display.blit(draw_text, (WIDTH/2 - 135, 13))
-    display.blit(stripe_text,(WIDTH - 162, 22))
-    display.blit(solid_text, (15, 22))
-    display.blit(feed_text, (WIDTH / 2 - 275, HEIGHT - 65))
+    if game_mode == "eight ball":
+        draw_text = FONT.render(eight.message, 1, WHITE)
+        stripe_text = FONT2.render(eight.stripe_txt, 1, WHITE)
+        solid_text = FONT2.render(eight.solid_txt, 1, WHITE)
+        feed_text = FONT3.render(eight.feed, 1, WHITE)
+        display.blit(draw_text, (WIDTH/2 - 135, 13))
+        display.blit(stripe_text,(WIDTH - 162, 22))
+        display.blit(solid_text, (15, 22))
+        display.blit(feed_text, (WIDTH / 2 - 275, HEIGHT - 65))
     
 
     space.debug_draw(draw_options)
@@ -131,14 +144,17 @@ def draw_line(space, display, draw_options):
 
     pygame.draw.line(display, BLACK, shooting_line[0], shooting_line[1], 3), #SHOOTING LINE
 
-    draw_text = FONT.render(eight.message, 1, WHITE)
-    stripe_text = FONT2.render(eight.stripe_txt, 1, WHITE)
-    solid_text = FONT2.render(eight.solid_txt, 1, WHITE)
-    feed_text = FONT3.render(eight.feed, 1, WHITE)
-    display.blit(draw_text, (WIDTH/2 - 135, 13))
-    display.blit(stripe_text,(WIDTH - 162, 22))
-    display.blit(solid_text, (15, 22))
-    display.blit(feed_text, (WIDTH / 2 - 275, HEIGHT - 65))
+    if game_mode == "eight ball":
+        draw_text = FONT.render(eight.message, 1, WHITE)
+        stripe_text = FONT2.render(eight.stripe_txt, 1, WHITE)
+        solid_text = FONT2.render(eight.solid_txt, 1, WHITE)
+        feed_text = FONT3.render(eight.feed, 1, WHITE)
+        display.blit(draw_text, (WIDTH/2 - 135, 13))
+        display.blit(stripe_text,(WIDTH - 162, 22))
+        display.blit(solid_text, (15, 22))
+        display.blit(feed_text, (WIDTH / 2 - 275, HEIGHT - 65))
+
+    
 
     space.debug_draw(draw_options)
     pygame.display.update()
