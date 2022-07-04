@@ -535,7 +535,7 @@ def handle_pocket_rules(space):
     handler = space.add_default_collision_handler()
     handler.begin = collision_detected
 
-
+"""
 def create_object_balls(space):
     global solid_balls, striped_balls, solids_remaining, stripes_remaining, object_balls
     solid_balls = []
@@ -645,6 +645,7 @@ def create_object_balls(space):
 
         object_balls.append(object_ball_shape)
         space.add(object_ball_shape, object_ball_body)
+"""
 
 
 def display_object_balls(space):

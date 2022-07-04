@@ -57,7 +57,115 @@ def create_cushions(space):
         triangle_shape.id = 3331397
         space.add(triangle_body, triangle_shape)
 
+def create_object_balls(space):
+    global solid_balls, striped_balls, solids_remaining, stripes_remaining, object_balls
+    solid_balls = []
+    striped_balls = []
+    object_balls = []
+    solids_remaining = []
+    stripes_remaining = []
+    
+    for ball in range (0, 15):
+        object_ball_body = pymunk.Body()
+        object_ball_shape = pymunk.Circle(object_ball_body, BALL_RADIUS)
+        object_ball_shape.mass = BALL_MASS
+        object_ball_shape.elasticity = BALL_ELASTICITY
+        object_ball_shape.friction = BALL_FRICTION
 
+        #SOLIDS
+        if ball == 0:  #1-BALL
+            object_ball_shape.color = pygame.Color(YELLOW)
+            object_ball_body.position = (WIDTH/2 + 175 , HEIGHT/2)
+            object_ball_shape.id = 111
+            solid_balls.append(object_ball_shape)
+            solids_remaining.append(object_ball_shape)
+        elif ball == 1: #2-BALL
+            object_ball_shape.color = pygame.Color(BLUE)
+            object_ball_body.position = (WIDTH/2 + 204, HEIGHT/2 - 18)
+            object_ball_shape.id = 222
+            solid_balls.append(object_ball_shape)
+            solids_remaining.append(object_ball_shape)
+        elif ball == 2: #3-BALL
+            object_ball_shape.color = pygame.Color(RED)
+            object_ball_body.position = (WIDTH/2 + 291, HEIGHT/2 + 72) 
+            object_ball_shape.id = 333
+            solid_balls.append(object_ball_shape)
+            solids_remaining.append(object_ball_shape)
+        elif ball == 3: #4-BALL
+            object_ball_shape.color = pygame.Color(PURPLE)
+            object_ball_body.position = (WIDTH/2 + 291, HEIGHT/2) 
+            object_ball_shape.id = 444
+            solid_balls.append(object_ball_shape)
+            solids_remaining.append(object_ball_shape)
+        elif ball == 4: #5-BALL
+            object_ball_shape.color = pygame.Color(ORANGE)
+            object_ball_body.position = (WIDTH/2 + 233, HEIGHT/2 + 36)
+            object_ball_shape.id = 555
+            solid_balls.append(object_ball_shape)
+            solids_remaining.append(object_ball_shape)
+        elif ball == 5: #6-BALL
+            object_ball_shape.color = pygame.Color(GREEN)
+            object_ball_body.position = (WIDTH/2 + 262, HEIGHT/2 - 54)
+            object_ball_shape.id = 666
+            solid_balls.append(object_ball_shape)
+            solids_remaining.append(object_ball_shape)
+        elif ball == 6: #7-BALL
+            object_ball_shape.color = pygame.Color(BURGUNDY)
+            object_ball_body.position = (WIDTH/2 + 262, HEIGHT/2 + 18)
+            object_ball_shape.id = 777
+            solid_balls.append(object_ball_shape)
+            solids_remaining.append(object_ball_shape)
+        elif ball == 7: #8-BALL
+            object_ball_shape.color = pygame.Color(BLACK)
+            object_ball_body.position = (WIDTH/2 + 233, HEIGHT/2)
+            object_ball_shape.id = 888
+        
+        #STRIPES
+        elif ball == 8: #9-BALL
+            object_ball_shape.color = pygame.Color(LIGHT_YELLOW)
+            object_ball_body.position = (WIDTH/2 + 262, HEIGHT/2 - 18)
+            object_ball_shape.id = 999
+            striped_balls.append(object_ball_shape)
+            stripes_remaining.append(object_ball_shape)
+        elif ball == 9: #10-BALL
+            object_ball_shape.color = pygame.Color(LIGHT_BLUE)
+            object_ball_body.position = (WIDTH/2 + 262, HEIGHT/2 + 54)
+            object_ball_shape.id = 101010
+            striped_balls.append(object_ball_shape)
+            stripes_remaining.append(object_ball_shape)
+        elif ball == 10: #11-BALL
+            object_ball_shape.color = pygame.Color(LIGHT_RED)
+            object_ball_body.position = (WIDTH/2 + 204, HEIGHT/2 + 18)
+            object_ball_shape.id = 111111
+            striped_balls.append(object_ball_shape)
+            stripes_remaining.append(object_ball_shape)
+        elif ball == 11: #12-BALL
+            object_ball_shape.color = pygame.Color(LIGHT_PURPLE)
+            object_ball_body.position = (WIDTH/2 + 291, HEIGHT/2 - 36)
+            object_ball_shape.id = 121212
+            striped_balls.append(object_ball_shape)
+            stripes_remaining.append(object_ball_shape)
+        elif ball == 12: #13-BALL
+            object_ball_shape.color = pygame.Color(LIGHT_ORANGE) 
+            object_ball_body.position = (WIDTH/2 + 233, HEIGHT/2 - 36) 
+            object_ball_shape.id = 131313
+            striped_balls.append(object_ball_shape)
+            stripes_remaining.append(object_ball_shape)
+        elif ball == 13: #14-BALL
+            object_ball_shape.color = pygame.Color(LIGHT_GREEN)
+            object_ball_body.position = (WIDTH/2 + 291, HEIGHT/2 + 36)
+            object_ball_shape.id = 141414
+            striped_balls.append(object_ball_shape)
+            stripes_remaining.append(object_ball_shape)
+        else: #15-BALL
+            object_ball_shape.color = pygame.Color(LIGHT_BURGUNDY)
+            object_ball_body.position = (WIDTH/2 + 291, HEIGHT/2 - 72) 
+            object_ball_shape.id = 151515
+            striped_balls.append(object_ball_shape)
+            stripes_remaining.append(object_ball_shape)
+
+        object_balls.append(object_ball_shape)
+        space.add(object_ball_shape, object_ball_body)
 
 def create_cue_ball(space):
     global cue_ball_body
