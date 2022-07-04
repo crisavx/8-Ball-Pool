@@ -29,6 +29,9 @@ global solids_player
 stripes_player= ""
 solids_player = ""
 
+#global solids_remaining
+#global stripes_remaining
+
 #HANDLE COLLISIONS
 def handle_pocket_rules(space):
     global ball_in_pocket
@@ -93,49 +96,88 @@ def handle_pocket_rules(space):
             main.POOL_POCKET.play()
             if ball.id == 111:
                 print('1ball')
+                table.solids_remaining.remove(ball)
             elif ball.id == 222:
                 print('2ball')
+                table.solids_remaining.remove(ball)
             elif ball.id == 333:
                 print('3ball')
+                table.solids_remaining.remove(ball)
             elif ball.id == 444:
                 print('4ball')
+                table.solids_remaining.remove(ball)
             elif ball.id == 555:
                 print('5ball')
+                table.solids_remaining.remove(ball)
             elif ball.id == 666:
                 print('6ball')
+                table.solids_remaining.remove(ball)
             elif ball.id == 777:
                 print('7ball')
+                table.solids_remaining.remove(ball)
             elif ball.id == 888:
                 print('8ball')
             if ball.id == 999:
                 print('9ball')
+                table.stripes_remaining.remove(ball)
             elif ball.id == 101010:
                 print('10ball')
+                table.stripes_remaining.remove(ball)
             elif ball.id == 111111:
                 print('11ball')
+                table.stripes_remaining.remove(ball)
             elif ball.id == 121212:
                 print('12ball')
+                table.stripes_remaining.remove(ball)
             elif ball.id == 131313:
                 print('13ball')
+                table.stripes_remaining.remove(ball)
             elif ball.id == 141414:
                 print('14ball')
+                table.stripes_remaining.remove(ball)
             elif ball.id == 151515:
                 print('15ball')
+                table.stripes_remaining.remove(ball)
             
 
             #RULES-SEQUENCE
 
-            if solids_player == "": #START, IF GROUPS ARE NOT SET
-                if is_even(turn):   #IF PLAYER ONE TURN
-                    for ball_pkt in pocketed_balls:
-                        if ball_pkt.id <= 777:
+            if solids_player == "": #BREAK, IF GROUPS ARE NOT SET
+                #PLAYER ONE TURN
+                if is_even(turn): 
+                    #IF MULTIPLE BALLS ARE MADE OFF THE BREAK  
+                    if len(pocketed_balls) > 1:
+                        #IF MADE MORE SOLIDS THAN STRIPES
+                        if len(table.stripes_remaining) > len(table.solids_remaining):
                             solids_player = "Player 1"
                             stripes_player = "player 2"
                             print("1Solids = " + solids_player + "\nStripes = " + stripes_player)
-                        elif ball_pkt.id >= 999:   #STRIPES
+                        #IF MADE MORE STRIPES THAN SOLIDS
+                        elif len(table.solids_remaining) > len(table.stripes_remaining):
                             solids_player = "Player 2"
                             stripes_player = "Player 1"
                             print("2Solids = " + solids_player + "\nStripes = " + stripes_player)
+                    #IF ONLY ONE BALL IS MADE
+                    else:
+                        for ball_pkt in pocketed_balls:
+                            
+
+                #PLAYER TWO TURN
+                else:
+                    if len(pocketed_balls) > 1:
+                        #IF MADE MORE SOLIDS THAN STRIPES
+                        if len(table.stripes_remaining) > len(table.solids_remaining):
+                            solids_player = "Player 2"
+                            stripes_player = "Player 1"
+                            print("3Solids = " + solids_player + "\nStripes = " + stripes_player)
+                        #IF MADE MORE STRIPES THAN SOLIDS
+                        elif len(table.solids_remaining) > len(table.stripes_remaining):
+                            solids_player = "Player 1"
+                            stripes_player = "Player 2"
+                            print("4Solids = " + solids_player + "\nStripes = " + stripes_player)
+
+                    
+                        
 
                 else:   #IF PLAYER TWO
                     for ball_pkt in pocketed_balls:
