@@ -67,11 +67,12 @@ def run(display):
     
     cue_ball = table.create_cue_ball(space)
     table.create_cushions(space)
+    table.create_object_balls(space)
 
     if game_mode == "eight ball":
-        eight.create_object_balls(space)
+        #eight.create_object_balls(space)
         eight.handle_pocket_rules(space)
-        eight.display_object_balls(space)
+        #eight.display_object_balls(space)
     elif game_mode == "free play":
         fp.create_object_balls(space)
         fp.handle_pocket_rules(space)
@@ -204,7 +205,6 @@ def draw_line(space, display, draw_options):
     display.blit(fourteen_ball_img, (table.fourteen_ball_body.position.x - 12, table.fourteen_ball_body.position.y - 12))
     display.blit(fifteen_ball_img, (table.fifteen_ball_body.position.x - 12, table.fifteen_ball_body.position.y - 12))
     
-
     #space.debug_draw(draw_options)
     pygame.display.update()
 
