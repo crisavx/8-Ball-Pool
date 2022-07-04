@@ -70,11 +70,9 @@ def run(display):
     table.create_object_balls(space)
 
     if game_mode == "eight ball":
-        #eight.create_object_balls(space)
         eight.handle_pocket_rules(space)
         #eight.display_object_balls(space)
     elif game_mode == "free play":
-        fp.create_object_balls(space)
         fp.handle_pocket_rules(space)
 
     draw_options = pymunk.pygame_util.DrawOptions(display)
