@@ -1,11 +1,10 @@
-from properties import *
 from eight_ball import *
 from free_play import *
 from main import *
-from properties import *
+from constants import *
 import eight_ball as eight
 import free_play as fp
-import table as t
+import table as table
 import pygame, pymunk, pymunk.pygame_util, math
 from threading import Timer
 import os
@@ -50,8 +49,8 @@ def run(display):
     print("Player 1 - Shoot!")
     
     
-    cue_ball = t.create_cue_ball(space)
-    t.create_cushions(space)
+    cue_ball = table.create_cue_ball(space)
+    table.create_cushions(space)
 
     if game_mode == "eight ball":
         eight.create_object_balls(space)

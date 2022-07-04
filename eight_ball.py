@@ -1,7 +1,6 @@
 import main as m
-from properties import *
 from main import *
-from properties import *
+from constants import *
 import pygame, pymunk, pymunk.pygame_util, math
 
 
@@ -120,23 +119,23 @@ def handle_pocket_rules(space):
         #POSITION       #ANGLE        #START POINT    #END POINT
         #((27, 39), degrees2_radians(90), (0, 0), (15, 0)),
         #((40, 27), degrees2_radians(0), (0, 0), (15, 0)),
-        ((188, 138), degrees2_radians(-45), (0, 0), (25, 0)), 
+        ((188, 138), main.degrees2_radians(-45), (0, 0), (25, 0)), 
 
-        ((WIDTH/2 - 10, 120), degrees2_radians(0), (0, 0), (25, 0)),  
+        ((WIDTH/2 - 10, 120), main.degrees2_radians(0), (0, 0), (25, 0)),  
 
         #((WIDTH - 51, 27), degrees2_radians(0), (0, 0), (15, 0)),
         #((WIDTH - 24, 39), degrees2_radians(90), (0, 0), (15, 0)),
-        ((WIDTH - 203, 123), degrees2_radians(45), (0, 0), (25, 0)), 
+        ((WIDTH - 203, 123), main.degrees2_radians(45), (0, 0), (25, 0)), 
 
         #((25, HEIGHT - 55), degrees2_radians(90), (0, 0), (15, 0)),
         #((37, HEIGHT - 27), degrees2_radians(0), (0, 0), (15, 0)),
-        ((190, HEIGHT - 145), degrees2_radians(45), (0, 0), (25, 0)), 
+        ((190, HEIGHT - 145), main.degrees2_radians(45), (0, 0), (25, 0)), 
 
-        ((WIDTH/2 - 10, HEIGHT - 122), degrees2_radians(0), (0, 0), (25, 0)), 
+        ((WIDTH/2 - 10, HEIGHT - 122), main.degrees2_radians(0), (0, 0), (25, 0)), 
 
         #((WIDTH - 58, HEIGHT - 25), degrees2_radians(0), (0, 0), (15, 0)),
         #((WIDTH - 25, HEIGHT - 51), degrees2_radians(90), (0, 0), (15, 0))
-        ((WIDTH - 205, HEIGHT - 128), degrees2_radians(-45), (0, 0), (25, 0)) 
+        ((WIDTH - 205, HEIGHT - 128), main.degrees2_radians(-45), (0, 0), (25, 0)) 
     ]
     for position, angle, start_point, end_point in pocket_segments:
         pocket_segment_moment = pymunk.moment_for_segment(1, start_point, end_point, 2)
@@ -168,7 +167,7 @@ def handle_pocket_rules(space):
 
         if arbiter.shapes[1].id <= 151515: #(1 or ball.id <= 151515):
             #message = "BALL CONTACT"
-            m.POOL_BALL_CONTACT.play()
+            main.POOL_BALL_CONTACT.play()
 
         #if arbiter.shapes[1].id == 3331397:
             #message = "RAIL CONTACT"
@@ -181,7 +180,7 @@ def handle_pocket_rules(space):
             space.remove(ball) #ball.body,
             ball_pocketed = True
             pocketed_balls.append(ball)
-            m.POOL_POCKET.play()
+            main.POOL_POCKET.play()
 
             if player_one_is_solids == None or player_one_is_stripes == None or player_two_is_solids == None or player_two_is_stripes == None:
                 if turn % 2 == 0: #PLAYER 1 TURN
@@ -803,9 +802,3 @@ def display_object_balls(space):
     fifteen_ball_shape.color = pygame.Color(LIGHT_BURGUNDY)
     fifteen_ball_shape.id = 151515
     space.add(fifteen_ball_shape, fifteen_ball_body)
-
-#MATH FUNCTIONS
-def degrees2_radians(degree): #CONVERTS DEGREES TO RADIANS
-    pi = math.pi
-    radians = degree * (pi / 180)
-    return radians
