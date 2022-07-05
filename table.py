@@ -64,6 +64,163 @@ def create_cushions(space):
         triangle_shape.id = 3331397
         space.add(triangle_body, triangle_shape)
 
+def display_object_balls(space):
+    global one_display_body, one_display_shape
+    global two_display_body, two_display_shape
+    global three_display_body, three_display_shape
+    global four_display_body, four_display_shape
+    global five_display_body, five_display_shape
+    global six_display_body, six_display_shape
+    global seven_display_body, seven_display_shape
+    global nine_display_body, nine_display_shape
+    global ten_display_body, ten_display_shape
+    global eleven_display_body, eleven_display_shape
+    global twelve_display_body, twelve_display_shape
+    global thirteen_display_body, thirteen_display_shape
+    global fourteen_display_body, fourteen_display_shape
+    global fifteen_display_body, fifteen_display_shape
+ 
+    one_display_body = pymunk.Body()
+    one_display_body.position = (189, 30)
+    one_display_shape = pymunk.Circle(one_display_body, BALL_RADIUS)
+    one_display_shape.mass = BALL_MASS
+    one_display_shape.elasticity = BALL_ELASTICITY
+    one_display_shape.friction = BALL_FRICTION
+    one_display_shape.color = pygame.Color(YELLOW)
+    one_display_shape.id = 111
+    space.add(one_display_shape, one_display_body)
+ 
+    two_display_body = pymunk.Body()
+    two_display_body.position = (229, 30)
+    two_display_shape = pymunk.Circle(two_display_body, BALL_RADIUS)
+    two_display_shape.mass = BALL_MASS
+    two_display_shape.elasticity = BALL_ELASTICITY
+    two_display_shape.friction = BALL_FRICTION
+    two_display_shape.color = pygame.Color(BLUE)
+    two_display_shape.id = 222
+    space.add(two_display_shape, two_display_body)
+ 
+    three_display_body = pymunk.Body()
+    three_display_body.position = (271, 30)
+    three_display_shape = pymunk.Circle(three_display_body, BALL_RADIUS)
+    three_display_shape.mass = BALL_MASS
+    three_display_shape.elasticity = BALL_ELASTICITY
+    three_display_shape.friction = BALL_FRICTION
+    three_display_shape.color = pygame.Color(RED)
+    three_display_shape.id = 333
+    space.add(three_display_shape, three_display_body)
+ 
+    four_display_body = pymunk.Body()
+    four_display_body.position = (312, 30)
+    four_display_shape = pymunk.Circle(four_display_body, BALL_RADIUS)
+    four_display_shape.mass = BALL_MASS
+    four_display_shape.elasticity = BALL_ELASTICITY
+    four_display_shape.friction = BALL_FRICTION
+    four_display_shape.color = pygame.Color(PURPLE)
+    four_display_shape.id = 444
+    space.add(four_display_shape, four_display_body)
+ 
+    five_display_body = pymunk.Body()
+    five_display_body.position = (352, 30)
+    five_display_shape = pymunk.Circle(five_display_body, BALL_RADIUS)
+    five_display_shape.mass = BALL_MASS
+    five_display_shape.elasticity = BALL_ELASTICITY
+    five_display_shape.friction = BALL_FRICTION
+    five_display_shape.color = pygame.Color(ORANGE)
+    five_display_shape.id = 555
+    space.add(five_display_shape, five_display_body)
+ 
+    six_display_body = pymunk.Body()
+    six_display_body.position = (394, 30)
+    six_display_shape = pymunk.Circle(six_display_body, BALL_RADIUS)
+    six_display_shape.mass = BALL_MASS
+    six_display_shape.elasticity = BALL_ELASTICITY
+    six_display_shape.friction = BALL_FRICTION
+    six_display_shape.color = pygame.Color(GREEN)
+    six_display_shape.id = 666
+    space.add(six_display_shape, six_display_body)
+ 
+    seven_display_body = pymunk.Body()
+    seven_display_body.position = (435, 30)
+    seven_display_shape = pymunk.Circle(seven_display_body, BALL_RADIUS)
+    seven_display_shape.mass = BALL_MASS
+    seven_display_shape.elasticity = BALL_ELASTICITY
+    seven_display_shape.friction = BALL_FRICTION
+    seven_display_shape.color = pygame.Color(BURGUNDY)
+    seven_display_shape.id = 777
+    space.add(seven_display_shape, seven_display_body)
+ 
+    nine_display_body = pymunk.Body()
+    nine_display_body.position = (848, 30)
+    nine_display_shape = pymunk.Circle(nine_display_body, BALL_RADIUS)
+    nine_display_shape.mass = BALL_MASS
+    nine_display_shape.elasticity = BALL_ELASTICITY
+    nine_display_shape.friction = BALL_FRICTION
+    nine_display_shape.color = pygame.Color(LIGHT_YELLOW)
+    nine_display_shape.id = 999
+    space.add(nine_display_shape, nine_display_body)
+   
+    ten_display_body = pymunk.Body()
+    ten_display_body.position = (889, 30)
+    ten_display_shape = pymunk.Circle(ten_display_body, BALL_RADIUS)
+    ten_display_shape.mass = BALL_MASS
+    ten_display_shape.elasticity = BALL_ELASTICITY
+    ten_display_shape.friction = BALL_FRICTION
+    ten_display_shape.color = pygame.Color(LIGHT_BLUE)
+    ten_display_shape.id = 101010
+    space.add(ten_display_shape, ten_display_body)
+ 
+    eleven_display_body = pymunk.Body()
+    eleven_display_body.position = (930, 30)
+    eleven_display_shape = pymunk.Circle(eleven_display_body, BALL_RADIUS)
+    eleven_display_shape.mass = BALL_MASS
+    eleven_display_shape.elasticity = BALL_ELASTICITY
+    eleven_display_shape.friction = BALL_FRICTION
+    eleven_display_shape.color = pygame.Color(LIGHT_RED)
+    eleven_display_shape.id = 111111
+    space.add(eleven_display_shape, eleven_display_body)
+ 
+    twelve_display_body = pymunk.Body()
+    twelve_display_body.position = (970, 30)
+    twelve_display_shape = pymunk.Circle(twelve_display_body, BALL_RADIUS)
+    twelve_display_shape.mass = BALL_MASS
+    twelve_display_shape.elasticity = BALL_ELASTICITY
+    twelve_display_shape.friction = BALL_FRICTION
+    twelve_display_shape.color = pygame.Color(LIGHT_PURPLE)
+    twelve_display_shape.id = 121212
+    space.add(twelve_display_shape, twelve_display_body)
+ 
+    thirteen_display_body = pymunk.Body()
+    thirteen_display_body.position = (1011, 30)
+    thirteen_display_shape = pymunk.Circle(thirteen_display_body, BALL_RADIUS)
+    thirteen_display_shape.mass = BALL_MASS
+    thirteen_display_shape.elasticity = BALL_ELASTICITY
+    thirteen_display_shape.friction = BALL_FRICTION
+    thirteen_display_shape.color = pygame.Color(LIGHT_ORANGE)
+    thirteen_display_shape.id = 131313
+    space.add(thirteen_display_shape, thirteen_display_body)
+ 
+    fourteen_display_body = pymunk.Body()
+    fourteen_display_body.position = (1052, 30)
+    fourteen_display_shape = pymunk.Circle(fourteen_display_body, BALL_RADIUS)
+    fourteen_display_shape.mass = BALL_MASS
+    fourteen_display_shape.elasticity = BALL_ELASTICITY
+    fourteen_display_shape.friction = BALL_FRICTION
+    fourteen_display_shape.color = pygame.Color(LIGHT_GREEN)
+    fourteen_display_shape.id = 141414
+    space.add(fourteen_display_shape, fourteen_display_body)
+ 
+    fifteen_display_body = pymunk.Body()
+    fifteen_display_body.position = (1093, 30)
+    fifteen_display_shape = pymunk.Circle(fifteen_display_body, BALL_RADIUS)
+    fifteen_display_shape.mass = BALL_MASS
+    fifteen_display_shape.elasticity = BALL_ELASTICITY
+    fifteen_display_shape.friction = BALL_FRICTION
+    fifteen_display_shape.color = pygame.Color(LIGHT_BURGUNDY)
+    fifteen_display_shape.id = 151515
+    space.add(fifteen_display_shape, fifteen_display_body)
+
+
 def create_object_balls(space):
     global solid_balls, striped_balls, solids_remaining, stripes_remaining, object_balls
     solid_balls = []
@@ -251,6 +408,7 @@ def create_object_balls(space):
     fourteen_ball_shape.color = pygame.Color(LIGHT_GREEN)
     fourteen_ball_shape.id = 141414
     object_balls.append(fourteen_ball_shape)
+    stripes_remaining.append(fourteen_ball_shape)
     space.add(fourteen_ball_shape, fourteen_ball_body)
 
     fifteen_ball_body = pymunk.Body()
