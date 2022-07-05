@@ -32,6 +32,8 @@ global stripes_player
 global solids_player
 stripes_player = ""
 solids_player = ""
+#global ball_in_pocket
+#ball_in_pocket = False
 
 #global solids_remaining
 #global stripes_remaining
@@ -40,7 +42,7 @@ solids_player = ""
 
 
 def handle_pocket(space):
-    global ball_in_pocket
+    
     # pocket hit box
     pocket_segments = [
         # POSITION       #ANGLE        #START POINT    #END POINT
@@ -78,6 +80,7 @@ def handle_pocket(space):
         space.add(pocket_segment_body, pocket_segment_shape)
 
     def collision_detected(arbiter, space, data):
+        global ball_in_pocket
         global solid_txt
         global stripe_txt
         global feed
@@ -101,7 +104,7 @@ def handle_pocket(space):
         # OUTISDE ID NO. IS THE COLLISION DETECTOR    AND: IGNORE CUE BALL POCKET TEMP
         if arbiter.shapes[1].id == 2 and not (ball.id == 1):
             space.remove(ball)  # ball.body,
-            #ball_in_pocket = True
+            ball_in_pocket = True
             pocketed_balls.append(ball)
             main.POOL_POCKET.play()
             if ball.id == 111:
@@ -148,6 +151,7 @@ def handle_pocket(space):
             elif ball.id == 151515:
                 print('15ball')
                 table.stripes_remaining.remove(ball)
+            handle_rules()
 
         return True
 
@@ -155,12 +159,16 @@ def handle_pocket(space):
     handler.begin = collision_detected
 
 
+# RULES-SEQUENCE
 def handle_rules():
-    # RULES-SEQUENCE
+    global solids_player
+    global stripes_player
+    global turn
 
-    if solids_player == "":  # BREAK, IF GROUPS ARE NOT SET
+    #BREAK, IF GROUPS ARE NOT SET
+    if solids_player == "" or stripes_player == "":  
         # PLAYER ONE TURN
-        if is_even(turn):
+        if turn % 2 == 0:
             # IF MULTIPLE BALLS ARE MADE OFF THE BREAK
             if len(pocketed_balls) > 1:
                 # IF MADE MORE SOLIDS THAN STRIPES
@@ -191,7 +199,7 @@ def handle_rules():
                         print("4Solids = " + solids_player +
                               "\nStripes = " + stripes_player)
         # PLAYER TWO TURN
-        else:
+        elif turn % 2 == 1:
             if len(pocketed_balls) > 1:
                 # IF MADE MORE SOLIDS THAN STRIPES
                 if len(table.stripes_remaining) > len(table.solids_remaining):
@@ -205,9 +213,71 @@ def handle_rules():
                     stripes_player = "Player 2"
                     print("4Solids = " + solids_player +
                           "\nStripes = " + stripes_player)
+            else:
+                for ball_pkt in pocketed_balls:
+                    #SOLID MADE
+                    if ball_pkt.id <= 777:
+                        solids_player = "Player 2"
+                        stripes_player = "Player 1"
+                        print("3Solids = " + solids_player +
+                              "\nStripes = " + stripes_player)
+                    # STRIPE MADE
+                    elif ball_pkt.id >= 999:
+                        solids_player = "Player 1"
+                        stripes_player = "Player 2"
+                        print("4Solids = " + solids_player +
+                              "\nStripes = " + stripes_player)
 
+    #AFTER THE BREAK
     else:
-        pass
+        #IF PLAYER ONE TURN
+        if is_even(turn):
+            for ball_pkt in pocketed_balls:
+                #IF PLAYER ONE IS SOLIDS
+                if solids_player == "Player 1":
+                    if ball_pkt.id <= 777 and not (ball_pkt.id == 1):  #BALL POCKETED IS SOLID
+                        pass
+                    elif ball_pkt.id == 888 and (len(table.solids_remaining) == 0) and not(ball_pkt.id == 1):
+                        print("PLAYER 1, YOU WIN!")
+                    elif ball_pkt.id == 888 and ((len(table.solids_remaining) > 0) or ball_pkt.id == 1):
+                        print("PLAYER 1, YOU LOSE!")
+                    elif ball_pkt.id >= 999:
+                        turn+=1
+                #IF PLAYER ONE IS STRIPES
+                if stripes_player == "Player 1":
+                    if ball_pkt.id >= 999 and not (ball_pkt.id == 1):   #BALL POCKETED IS STRIPED
+                        pass
+                    elif ball_pkt.id == 888 and (len(table.stripes_remaining) == 0) and not (ball_pkt.id == 1):
+                        print("PLAYER 1 YOU WIN!")
+                    elif ball_pkt.id == 888 and ((len(table.stripes_remaining) > 0) or ball_pkt.id == 1):
+                        print("PLAYER 1, YOU LOSE!")
+                    elif ball_pkt.id <= 777:
+                        turn+=1
+        #PLAYER TWO TURN
+        elif turn % 2 == 1:
+            for ball_pkt in pocketed_balls:
+                #IF PLAYER TWO IS SOLIDS
+                if solids_player == "Player 2":
+                    if ball_pkt.id <= 777 and not (ball_pkt.id == 1):  #BALL POCKETED IS SOLID
+                        pass
+                    elif ball_pkt.id == 888 and (len(table.solids_remaining) == 0) and not(ball_pkt.id == 1):
+                        print("PLAYER 2, YOU WIN!")
+                    elif ball_pkt.id == 888 and ((len(table.solids_remaining) > 0) or ball_pkt.id == 1):
+                        print("PLAYER 2, YOU LOSE!")
+                    elif ball_pkt.id >= 999:
+                        turn+=1
+                #IF PLAYER TWO IS STRIPES
+                if stripes_player == "Player 2":
+                    if ball_pkt.id >= 999 and not (ball_pkt.id == 1):   #BALL POCKETED IS STRIPED
+                        pass
+                    elif ball_pkt.id == 888 and (len(table.stripes_remaining) == 0) and not (ball_pkt.id == 1):
+                        print("PLAYER 2 YOU WIN!")
+                    elif ball_pkt.id == 888 and ((len(table.stripes_remaining) > 0) or ball_pkt.id == 1):
+                        print("PLAYER 2, YOU LOSE!")
+                    elif ball_pkt.id <= 777:
+                        turn+=1
+
+            
 
 
 def is_even(input):
@@ -223,15 +293,16 @@ def reset_feed():
 
 
 def update_ball_pocketed():
-    global ball_pocketed
-    ball_pocketed = False
+    global ball_in_pocket
+    ball_in_pocket = False
 
-# def check_ball_pocketed():
-    #global turn
+def check_ball_pocketed():
+    global turn
     #global message
     #global stripe_txt, solid_txt
-    # if ball_in_pocket == False: #NO BALL POCKETED, UPDATE TURN
-    # turn+=1
+    if ball_in_pocket == False: #NO BALL POCKETED, UPDATE TURN
+        turn+=1
+
 
     """
     else: #BALL GETS POCKETED

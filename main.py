@@ -103,8 +103,8 @@ def run(display):
                     line_on = False
                     POOL_SHOT.play()
 
-                    #timer_check_pocketed = Timer(5.5, eight.check_ball_pocketed)
-                    #timer_check_pocketed.start()
+                    timer_check_pocketed = Timer(5.5, eight.check_ball_pocketed)
+                    timer_check_pocketed.start()
 
                     timer_reset_pocketed = Timer(5.6, eight.update_ball_pocketed)
                     timer_reset_pocketed.start()
