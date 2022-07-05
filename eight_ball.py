@@ -114,6 +114,7 @@ def handle_pocket(space):
                 else:
                     feed = "Player 2, you made the 1-Ball!"
                 table.solids_remaining.remove(ball)
+                #space.remove(table.one_ball_img)
                 space.remove(table.one_display_body, table.one_display_shape)
             elif ball.id == 222:
                 print('2ball')

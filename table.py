@@ -26,7 +26,7 @@ def create_cushions(space):
         cushion_body = pymunk.Body(body_type = pymunk.Body.STATIC)
         cushion_body.position = position
         cushion_shape = pymunk.Poly.create_box(cushion_body, size)
-        cushion_shape.color = pygame.Color(NAVY)
+        cushion_shape.color = pygame.Color(CREAM)
         cushion_shape.elasticity = CUSHION_ELASTICITY
         cushion_shape.friction = CUSHION_FRICTION
         cushion_shape.id = 3331397 #ID SET TO A HIGH NUMBER TO ENSURE CUSHIONS DONT DETECT COLLISIONS
@@ -58,7 +58,7 @@ def create_cushions(space):
         triangle_body.position = position
         triangle_body.angle = angle
         triangle_shape = pymunk.Poly(triangle_body, vertices)
-        triangle_shape.color = pygame.Color(NAVY)
+        triangle_shape.color = pygame.Color(CREAM)
         triangle_shape.elasticity = 0.2
         triangle_shape.friction = CUSHION_FRICTION
         triangle_shape.id = 3331397

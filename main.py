@@ -125,19 +125,19 @@ def run(display):
                     line_on = False
                     POOL_SHOT.play()
 
-                    timer_check_pocketed = Timer(5.5, eight.check_ball_pocketed)
+                    timer_check_pocketed = Timer(3.5, eight.check_ball_pocketed)
                     timer_check_pocketed.start()
 
-                    timer_reset_pocketed = Timer(5.6, eight.update_ball_pocketed)
+                    timer_reset_pocketed = Timer(3.6, eight.update_ball_pocketed)
                     timer_reset_pocketed.start()
 
-                    timer = Timer(6, eight.check_turn)
+                    timer = Timer(4, eight.check_turn)
                     timer.start()
 
-                    timer_reset_line = Timer(6, reset_line)
+                    timer_reset_line = Timer(4, reset_line)
                     timer_reset_line.start()
 
-                    timer_reset_feed = Timer(6, eight.reset_feed)
+                    timer_reset_feed = Timer(4, eight.reset_feed)
                     timer_reset_feed.start()
 
         if line_on == True:
@@ -160,6 +160,7 @@ def reset_line():
 
 def draw_no_line(space, display, draw_options):
     display.blit(BACKGROUND, ((0,0)))
+    #display.fill(NAVY)
 
     if game_mode == "eight ball":
         draw_text = FONT.render(eight.message, 1, WHITE)
@@ -209,6 +210,7 @@ def draw_no_line(space, display, draw_options):
 
 def draw_line(space, display, draw_options):
     display.blit(BACKGROUND, ((0,0)))
+    #display.fill(NAVY)
 
     pygame.draw.line(display, BLACK, shooting_line[0], shooting_line[1], 3), #SHOOTING LINE
 
@@ -240,6 +242,8 @@ def draw_line(space, display, draw_options):
     display.blit(fourteen_ball_img, (table.fourteen_ball_body.position.x - 12, table.fourteen_ball_body.position.y - 12))
     display.blit(fifteen_ball_img, (table.fifteen_ball_body.position.x - 12, table.fifteen_ball_body.position.y - 12))
 
+    
+    
     display.blit(one_ball_img, (table.one_display_body.position.x - 12, table.one_display_body.position.y - 12))
     display.blit(two_ball_img, (table.two_display_body.position.x - 12, table.two_display_body.position.y - 12))
     display.blit(three_ball_img, (table.three_display_body.position.x - 12, table.three_display_body.position.y - 12))
