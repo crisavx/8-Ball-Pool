@@ -1,7 +1,11 @@
 import main as main
 from main import *
 from constants import *
-import pygame, pymunk, pymunk.pygame_util, math
+import pygame
+import pymunk
+import pymunk.pygame_util
+import math
+import table as table
 
 
 global message
@@ -22,48 +26,53 @@ global feed
 feed = ""
 
 global turn
-turn = 0  #EVEN --> P1 TURN;  ODD --> P2 TURN
+turn = 0  # EVEN --> P1 TURN;  ODD --> P2 TURN
 
 global stripes_player
 global solids_player
-stripes_player= ""
+stripes_player = ""
 solids_player = ""
 
 #global solids_remaining
 #global stripes_remaining
 
-#HANDLE COLLISIONS
-def handle_pocket_rules(space):
+# HANDLE COLLISIONS
+
+
+def handle_pocket(space):
     global ball_in_pocket
-    #pocket hit box
+    # pocket hit box
     pocket_segments = [
-        #POSITION       #ANGLE        #START POINT    #END POINT
+        # POSITION       #ANGLE        #START POINT    #END POINT
         #((27, 39), degrees2_radians(90), (0, 0), (15, 0)),
         #((40, 27), degrees2_radians(0), (0, 0), (15, 0)),
-        ((188, 138), main.degrees2_radians(-45), (0, 0), (25, 0)), 
+        ((188, 138), main.degrees2_radians(-45), (0, 0), (25, 0)),
 
-        ((WIDTH/2 - 10, 120), main.degrees2_radians(0), (0, 0), (25, 0)),  
+        ((WIDTH/2 - 10, 120), main.degrees2_radians(0), (0, 0), (25, 0)),
 
         #((WIDTH - 51, 27), degrees2_radians(0), (0, 0), (15, 0)),
         #((WIDTH - 24, 39), degrees2_radians(90), (0, 0), (15, 0)),
-        ((WIDTH - 203, 123), main.degrees2_radians(45), (0, 0), (25, 0)), 
+        ((WIDTH - 203, 123), main.degrees2_radians(45), (0, 0), (25, 0)),
 
         #((25, HEIGHT - 55), degrees2_radians(90), (0, 0), (15, 0)),
         #((37, HEIGHT - 27), degrees2_radians(0), (0, 0), (15, 0)),
-        ((190, HEIGHT - 145), main.degrees2_radians(45), (0, 0), (25, 0)), 
+        ((190, HEIGHT - 145), main.degrees2_radians(45), (0, 0), (25, 0)),
 
-        ((WIDTH/2 - 10, HEIGHT - 122), main.degrees2_radians(0), (0, 0), (25, 0)), 
+        ((WIDTH/2 - 10, HEIGHT - 122), main.degrees2_radians(0), (0, 0), (25, 0)),
 
         #((WIDTH - 58, HEIGHT - 25), degrees2_radians(0), (0, 0), (15, 0)),
         #((WIDTH - 25, HEIGHT - 51), degrees2_radians(90), (0, 0), (15, 0))
-        ((WIDTH - 205, HEIGHT - 128), main.degrees2_radians(-45), (0, 0), (25, 0)) 
+        ((WIDTH - 205, HEIGHT - 128), main.degrees2_radians(-45), (0, 0), (25, 0))
     ]
     for position, angle, start_point, end_point in pocket_segments:
-        pocket_segment_moment = pymunk.moment_for_segment(1, start_point, end_point, 2)
-        pocket_segment_body = pymunk.Body(1, pocket_segment_moment, body_type = pymunk.Body.STATIC)
+        pocket_segment_moment = pymunk.moment_for_segment(
+            1, start_point, end_point, 2)
+        pocket_segment_body = pymunk.Body(
+            1, pocket_segment_moment, body_type=pymunk.Body.STATIC)
         pocket_segment_body.position = position
         pocket_segment_body.angle = angle
-        pocket_segment_shape = pymunk.Segment(pocket_segment_body, start_point, end_point, 4)
+        pocket_segment_shape = pymunk.Segment(
+            pocket_segment_body, start_point, end_point, 4)
         pocket_segment_shape.id = 2
         pocket_segment_shape.color = pygame.Color(BLACK)
         space.add(pocket_segment_body, pocket_segment_shape)
@@ -74,23 +83,24 @@ def handle_pocket_rules(space):
         global feed
         global solids_player
         global stripes_player
-        
+
         #global decided
         #decided = False
 
         ball = arbiter.shapes[0]
 
-        if arbiter.shapes[1].id <= 151515: #(1 or ball.id <= 151515):
+        if arbiter.shapes[1].id <= 151515:  # (1 or ball.id <= 151515):
             #message = "BALL CONTACT"
             main.POOL_BALL_CONTACT.play()
 
-        #if arbiter.shapes[1].id == 3331397:
+        # if arbiter.shapes[1].id == 3331397:
             #message = "RAIL CONTACT"
-            #pass
-        
-        #COLLISION DETECTED / BALL POCKETED
-        if arbiter.shapes[1].id == 2 and not (ball.id == 1): #OUTISDE ID NO. IS THE COLLISION DETECTOR    AND: IGNORE CUE BALL POCKET TEMP
-            space.remove(ball) #ball.body,
+            # pass
+
+        # COLLISION DETECTED / BALL POCKETED
+        # OUTISDE ID NO. IS THE COLLISION DETECTOR    AND: IGNORE CUE BALL POCKET TEMP
+        if arbiter.shapes[1].id == 2 and not (ball.id == 1):
+            space.remove(ball)  # ball.body,
             #ball_in_pocket = True
             pocketed_balls.append(ball)
             main.POOL_POCKET.play()
@@ -138,77 +148,74 @@ def handle_pocket_rules(space):
             elif ball.id == 151515:
                 print('15ball')
                 table.stripes_remaining.remove(ball)
-            
 
-            #RULES-SEQUENCE
-
-            if solids_player == "": #BREAK, IF GROUPS ARE NOT SET
-                #PLAYER ONE TURN
-                if is_even(turn): 
-                    #IF MULTIPLE BALLS ARE MADE OFF THE BREAK  
-                    if len(pocketed_balls) > 1:
-                        #IF MADE MORE SOLIDS THAN STRIPES
-                        if len(table.stripes_remaining) > len(table.solids_remaining):
-                            solids_player = "Player 1"
-                            stripes_player = "player 2"
-                            print("1Solids = " + solids_player + "\nStripes = " + stripes_player)
-                        #IF MADE MORE STRIPES THAN SOLIDS
-                        elif len(table.solids_remaining) > len(table.stripes_remaining):
-                            solids_player = "Player 2"
-                            stripes_player = "Player 1"
-                            print("2Solids = " + solids_player + "\nStripes = " + stripes_player)
-                    #IF ONLY ONE BALL IS MADE
-                    else:
-                        for ball_pkt in pocketed_balls:
-                            
-
-                #PLAYER TWO TURN
-                else:
-                    if len(pocketed_balls) > 1:
-                        #IF MADE MORE SOLIDS THAN STRIPES
-                        if len(table.stripes_remaining) > len(table.solids_remaining):
-                            solids_player = "Player 2"
-                            stripes_player = "Player 1"
-                            print("3Solids = " + solids_player + "\nStripes = " + stripes_player)
-                        #IF MADE MORE STRIPES THAN SOLIDS
-                        elif len(table.solids_remaining) > len(table.stripes_remaining):
-                            solids_player = "Player 1"
-                            stripes_player = "Player 2"
-                            print("4Solids = " + solids_player + "\nStripes = " + stripes_player)
-
-                    
-                        
-
-                else:   #IF PLAYER TWO
-                    for ball_pkt in pocketed_balls:
-                        if ball_pkt.id <= 777:    #SOLIDS
-                            solids_player = "Player 2"
-                            stripes_player = "player 1"
-                            print("3Solids = " + solids_player + "\nStripes = " + stripes_player)
-                        elif ball_pkt.id >= 999:   #STRIPES
-                            solids_player = "Player 1"
-                            stripes_player = "Player 2"
-                            print("4Solids = " + solids_player + "\nStripes = " + stripes_player)
-            else:
-                pass
-                #print("AAAAAAAA")
-                #if is_even(turn):   #IF PLAYER ONE TURN
-                #    if solids_player == "Player 1":
-
-                #    if stripes_player == "Player 1":
-                #        pass
-
-            
         return True
 
     handler = space.add_default_collision_handler()
     handler.begin = collision_detected
+
+
+def handle_rules():
+    # RULES-SEQUENCE
+
+    if solids_player == "":  # BREAK, IF GROUPS ARE NOT SET
+        # PLAYER ONE TURN
+        if is_even(turn):
+            # IF MULTIPLE BALLS ARE MADE OFF THE BREAK
+            if len(pocketed_balls) > 1:
+                # IF MADE MORE SOLIDS THAN STRIPES
+                if len(table.stripes_remaining) > len(table.solids_remaining):
+                    solids_player = "Player 1"
+                    stripes_player = "player 2"
+                    print("1Solids = " + solids_player +
+                          "\nStripes = " + stripes_player)
+                # IF MADE MORE STRIPES THAN SOLIDS
+                elif len(table.solids_remaining) > len(table.stripes_remaining):
+                    solids_player = "Player 2"
+                    stripes_player = "Player 1"
+                    print("2Solids = " + solids_player +
+                          "\nStripes = " + stripes_player)
+            # IF ONLY ONE BALL IS MADE
+            else:
+                for ball_pkt in pocketed_balls:
+                    # SOLID MADE
+                    if ball_pkt.id <= 777:
+                        solids_player = "Player 1"
+                        stripes_player = "Player 2"
+                        print("3Solids = " + solids_player +
+                              "\nStripes = " + stripes_player)
+                    # STRIPE MADE
+                    elif ball_pkt.id >= 999:
+                        solids_player = "Player 2"
+                        stripes_player = "Player 1"
+                        print("4Solids = " + solids_player +
+                              "\nStripes = " + stripes_player)
+        # PLAYER TWO TURN
+        else:
+            if len(pocketed_balls) > 1:
+                # IF MADE MORE SOLIDS THAN STRIPES
+                if len(table.stripes_remaining) > len(table.solids_remaining):
+                    solids_player = "Player 2"
+                    stripes_player = "Player 1"
+                    print("3Solids = " + solids_player +
+                          "\nStripes = " + stripes_player)
+                # IF MADE MORE STRIPES THAN SOLIDS
+                elif len(table.solids_remaining) > len(table.stripes_remaining):
+                    solids_player = "Player 1"
+                    stripes_player = "Player 2"
+                    print("4Solids = " + solids_player +
+                          "\nStripes = " + stripes_player)
+
+    else:
+        pass
+
 
 def is_even(input):
     if input % 2 == 0:
         return True
     else:
         return False
+
 
 def reset_feed():
     global feed
@@ -219,12 +226,12 @@ def update_ball_pocketed():
     global ball_pocketed
     ball_pocketed = False
 
-#def check_ball_pocketed():
+# def check_ball_pocketed():
     #global turn
     #global message
     #global stripe_txt, solid_txt
-    #if ball_in_pocket == False: #NO BALL POCKETED, UPDATE TURN
-        #turn+=1
+    # if ball_in_pocket == False: #NO BALL POCKETED, UPDATE TURN
+    # turn+=1
 
     """
     else: #BALL GETS POCKETED
@@ -280,19 +287,16 @@ def update_ball_pocketed():
                         turn+=1
     """
 
-    
+
 def check_turn():
     global message
 
-    if turn % 2 == 0:   #IF PLAYER ONE TURN
+    if turn % 2 == 0:  # IF PLAYER ONE TURN
         print("Player 1 - Shoot!")
         message = ("Player 1 - Shoot!")
-    else:   #IF PLAYER TWO TURN
+    else:  # IF PLAYER TWO TURN
         print("Player 2 - Shoot!")
         message = ("Player 2 - Shoot!")
-
-
-
 
 
 """
