@@ -219,7 +219,6 @@ def display_object_balls(space):
     fifteen_display_shape.id = 151515
     space.add(fifteen_display_shape, fifteen_display_body)
 
-
 def create_object_balls(space):
     global solid_balls, striped_balls, solids_remaining, stripes_remaining, object_balls
     solid_balls = []

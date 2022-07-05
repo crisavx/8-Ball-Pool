@@ -81,7 +81,7 @@ def run(display):
         if angle_deg < 0:
             angle_deg += 360
 
-        force = calc_distance(*shooting_line) * 50
+        force = calc_distance(*shooting_line) * FORCE_COEFFICIENT
 
         #EVENT CHECKING LOOP
         for event in pygame.event.get():
@@ -112,7 +112,7 @@ def run(display):
                     timer_reset_line = Timer(4, reset_line)
                     timer_reset_line.start()
 
-                    timer_reset_feed = Timer(5, eight.reset_feed)
+                    timer_reset_feed = Timer(4, eight.reset_feed)
                     timer_reset_feed.start()
 
         if line_on == True:
@@ -147,37 +147,39 @@ def draw_no_line(space, display, draw_options):
         display.blit(solid_text, (15, 22))
         display.blit(feed_text, (WIDTH / 2 - 275, HEIGHT - 65))
     
-    display.blit(cue_ball_img, (table.cue_ball_body.position.x - 12, table.cue_ball_body.position.y - 12))
-    display.blit(one_ball_img, (table.one_ball_body.position.x - 12, table.one_ball_body.position.y - 12))
-    display.blit(two_ball_img, (table.two_ball_body.position.x - 12, table.two_ball_body.position.y - 12))
-    display.blit(three_ball_img, (table.three_ball_body.position.x - 12, table.three_ball_body.position.y - 12))
-    display.blit(four_ball_img, (table.four_ball_body.position.x - 12, table.four_ball_body.position.y - 12))
-    display.blit(five_ball_img, (table.five_ball_body.position.x - 12, table.five_ball_body.position.y - 12))
-    display.blit(six_ball_img, (table.six_ball_body.position.x - 12, table.six_ball_body.position.y - 12))
-    display.blit(seven_ball_img, (table.seven_ball_body.position.x - 12, table.seven_ball_body.position.y - 12))
-    display.blit(eight_ball_img, (table.eight_ball_body.position.x - 12, table.eight_ball_body.position.y - 12))
-    display.blit(nine_ball_img, (table.nine_ball_body.position.x - 12, table.nine_ball_body.position.y - 12))
-    display.blit(ten_ball_img, (table.ten_ball_body.position.x - 12, table.ten_ball_body.position.y - 12))
-    display.blit(eleven_ball_img, (table.eleven_ball_body.position.x - 12, table.eleven_ball_body.position.y - 12))
-    display.blit(twelve_ball_img, (table.twelve_ball_body.position.x - 12, table.twelve_ball_body.position.y - 12))
-    display.blit(thirteen_ball_img, (table.thirteen_ball_body.position.x - 12, table.thirteen_ball_body.position.y - 12))
-    display.blit(fourteen_ball_img, (table.fourteen_ball_body.position.x - 12, table.fourteen_ball_body.position.y - 12))
-    display.blit(fifteen_ball_img, (table.fifteen_ball_body.position.x - 12, table.fifteen_ball_body.position.y - 12))
-
-    display.blit(one_ball_img, (table.one_display_body.position.x - 12, table.one_display_body.position.y - 12))
-    display.blit(two_ball_img, (table.two_display_body.position.x - 12, table.two_display_body.position.y - 12))
-    display.blit(three_ball_img, (table.three_display_body.position.x - 12, table.three_display_body.position.y - 12))
-    display.blit(four_ball_img, (table.four_display_body.position.x - 12, table.four_display_body.position.y - 12))
-    display.blit(five_ball_img, (table.five_display_body.position.x - 12, table.five_display_body.position.y - 12))
-    display.blit(six_ball_img, (table.six_display_body.position.x - 12, table.six_display_body.position.y - 12))
-    display.blit(seven_ball_img, (table.seven_display_body.position.x - 12, table.seven_display_body.position.y - 12))
-    display.blit(nine_ball_img, (table.nine_display_body.position.x - 12, table.nine_display_body.position.y - 12))
-    display.blit(ten_ball_img, (table.ten_display_body.position.x - 12, table.ten_display_body.position.y - 12))
-    display.blit(eleven_ball_img, (table.eleven_display_body.position.x - 12, table.eleven_display_body.position.y - 12))
-    display.blit(twelve_ball_img, (table.twelve_display_body.position.x - 12, table.twelve_display_body.position.y - 12))
-    display.blit(thirteen_ball_img, (table.thirteen_display_body.position.x - 12, table.thirteen_display_body.position.y - 12))
-    display.blit(fourteen_ball_img, (table.fourteen_display_body.position.x - 12, table.fourteen_display_body.position.y - 12))
-    display.blit(fifteen_ball_img, (table.fifteen_display_body.position.x - 12, table.fifteen_display_body.position.y - 12))
+    display.blit(cue_ball_img, (table.cue_ball_body.position.x - 15, table.cue_ball_body.position.y - 15))
+    display.blit(one_ball_img, (table.one_ball_body.position.x - 15, table.one_ball_body.position.y - 15))
+    display.blit(two_ball_img, (table.two_ball_body.position.x - 15, table.two_ball_body.position.y - 15))
+    display.blit(three_ball_img, (table.three_ball_body.position.x - 15, table.three_ball_body.position.y - 15))
+    display.blit(four_ball_img, (table.four_ball_body.position.x - 15, table.four_ball_body.position.y - 15))
+    display.blit(five_ball_img, (table.five_ball_body.position.x - 15, table.five_ball_body.position.y - 15))
+    display.blit(six_ball_img, (table.six_ball_body.position.x - 15, table.six_ball_body.position.y - 15))
+    display.blit(seven_ball_img, (table.seven_ball_body.position.x - 15, table.seven_ball_body.position.y - 15))
+    display.blit(eight_ball_img, (table.eight_ball_body.position.x - 15, table.eight_ball_body.position.y - 15))
+    display.blit(nine_ball_img, (table.nine_ball_body.position.x - 15, table.nine_ball_body.position.y - 15))
+    display.blit(ten_ball_img, (table.ten_ball_body.position.x - 15, table.ten_ball_body.position.y - 15))
+    display.blit(eleven_ball_img, (table.eleven_ball_body.position.x - 15, table.eleven_ball_body.position.y - 15))
+    display.blit(twelve_ball_img, (table.twelve_ball_body.position.x - 15, table.twelve_ball_body.position.y - 15))
+    display.blit(thirteen_ball_img, (table.thirteen_ball_body.position.x - 15, table.thirteen_ball_body.position.y - 15))
+    display.blit(fourteen_ball_img, (table.fourteen_ball_body.position.x - 15, table.fourteen_ball_body.position.y - 15))
+    display.blit(fifteen_ball_img, (table.fifteen_ball_body.position.x - 15, table.fifteen_ball_body.position.y - 15))
+ 
+   
+   
+    display.blit(one_ball_img, (table.one_display_body.position.x - 15, table.one_display_body.position.y - 15))
+    display.blit(two_ball_img, (table.two_display_body.position.x - 15, table.two_display_body.position.y - 15))
+    display.blit(three_ball_img, (table.three_display_body.position.x - 15, table.three_display_body.position.y - 15))
+    display.blit(four_ball_img, (table.four_display_body.position.x - 15, table.four_display_body.position.y - 15))
+    display.blit(five_ball_img, (table.five_display_body.position.x - 15, table.five_display_body.position.y - 15))
+    display.blit(six_ball_img, (table.six_display_body.position.x - 15, table.six_display_body.position.y - 15))
+    display.blit(seven_ball_img, (table.seven_display_body.position.x - 15, table.seven_display_body.position.y - 15))
+    display.blit(nine_ball_img, (table.nine_display_body.position.x - 15, table.nine_display_body.position.y - 15))
+    display.blit(ten_ball_img, (table.ten_display_body.position.x - 15, table.ten_display_body.position.y - 15))
+    display.blit(eleven_ball_img, (table.eleven_display_body.position.x - 15, table.eleven_display_body.position.y - 15))
+    display.blit(twelve_ball_img, (table.twelve_display_body.position.x - 15, table.twelve_display_body.position.y - 15))
+    display.blit(thirteen_ball_img, (table.thirteen_display_body.position.x - 15, table.thirteen_display_body.position.y - 15))
+    display.blit(fourteen_ball_img, (table.fourteen_display_body.position.x - 15, table.fourteen_display_body.position.y - 15))
+    display.blit(fifteen_ball_img, (table.fifteen_display_body.position.x - 15, table.fifteen_display_body.position.y - 15))
     
     
     #space.debug_draw(draw_options)
@@ -200,39 +202,41 @@ def draw_line(space, display, draw_options):
         display.blit(feed_text, (WIDTH / 2 - 275, HEIGHT - 65))
 
 
-    display.blit(cue_ball_img, (table.cue_ball_body.position.x - 12, table.cue_ball_body.position.y - 12))
-    display.blit(one_ball_img, (table.one_ball_body.position.x - 12, table.one_ball_body.position.y - 12))
-    display.blit(two_ball_img, (table.two_ball_body.position.x - 12, table.two_ball_body.position.y - 12))
-    display.blit(three_ball_img, (table.three_ball_body.position.x - 12, table.three_ball_body.position.y - 12))
-    display.blit(four_ball_img, (table.four_ball_body.position.x - 12, table.four_ball_body.position.y - 12))
-    display.blit(five_ball_img, (table.five_ball_body.position.x - 12, table.five_ball_body.position.y - 12))
-    display.blit(six_ball_img, (table.six_ball_body.position.x - 12, table.six_ball_body.position.y - 12))
-    display.blit(seven_ball_img, (table.seven_ball_body.position.x - 12, table.seven_ball_body.position.y - 12))
-    display.blit(eight_ball_img, (table.eight_ball_body.position.x - 12, table.eight_ball_body.position.y - 12))
-    display.blit(nine_ball_img, (table.nine_ball_body.position.x - 12, table.nine_ball_body.position.y - 12))
-    display.blit(ten_ball_img, (table.ten_ball_body.position.x - 12, table.ten_ball_body.position.y - 12))
-    display.blit(eleven_ball_img, (table.eleven_ball_body.position.x - 12, table.eleven_ball_body.position.y - 12))
-    display.blit(twelve_ball_img, (table.twelve_ball_body.position.x - 12, table.twelve_ball_body.position.y - 12))
-    display.blit(thirteen_ball_img, (table.thirteen_ball_body.position.x - 12, table.thirteen_ball_body.position.y - 12))
-    display.blit(fourteen_ball_img, (table.fourteen_ball_body.position.x - 12, table.fourteen_ball_body.position.y - 12))
-    display.blit(fifteen_ball_img, (table.fifteen_ball_body.position.x - 12, table.fifteen_ball_body.position.y - 12))
+    display.blit(cue_ball_img, (table.cue_ball_body.position.x - 15, table.cue_ball_body.position.y - 15))
+    display.blit(one_ball_img, (table.one_ball_body.position.x - 15, table.one_ball_body.position.y - 15))
+    display.blit(two_ball_img, (table.two_ball_body.position.x - 15, table.two_ball_body.position.y - 15))
+    display.blit(three_ball_img, (table.three_ball_body.position.x - 15, table.three_ball_body.position.y - 15))
+    display.blit(four_ball_img, (table.four_ball_body.position.x - 15, table.four_ball_body.position.y - 15))
+    display.blit(five_ball_img, (table.five_ball_body.position.x - 15, table.five_ball_body.position.y - 15))
+    display.blit(six_ball_img, (table.six_ball_body.position.x - 15, table.six_ball_body.position.y - 15))
+    display.blit(seven_ball_img, (table.seven_ball_body.position.x - 15, table.seven_ball_body.position.y - 15))
+    display.blit(eight_ball_img, (table.eight_ball_body.position.x - 15, table.eight_ball_body.position.y - 15))
+    display.blit(nine_ball_img, (table.nine_ball_body.position.x - 15, table.nine_ball_body.position.y - 15))
+    display.blit(ten_ball_img, (table.ten_ball_body.position.x - 15, table.ten_ball_body.position.y - 15))
+    display.blit(eleven_ball_img, (table.eleven_ball_body.position.x - 15, table.eleven_ball_body.position.y - 15))
+    display.blit(twelve_ball_img, (table.twelve_ball_body.position.x - 15, table.twelve_ball_body.position.y - 15))
+    display.blit(thirteen_ball_img, (table.thirteen_ball_body.position.x - 15, table.thirteen_ball_body.position.y - 15))
+    display.blit(fourteen_ball_img, (table.fourteen_ball_body.position.x - 15, table.fourteen_ball_body.position.y - 15))
+    display.blit(fifteen_ball_img, (table.fifteen_ball_body.position.x - 15, table.fifteen_ball_body.position.y - 15))
+ 
+   
+   
+    display.blit(one_ball_img, (table.one_display_body.position.x - 15, table.one_display_body.position.y - 15))
+    display.blit(two_ball_img, (table.two_display_body.position.x - 15, table.two_display_body.position.y - 15))
+    display.blit(three_ball_img, (table.three_display_body.position.x - 15, table.three_display_body.position.y - 15))
+    display.blit(four_ball_img, (table.four_display_body.position.x - 15, table.four_display_body.position.y - 15))
+    display.blit(five_ball_img, (table.five_display_body.position.x - 15, table.five_display_body.position.y - 15))
+    display.blit(six_ball_img, (table.six_display_body.position.x - 15, table.six_display_body.position.y - 15))
+    display.blit(seven_ball_img, (table.seven_display_body.position.x - 15, table.seven_display_body.position.y - 15))
+    display.blit(nine_ball_img, (table.nine_display_body.position.x - 15, table.nine_display_body.position.y - 15))
+    display.blit(ten_ball_img, (table.ten_display_body.position.x - 15, table.ten_display_body.position.y - 15))
+    display.blit(eleven_ball_img, (table.eleven_display_body.position.x - 15, table.eleven_display_body.position.y - 15))
+    display.blit(twelve_ball_img, (table.twelve_display_body.position.x - 15, table.twelve_display_body.position.y - 15))
+    display.blit(thirteen_ball_img, (table.thirteen_display_body.position.x - 15, table.thirteen_display_body.position.y - 15))
+    display.blit(fourteen_ball_img, (table.fourteen_display_body.position.x - 15, table.fourteen_display_body.position.y - 15))
+    display.blit(fifteen_ball_img, (table.fifteen_display_body.position.x - 15, table.fifteen_display_body.position.y - 15))
 
-    
-    
-    display.blit(one_ball_img, (table.one_display_body.position.x - 12, table.one_display_body.position.y - 12))
-    display.blit(two_ball_img, (table.two_display_body.position.x - 12, table.two_display_body.position.y - 12))
-    display.blit(three_ball_img, (table.three_display_body.position.x - 12, table.three_display_body.position.y - 12))
-    display.blit(four_ball_img, (table.four_display_body.position.x - 12, table.four_display_body.position.y - 12))
-    display.blit(five_ball_img, (table.five_display_body.position.x - 12, table.five_display_body.position.y - 12))
-    display.blit(six_ball_img, (table.six_display_body.position.x - 12, table.six_display_body.position.y - 12))
-    display.blit(seven_ball_img, (table.seven_display_body.position.x - 12, table.seven_display_body.position.y - 12))
-    display.blit(nine_ball_img, (table.nine_display_body.position.x - 12, table.nine_display_body.position.y - 12))
-    display.blit(ten_ball_img, (table.ten_display_body.position.x - 12, table.ten_display_body.position.y - 12))
-    display.blit(eleven_ball_img, (table.eleven_display_body.position.x - 12, table.eleven_display_body.position.y - 12))
-    display.blit(twelve_ball_img, (table.twelve_display_body.position.x - 12, table.twelve_display_body.position.y - 12))
-    display.blit(thirteen_ball_img, (table.thirteen_display_body.position.x - 12, table.thirteen_display_body.position.y - 12))
-    display.blit(fourteen_ball_img, (table.fourteen_display_body.position.x - 12, table.fourteen_display_body.position.y - 12))
-    display.blit(fifteen_ball_img, (table.fifteen_display_body.position.x - 12, table.fifteen_display_body.position.y - 12))
+
     
     #space.debug_draw(draw_options)
     pygame.display.update()
