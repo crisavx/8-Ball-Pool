@@ -109,48 +109,122 @@ def handle_pocket(space):
             main.POOL_POCKET.play()
             if ball.id == 111:
                 print('1ball')
+                if turn % 2 == 0:
+                    feed = "Player 1, you made the 1-Ball!"
+                else:
+                    feed = "Player 2, you made the 1-Ball!"
                 table.solids_remaining.remove(ball)
+                space.remove(table.one_display_body, table.one_display_shape)
             elif ball.id == 222:
                 print('2ball')
+                if turn % 2 == 0:
+                    feed = "Player 1, you made the 2-Ball!"
+                else:
+                    feed = "Player 2, you made the 2-Ball!"
                 table.solids_remaining.remove(ball)
+                space.remove(table.two_display_body, table.two_display_shape)
             elif ball.id == 333:
                 print('3ball')
+                if turn % 2 == 0:
+                    feed = "Player 1, you made the 3-Ball!"
+                else:
+                    feed = "Player 2, you made the 3-Ball!"
                 table.solids_remaining.remove(ball)
+                space.remove(table.three_display_body, table.three_display_shape)
             elif ball.id == 444:
                 print('4ball')
+                if turn % 2 == 0:
+                    feed = "Player 1, you made the 4-Ball!"
+                else:
+                    feed = "Player 2, you made the 4-Ball!"
                 table.solids_remaining.remove(ball)
+                space.remove(table.four_display_body, table.four_display_shape)
             elif ball.id == 555:
                 print('5ball')
+                if turn % 2 == 0:
+                    feed = "Player 1, you made the 5-Ball!"
+                else:
+                    feed = "Player 2, you made the 5-Ball!"
                 table.solids_remaining.remove(ball)
+                space.remove(table.five_display_body, table.five_display_shape)
             elif ball.id == 666:
                 print('6ball')
+                if turn % 2 == 0:
+                    feed = "Player 1, you made the 6-Ball!"
+                else:
+                    feed = "Player 2, you made the 6-Ball!"
                 table.solids_remaining.remove(ball)
+                space.remove(table.six_display_body, table.six_display_shape)
             elif ball.id == 777:
                 print('7ball')
+                if turn % 2 == 0:
+                    feed = "Player 1, you made the 7-Ball!"
+                else:
+                    feed = "Player 2, you made the 7-Ball!"
                 table.solids_remaining.remove(ball)
+                space.remove(table.seven_display_body, table.seven_display_shape)
             elif ball.id == 888:
                 print('8ball')
+                if turn % 2 == 0:
+                    feed = "Player 1, you made the 8-Ball!"
+                else:
+                    feed = "Player 2, you made the 8-Ball!"
             if ball.id == 999:
                 print('9ball')
+                if turn % 2 == 0:
+                    feed = "Player 1, you made the 9-Ball!"
+                else:
+                    feed = "Player 2, you made the 9-Ball!"
                 table.stripes_remaining.remove(ball)
+                space.remove(table.nine_display_body, table.nine_display_shape)
             elif ball.id == 101010:
                 print('10ball')
+                if turn % 2 == 0:
+                    feed = "Player 1, you made the 10-Ball!"
+                else:
+                    feed = "Player 2, you made the 10-Ball!"
                 table.stripes_remaining.remove(ball)
+                space.remove(table.ten_display_body, table.ten_display_shape)
             elif ball.id == 111111:
                 print('11ball')
+                if turn % 2 == 0:
+                    feed = "Player 1, you made the 11-Ball!"
+                else:
+                    feed = "Player 2, you made the 11-Ball!"
                 table.stripes_remaining.remove(ball)
+                space.remove(table.eleven_display_body, table.eleven_display_shape)
             elif ball.id == 121212:
                 print('12ball')
+                if turn % 2 == 0:
+                    feed = "Player 1, you made the 12-Ball!"
+                else:
+                    feed = "Player 2, you made the 12-Ball!"
                 table.stripes_remaining.remove(ball)
+                space.remove(table.twelve_display_body, table.twelve_display_shape)
             elif ball.id == 131313:
                 print('13ball')
+                if turn % 2 == 0:
+                    feed = "Player 1, you made the 13-Ball!"
+                else:
+                    feed = "Player 2, you made the 13-Ball!"
                 table.stripes_remaining.remove(ball)
+                space.remove(table.thirteen_display_body, table.thirteen_display_shape)
             elif ball.id == 141414:
+                if turn % 2 == 0:
+                    feed = "Player 1, you made the 14-Ball!"
+                else:
+                    feed = "Player 2, you made the 14-Ball!"
                 print('14ball')
                 table.stripes_remaining.remove(ball)
+                space.remove(table.fourteen_display_body, table.fourteen_display_shape)
             elif ball.id == 151515:
                 print('15ball')
+                if turn % 2 == 0:
+                    feed = "Player 1, you made the 15-Ball!"
+                else:
+                    feed = "Player 2, you made the 15-Ball!"
                 table.stripes_remaining.remove(ball)
+                space.remove(table.fifteen_display_body, table.fifteen_display_shape)
             handle_rules()
 
         return True
@@ -164,6 +238,8 @@ def handle_rules():
     global solids_player
     global stripes_player
     global turn
+    global solid_txt
+    global stripe_txt
 
     #BREAK, IF GROUPS ARE NOT SET
     if solids_player == "" or stripes_player == "":  
@@ -174,13 +250,17 @@ def handle_rules():
                 # IF MADE MORE SOLIDS THAN STRIPES
                 if len(table.stripes_remaining) > len(table.solids_remaining):
                     solids_player = "Player 1"
-                    stripes_player = "player 2"
+                    solid_txt = "Player 1 (SOLIDS)"
+                    stripes_player = "Player 2"
+                    stripe_txt = "Player 2 (STRIPES)"
                     print("1Solids = " + solids_player +
                           "\nStripes = " + stripes_player)
                 # IF MADE MORE STRIPES THAN SOLIDS
                 elif len(table.solids_remaining) > len(table.stripes_remaining):
                     solids_player = "Player 2"
+                    solid_txt = "Player 2 (SOLIDS)"
                     stripes_player = "Player 1"
+                    stripe_txt = "Player 1 (STRIPES)"
                     print("2Solids = " + solids_player +
                           "\nStripes = " + stripes_player)
             # IF ONLY ONE BALL IS MADE
@@ -189,13 +269,17 @@ def handle_rules():
                     # SOLID MADE
                     if ball_pkt.id <= 777:
                         solids_player = "Player 1"
+                        solid_txt = "Player 1 (SOLIDS)"
                         stripes_player = "Player 2"
+                        stripe_txt = "Player 2 (STRIPES)"
                         print("3Solids = " + solids_player +
                               "\nStripes = " + stripes_player)
                     # STRIPE MADE
                     elif ball_pkt.id >= 999:
                         solids_player = "Player 2"
+                        solid_txt = "Player 2 (SOLIDS)"
                         stripes_player = "Player 1"
+                        stripe_txt = "Player 1 (STRIPES)"
                         print("4Solids = " + solids_player +
                               "\nStripes = " + stripes_player)
         # PLAYER TWO TURN
@@ -204,13 +288,17 @@ def handle_rules():
                 # IF MADE MORE SOLIDS THAN STRIPES
                 if len(table.stripes_remaining) > len(table.solids_remaining):
                     solids_player = "Player 2"
+                    solid_txt = "Player 2 (SOLIDS)"
                     stripes_player = "Player 1"
+                    stripe_txt = "Player 1 (STRIPES)"
                     print("3Solids = " + solids_player +
                           "\nStripes = " + stripes_player)
                 # IF MADE MORE STRIPES THAN SOLIDS
                 elif len(table.solids_remaining) > len(table.stripes_remaining):
                     solids_player = "Player 1"
+                    solid_txt = "Player 1 (SOLIDS)"
                     stripes_player = "Player 2"
+                    stripe_txt = "Player 2 (STRIPES)"
                     print("4Solids = " + solids_player +
                           "\nStripes = " + stripes_player)
             else:
@@ -218,13 +306,17 @@ def handle_rules():
                     #SOLID MADE
                     if ball_pkt.id <= 777:
                         solids_player = "Player 2"
+                        solid_txt = "Player 2 (SOLIDS)"
                         stripes_player = "Player 1"
+                        stripe_txt = "Player 1 (STRIPES)"
                         print("3Solids = " + solids_player +
                               "\nStripes = " + stripes_player)
                     # STRIPE MADE
                     elif ball_pkt.id >= 999:
                         solids_player = "Player 1"
+                        solid_txt = "Player 1 (SOLIDS)"
                         stripes_player = "Player 2"
+                        stripe_txt = "Player 2 (STRIPES)"
                         print("4Solids = " + solids_player +
                               "\nStripes = " + stripes_player)
 
@@ -369,162 +461,3 @@ def check_turn():
         print("Player 2 - Shoot!")
         message = ("Player 2 - Shoot!")
 
-
-"""
-def display_object_balls(space):
-    global one_ball_body, one_ball_shape
-    global two_ball_body, two_ball_shape
-    global three_ball_body, three_ball_shape
-    global four_ball_body, four_ball_shape
-    global five_ball_body, five_ball_shape
-    global six_ball_body, six_ball_shape
-    global seven_ball_body, seven_ball_shape
-    global nine_ball_body, nine_ball_shape
-    global ten_ball_body, ten_ball_shape
-    global eleven_ball_body, eleven_ball_shape
-    global twelve_ball_body, twelve_ball_shape
-    global thirteen_ball_body, thirteen_ball_shape
-    global fourteen_ball_body, fourteen_ball_shape
-    global fifteen_ball_body, fifteen_ball_shape
-
-    one_ball_body = pymunk.Body()
-    one_ball_body.position = (189, 30)
-    one_ball_shape = pymunk.Circle(one_ball_body, BALL_RADIUS)
-    one_ball_shape.mass = BALL_MASS
-    one_ball_shape.elasticity = BALL_ELASTICITY
-    one_ball_shape.friction = BALL_FRICTION
-    one_ball_shape.color = pygame.Color(YELLOW)
-    one_ball_shape.id = 111
-    space.add(one_ball_shape, one_ball_body)
-
-    two_ball_body = pymunk.Body()
-    two_ball_body.position = (229, 30)
-    two_ball_shape = pymunk.Circle(two_ball_body, BALL_RADIUS)
-    two_ball_shape.mass = BALL_MASS
-    two_ball_shape.elasticity = BALL_ELASTICITY
-    two_ball_shape.friction = BALL_FRICTION
-    two_ball_shape.color = pygame.Color(BLUE)
-    two_ball_shape.id = 222
-    space.add(two_ball_shape, two_ball_body)
-
-    three_ball_body = pymunk.Body()
-    three_ball_body.position = (271, 30)
-    three_ball_shape = pymunk.Circle(three_ball_body, BALL_RADIUS)
-    three_ball_shape.mass = BALL_MASS
-    three_ball_shape.elasticity = BALL_ELASTICITY
-    three_ball_shape.friction = BALL_FRICTION
-    three_ball_shape.color = pygame.Color(RED)
-    three_ball_shape.id = 333
-    space.add(three_ball_shape, three_ball_body)
-
-    four_ball_body = pymunk.Body()
-    four_ball_body.position = (312, 30)
-    four_ball_shape = pymunk.Circle(four_ball_body, BALL_RADIUS)
-    four_ball_shape.mass = BALL_MASS
-    four_ball_shape.elasticity = BALL_ELASTICITY
-    four_ball_shape.friction = BALL_FRICTION
-    four_ball_shape.color = pygame.Color(PURPLE)
-    four_ball_shape.id = 444
-    space.add(four_ball_shape, four_ball_body)
-
-    five_ball_body = pymunk.Body()
-    five_ball_body.position = (352, 30)
-    five_ball_shape = pymunk.Circle(five_ball_body, BALL_RADIUS)
-    five_ball_shape.mass = BALL_MASS
-    five_ball_shape.elasticity = BALL_ELASTICITY
-    five_ball_shape.friction = BALL_FRICTION
-    five_ball_shape.color = pygame.Color(ORANGE)
-    five_ball_shape.id = 555
-    space.add(five_ball_shape, five_ball_body)
-
-    six_ball_body = pymunk.Body()
-    six_ball_body.position = (394, 30)
-    six_ball_shape = pymunk.Circle(six_ball_body, BALL_RADIUS)
-    six_ball_shape.mass = BALL_MASS
-    six_ball_shape.elasticity = BALL_ELASTICITY
-    six_ball_shape.friction = BALL_FRICTION
-    six_ball_shape.color = pygame.Color(GREEN)
-    six_ball_shape.id = 666
-    space.add(six_ball_shape, six_ball_body)
-
-    seven_ball_body = pymunk.Body()
-    seven_ball_body.position = (435, 30)
-    seven_ball_shape = pymunk.Circle(seven_ball_body, BALL_RADIUS)
-    seven_ball_shape.mass = BALL_MASS
-    seven_ball_shape.elasticity = BALL_ELASTICITY
-    seven_ball_shape.friction = BALL_FRICTION
-    seven_ball_shape.color = pygame.Color(BURGUNDY)
-    seven_ball_shape.id = 777
-    space.add(seven_ball_shape, seven_ball_body)
-
-    nine_ball_body = pymunk.Body()
-    nine_ball_body.position = (848, 30)
-    nine_ball_shape = pymunk.Circle(nine_ball_body, BALL_RADIUS)
-    nine_ball_shape.mass = BALL_MASS
-    nine_ball_shape.elasticity = BALL_ELASTICITY
-    nine_ball_shape.friction = BALL_FRICTION
-    nine_ball_shape.color = pygame.Color(LIGHT_YELLOW)
-    nine_ball_shape.id = 999
-    space.add(nine_ball_shape, nine_ball_body)
-    
-    ten_ball_body = pymunk.Body()
-    ten_ball_body.position = (889, 30)
-    ten_ball_shape = pymunk.Circle(ten_ball_body, BALL_RADIUS)
-    ten_ball_shape.mass = BALL_MASS
-    ten_ball_shape.elasticity = BALL_ELASTICITY
-    ten_ball_shape.friction = BALL_FRICTION
-    ten_ball_shape.color = pygame.Color(LIGHT_BLUE)
-    ten_ball_shape.id = 101010
-    space.add(ten_ball_shape, ten_ball_body)
-
-    eleven_ball_body = pymunk.Body()
-    eleven_ball_body.position = (930, 30)
-    eleven_ball_shape = pymunk.Circle(eleven_ball_body, BALL_RADIUS)
-    eleven_ball_shape.mass = BALL_MASS
-    eleven_ball_shape.elasticity = BALL_ELASTICITY
-    eleven_ball_shape.friction = BALL_FRICTION
-    eleven_ball_shape.color = pygame.Color(LIGHT_RED)
-    eleven_ball_shape.id = 111111
-    space.add(eleven_ball_shape, eleven_ball_body)
-
-    twelve_ball_body = pymunk.Body()
-    twelve_ball_body.position = (970, 30)
-    twelve_ball_shape = pymunk.Circle(twelve_ball_body, BALL_RADIUS)
-    twelve_ball_shape.mass = BALL_MASS
-    twelve_ball_shape.elasticity = BALL_ELASTICITY
-    twelve_ball_shape.friction = BALL_FRICTION
-    twelve_ball_shape.color = pygame.Color(LIGHT_PURPLE)
-    twelve_ball_shape.id = 121212
-    space.add(twelve_ball_shape, twelve_ball_body)
-
-    thirteen_ball_body = pymunk.Body()
-    thirteen_ball_body.position = (1011, 30)
-    thirteen_ball_shape = pymunk.Circle(thirteen_ball_body, BALL_RADIUS)
-    thirteen_ball_shape.mass = BALL_MASS
-    thirteen_ball_shape.elasticity = BALL_ELASTICITY
-    thirteen_ball_shape.friction = BALL_FRICTION
-    thirteen_ball_shape.color = pygame.Color(LIGHT_ORANGE)
-    thirteen_ball_shape.id = 131313
-    space.add(thirteen_ball_shape, thirteen_ball_body)
-
-    fourteen_ball_body = pymunk.Body()
-    fourteen_ball_body.position = (1052, 30)
-    fourteen_ball_shape = pymunk.Circle(fourteen_ball_body, BALL_RADIUS)
-    fourteen_ball_shape.mass = BALL_MASS
-    fourteen_ball_shape.elasticity = BALL_ELASTICITY
-    fourteen_ball_shape.friction = BALL_FRICTION
-    fourteen_ball_shape.color = pygame.Color(LIGHT_GREEN)
-    fourteen_ball_shape.id = 141414
-    space.add(fourteen_ball_shape, fourteen_ball_body)
-
-    fifteen_ball_body = pymunk.Body()
-    fifteen_ball_body.position = (1093, 30)
-    fifteen_ball_shape = pymunk.Circle(fifteen_ball_body, BALL_RADIUS)
-    fifteen_ball_shape.mass = BALL_MASS
-    fifteen_ball_shape.elasticity = BALL_ELASTICITY
-    fifteen_ball_shape.friction = BALL_FRICTION
-    fifteen_ball_shape.color = pygame.Color(LIGHT_BURGUNDY)
-    fifteen_ball_shape.id = 151515
-    space.add(fifteen_ball_shape, fifteen_ball_body)
-
-"""

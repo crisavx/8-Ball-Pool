@@ -44,6 +44,8 @@ fifteen_ball_img = pygame.image.load('fifteen_ball.png')
 
 
 
+
+
 def run(display):
     run = True
     clock = pygame.time.Clock()
@@ -53,6 +55,23 @@ def run(display):
     space = pymunk.Space()
     space.gravity = GRAVITY
     space.damping = DAMPING
+
+    """
+    global one_display_body, one_display_shape
+    global two_display_body, two_display_shape
+    global three_display_body, three_display_shape
+    global four_display_body, four_display_shape
+    global five_display_body, five_display_shape
+    global six_display_body, six_display_shape
+    global seven_display_body, seven_display_shape
+    global nine_display_body, nine_display_shape
+    global ten_display_body, ten_display_shape
+    global eleven_display_body, eleven_display_shape
+    global twelve_display_body, twelve_display_shape
+    global thirteen_display_body, thirteen_display_shape
+    global fourteen_display_body, fourteen_display_shape
+    global fifteen_display_body, fifteen_display_shape
+    """
 
     global shooting_line
     global line_on
@@ -68,6 +87,9 @@ def run(display):
     cue_ball = table.create_cue_ball(space)
     table.create_cushions(space)
     table.create_object_balls(space)
+    table.display_object_balls(space)
+
+    #display_object_balls(space)
 
     if game_mode == "eight ball":
         eight.handle_pocket(space)
@@ -165,6 +187,21 @@ def draw_no_line(space, display, draw_options):
     display.blit(thirteen_ball_img, (table.thirteen_ball_body.position.x - 12, table.thirteen_ball_body.position.y - 12))
     display.blit(fourteen_ball_img, (table.fourteen_ball_body.position.x - 12, table.fourteen_ball_body.position.y - 12))
     display.blit(fifteen_ball_img, (table.fifteen_ball_body.position.x - 12, table.fifteen_ball_body.position.y - 12))
+
+    display.blit(one_ball_img, (table.one_display_body.position.x - 12, table.one_display_body.position.y - 12))
+    display.blit(two_ball_img, (table.two_display_body.position.x - 12, table.two_display_body.position.y - 12))
+    display.blit(three_ball_img, (table.three_display_body.position.x - 12, table.three_display_body.position.y - 12))
+    display.blit(four_ball_img, (table.four_display_body.position.x - 12, table.four_display_body.position.y - 12))
+    display.blit(five_ball_img, (table.five_display_body.position.x - 12, table.five_display_body.position.y - 12))
+    display.blit(six_ball_img, (table.six_display_body.position.x - 12, table.six_display_body.position.y - 12))
+    display.blit(seven_ball_img, (table.seven_display_body.position.x - 12, table.seven_display_body.position.y - 12))
+    display.blit(nine_ball_img, (table.nine_display_body.position.x - 12, table.nine_display_body.position.y - 12))
+    display.blit(ten_ball_img, (table.ten_display_body.position.x - 12, table.ten_display_body.position.y - 12))
+    display.blit(eleven_ball_img, (table.eleven_display_body.position.x - 12, table.eleven_display_body.position.y - 12))
+    display.blit(twelve_ball_img, (table.twelve_display_body.position.x - 12, table.twelve_display_body.position.y - 12))
+    display.blit(thirteen_ball_img, (table.thirteen_display_body.position.x - 12, table.thirteen_display_body.position.y - 12))
+    display.blit(fourteen_ball_img, (table.fourteen_display_body.position.x - 12, table.fourteen_display_body.position.y - 12))
+    display.blit(fifteen_ball_img, (table.fifteen_display_body.position.x - 12, table.fifteen_display_body.position.y - 12))
     
     
     #space.debug_draw(draw_options)
@@ -202,9 +239,29 @@ def draw_line(space, display, draw_options):
     display.blit(thirteen_ball_img, (table.thirteen_ball_body.position.x - 12, table.thirteen_ball_body.position.y - 12))
     display.blit(fourteen_ball_img, (table.fourteen_ball_body.position.x - 12, table.fourteen_ball_body.position.y - 12))
     display.blit(fifteen_ball_img, (table.fifteen_ball_body.position.x - 12, table.fifteen_ball_body.position.y - 12))
+
+    display.blit(one_ball_img, (table.one_display_body.position.x - 12, table.one_display_body.position.y - 12))
+    display.blit(two_ball_img, (table.two_display_body.position.x - 12, table.two_display_body.position.y - 12))
+    display.blit(three_ball_img, (table.three_display_body.position.x - 12, table.three_display_body.position.y - 12))
+    display.blit(four_ball_img, (table.four_display_body.position.x - 12, table.four_display_body.position.y - 12))
+    display.blit(five_ball_img, (table.five_display_body.position.x - 12, table.five_display_body.position.y - 12))
+    display.blit(six_ball_img, (table.six_display_body.position.x - 12, table.six_display_body.position.y - 12))
+    display.blit(seven_ball_img, (table.seven_display_body.position.x - 12, table.seven_display_body.position.y - 12))
+    display.blit(nine_ball_img, (table.nine_display_body.position.x - 12, table.nine_display_body.position.y - 12))
+    display.blit(ten_ball_img, (table.ten_display_body.position.x - 12, table.ten_display_body.position.y - 12))
+    display.blit(eleven_ball_img, (table.eleven_display_body.position.x - 12, table.eleven_display_body.position.y - 12))
+    display.blit(twelve_ball_img, (table.twelve_display_body.position.x - 12, table.twelve_display_body.position.y - 12))
+    display.blit(thirteen_ball_img, (table.thirteen_display_body.position.x - 12, table.thirteen_display_body.position.y - 12))
+    display.blit(fourteen_ball_img, (table.fourteen_display_body.position.x - 12, table.fourteen_display_body.position.y - 12))
+    display.blit(fifteen_ball_img, (table.fifteen_display_body.position.x - 12, table.fifteen_display_body.position.y - 12))
     
     #space.debug_draw(draw_options)
     pygame.display.update()
+
+
+
+
+
 
 #MATH FUNCTIONS
 def degrees2_radians(degree): #CONVERTS DEGREES TO RADIANS
