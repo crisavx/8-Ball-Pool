@@ -14,11 +14,11 @@ pygame.init()
 display = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("8-Ball Pool by Cristian Lopez")
 
-
 FONT = pygame.font.SysFont('arial-bold', 50)
 FONT2 = pygame.font.SysFont('arial-bold', 26)
 FONT3 = pygame.font.SysFont('arial-bold', 60)
 
+#ASSETS
 #AUDIO
 POOL_SHOT = pygame.mixer.Sound(os.path.join('pool_shot.mp3'))
 POOL_POCKET = pygame.mixer.Sound(os.path.join('pool_pocket.mp3'))
@@ -43,9 +43,6 @@ fourteen_ball_img = pygame.image.load('fourteen_ball.png')
 fifteen_ball_img = pygame.image.load('fifteen_ball.png')
 
 
-
-
-
 def run(display):
     run = True
     clock = pygame.time.Clock()
@@ -56,22 +53,6 @@ def run(display):
     space.gravity = GRAVITY
     space.damping = DAMPING
 
-    """
-    global one_display_body, one_display_shape
-    global two_display_body, two_display_shape
-    global three_display_body, three_display_shape
-    global four_display_body, four_display_shape
-    global five_display_body, five_display_shape
-    global six_display_body, six_display_shape
-    global seven_display_body, seven_display_shape
-    global nine_display_body, nine_display_shape
-    global ten_display_body, ten_display_shape
-    global eleven_display_body, eleven_display_shape
-    global twelve_display_body, twelve_display_shape
-    global thirteen_display_body, thirteen_display_shape
-    global fourteen_display_body, fourteen_display_shape
-    global fifteen_display_body, fifteen_display_shape
-    """
 
     global shooting_line
     global line_on
@@ -81,19 +62,13 @@ def run(display):
     game_mode = "eight ball"
     #game_mode = "free play"
 
-    print("Player 1 - Shoot!")
-    
-    
     cue_ball = table.create_cue_ball(space)
     table.create_cushions(space)
     table.create_object_balls(space)
     table.display_object_balls(space)
 
-    #display_object_balls(space)
-
     if game_mode == "eight ball":
         eight.handle_pocket(space)
-        #eight.display_object_balls(space)
     elif game_mode == "free play":
         fp.handle_pocket_rules(space)
 
@@ -137,7 +112,7 @@ def run(display):
                     timer_reset_line = Timer(4, reset_line)
                     timer_reset_line.start()
 
-                    timer_reset_feed = Timer(4, eight.reset_feed)
+                    timer_reset_feed = Timer(5, eight.reset_feed)
                     timer_reset_feed.start()
 
         if line_on == True:
@@ -263,10 +238,6 @@ def draw_line(space, display, draw_options):
     pygame.display.update()
 
 
-
-
-
-
 #MATH FUNCTIONS
 def degrees2_radians(degree): #CONVERTS DEGREES TO RADIANS
     pi = math.pi
@@ -276,7 +247,6 @@ def calc_angle(point_one, point_two):     #RETURNS ANGLE BETWEEN TWO POINTS
     return math.atan2(point_two[1] - point_one[1], point_two[0] - point_one[0])
 def calc_distance(point_one, point_two): #RETURNS DISTANCE BETWEEN TWO POINTS, DISTANCE FORMULA
     return math.sqrt((point_two[1] - point_one[1])**2 + (point_two[0] - point_one[0])**2)
-
 
 if __name__ == "__main__":
     run(display)

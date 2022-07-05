@@ -4,9 +4,6 @@ from main import *
 import pygame, pymunk, pymunk.pygame_util
 
 
-
-
-
 def handle_pocket_rules(space):
     #pocket hit box
     pocket_segments = [

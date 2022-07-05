@@ -10,7 +10,6 @@ global stripes_remaining
 solids_remaining = []
 stripes_remaining = []
 
-
 def create_cushions(space):
     cushions = [
         #position,          #size

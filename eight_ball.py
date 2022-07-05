@@ -4,7 +4,6 @@ from constants import *
 import pygame
 import pymunk
 import pymunk.pygame_util
-import math
 import table as table
 
 
@@ -21,7 +20,6 @@ ball_in_pocket = False
 global pocketed_balls
 pocketed_balls = []
 
-
 global feed
 feed = ""
 
@@ -32,15 +30,9 @@ global stripes_player
 global solids_player
 stripes_player = ""
 solids_player = ""
-#global ball_in_pocket
-#ball_in_pocket = False
 
-#global solids_remaining
-#global stripes_remaining
 
 # HANDLE COLLISIONS
-
-
 def handle_pocket(space):
     
     # pocket hit box
@@ -87,9 +79,6 @@ def handle_pocket(space):
         global solids_player
         global stripes_player
 
-        #global decided
-        #decided = False
-
         ball = arbiter.shapes[0]
 
         if arbiter.shapes[1].id <= 151515:  # (1 or ball.id <= 151515):
@@ -101,7 +90,7 @@ def handle_pocket(space):
             # pass
 
         # COLLISION DETECTED / BALL POCKETED
-        # OUTISDE ID NO. IS THE COLLISION DETECTOR    AND: IGNORE CUE BALL POCKET TEMP
+        # OUTISDE ID NO. IS THE COLLISION DETECTOR 
         if arbiter.shapes[1].id == 2 and not (ball.id == 1):
             space.remove(ball)  # ball.body,
             ball_in_pocket = True
@@ -115,7 +104,7 @@ def handle_pocket(space):
                     feed = "Player 2, you made the 1-Ball!"
                 table.solids_remaining.remove(ball)
                 #space.remove(table.one_ball_img)
-                space.remove(table.one_display_body, table.one_display_shape)
+                space.remove(table.one_display_shape)
             elif ball.id == 222:
                 print('2ball')
                 if turn % 2 == 0:
@@ -123,7 +112,7 @@ def handle_pocket(space):
                 else:
                     feed = "Player 2, you made the 2-Ball!"
                 table.solids_remaining.remove(ball)
-                space.remove(table.two_display_body, table.two_display_shape)
+                space.remove(table.two_display_shape)
             elif ball.id == 333:
                 print('3ball')
                 if turn % 2 == 0:
@@ -131,7 +120,7 @@ def handle_pocket(space):
                 else:
                     feed = "Player 2, you made the 3-Ball!"
                 table.solids_remaining.remove(ball)
-                space.remove(table.three_display_body, table.three_display_shape)
+                space.remove(table.three_display_shape)
             elif ball.id == 444:
                 print('4ball')
                 if turn % 2 == 0:
@@ -139,7 +128,7 @@ def handle_pocket(space):
                 else:
                     feed = "Player 2, you made the 4-Ball!"
                 table.solids_remaining.remove(ball)
-                space.remove(table.four_display_body, table.four_display_shape)
+                space.remove(table.four_display_shape)
             elif ball.id == 555:
                 print('5ball')
                 if turn % 2 == 0:
@@ -147,7 +136,7 @@ def handle_pocket(space):
                 else:
                     feed = "Player 2, you made the 5-Ball!"
                 table.solids_remaining.remove(ball)
-                space.remove(table.five_display_body, table.five_display_shape)
+                space.remove(table.five_display_shape)
             elif ball.id == 666:
                 print('6ball')
                 if turn % 2 == 0:
@@ -155,7 +144,7 @@ def handle_pocket(space):
                 else:
                     feed = "Player 2, you made the 6-Ball!"
                 table.solids_remaining.remove(ball)
-                space.remove(table.six_display_body, table.six_display_shape)
+                space.remove(table.six_display_shape)
             elif ball.id == 777:
                 print('7ball')
                 if turn % 2 == 0:
@@ -163,7 +152,7 @@ def handle_pocket(space):
                 else:
                     feed = "Player 2, you made the 7-Ball!"
                 table.solids_remaining.remove(ball)
-                space.remove(table.seven_display_body, table.seven_display_shape)
+                space.remove(table.seven_display_shape)
             elif ball.id == 888:
                 print('8ball')
                 if turn % 2 == 0:
@@ -177,7 +166,7 @@ def handle_pocket(space):
                 else:
                     feed = "Player 2, you made the 9-Ball!"
                 table.stripes_remaining.remove(ball)
-                space.remove(table.nine_display_body, table.nine_display_shape)
+                space.remove(table.nine_display_shape)
             elif ball.id == 101010:
                 print('10ball')
                 if turn % 2 == 0:
@@ -185,7 +174,7 @@ def handle_pocket(space):
                 else:
                     feed = "Player 2, you made the 10-Ball!"
                 table.stripes_remaining.remove(ball)
-                space.remove(table.ten_display_body, table.ten_display_shape)
+                space.remove(table.ten_display_shape)
             elif ball.id == 111111:
                 print('11ball')
                 if turn % 2 == 0:
@@ -193,7 +182,7 @@ def handle_pocket(space):
                 else:
                     feed = "Player 2, you made the 11-Ball!"
                 table.stripes_remaining.remove(ball)
-                space.remove(table.eleven_display_body, table.eleven_display_shape)
+                space.remove(table.eleven_display_shape)
             elif ball.id == 121212:
                 print('12ball')
                 if turn % 2 == 0:
@@ -201,7 +190,7 @@ def handle_pocket(space):
                 else:
                     feed = "Player 2, you made the 12-Ball!"
                 table.stripes_remaining.remove(ball)
-                space.remove(table.twelve_display_body, table.twelve_display_shape)
+                space.remove(table.twelve_display_shape)
             elif ball.id == 131313:
                 print('13ball')
                 if turn % 2 == 0:
@@ -209,7 +198,7 @@ def handle_pocket(space):
                 else:
                     feed = "Player 2, you made the 13-Ball!"
                 table.stripes_remaining.remove(ball)
-                space.remove(table.thirteen_display_body, table.thirteen_display_shape)
+                space.remove(table.thirteen_display_shape)
             elif ball.id == 141414:
                 if turn % 2 == 0:
                     feed = "Player 1, you made the 14-Ball!"
@@ -217,7 +206,7 @@ def handle_pocket(space):
                     feed = "Player 2, you made the 14-Ball!"
                 print('14ball')
                 table.stripes_remaining.remove(ball)
-                space.remove(table.fourteen_display_body, table.fourteen_display_shape)
+                space.remove(table.fourteen_display_shape)
             elif ball.id == 151515:
                 print('15ball')
                 if turn % 2 == 0:
@@ -225,7 +214,7 @@ def handle_pocket(space):
                 else:
                     feed = "Player 2, you made the 15-Ball!"
                 table.stripes_remaining.remove(ball)
-                space.remove(table.fifteen_display_body, table.fifteen_display_shape)
+                space.remove(table.fifteen_display_shape)
             handle_rules()
 
         return True
@@ -324,7 +313,7 @@ def handle_rules():
     #AFTER THE BREAK
     else:
         #IF PLAYER ONE TURN
-        if is_even(turn):
+        if turn % 2 == 0:
             for ball_pkt in pocketed_balls:
                 #IF PLAYER ONE IS SOLIDS
                 if solids_player == "Player 1":
@@ -370,20 +359,9 @@ def handle_rules():
                     elif ball_pkt.id <= 777:
                         turn+=1
 
-            
-
-
-def is_even(input):
-    if input % 2 == 0:
-        return True
-    else:
-        return False
-
-
 def reset_feed():
     global feed
     feed = ""
-
 
 def update_ball_pocketed():
     global ball_in_pocket
@@ -391,66 +369,8 @@ def update_ball_pocketed():
 
 def check_ball_pocketed():
     global turn
-    #global message
-    #global stripe_txt, solid_txt
     if ball_in_pocket == False: #NO BALL POCKETED, UPDATE TURN
         turn+=1
-
-
-    """
-    else: #BALL GETS POCKETED
-        if turn % 2 == 0:   #PLAYER ONE TURN
-            if player_one_is_solids:
-                for ball in pocketed_balls:
-                    if ball.id <= 777 and not (ball.id == 1): #IF SOLID GETS MADE, AND NOT THE CUE BALL
-                        pass
-                    elif ball.id == 888 and (len(solids_remaining) > 0): #IF 8 BALL GETS MADE ILLEGALLY
-                        print("PLAYER 1, YOU LOSE")
-                        message = ("PLAYER 1, YOU LOSE")
-                    elif ball.id == 888 and (len(solids_remaining) == 0) and not (ball.id == 1):    #IF 8 BALL GETS MADE LEGALLY
-                        print("PLAYER 1, YOU WIN")
-                        message = ("PLAYER 1, YOU WIN")
-                    elif ball.id >= 999 or ball.id == 1:   #IF STRIPE GETS MADE OR CUE BALL
-                        turn+=1
-            if player_one_is_stripes:
-                for ball in pocketed_balls:
-                    if ball.id >= 999 and not (ball.id == 1): #IF STRIPED GETS MADE, AND NOT THE CUE BALL
-                        pass
-                    elif ball.id == 888 and (len(stripes_remaining) > 0): #IF 8 BALL GETS MADE ILLEGALLY
-                        print("PLAYER 1, YOU LOSE")
-                        message = ("PLAYER 1, YOU LOSE")
-                    elif ball.id == 888 and (len(stripes_remaining) == 0) and not (ball.id == 1):    #IF 8 BALL GETS MADE LEGALLY
-                        print("PLAYER 1, YOU WIN")
-                        message = ("PLAYER 1, YOU WIN")
-                    elif ball.id <= 777 or ball.id == 1:   #IF SOLID GETS MADE
-                        turn+=1
-        else:   #PLAYER TWO TURN
-            if player_two_is_solids:
-                for ball in pocketed_balls:
-                    if ball.id <= 777 and not (ball.id == 1): #IF SOLID GETS MADE, AND NOT CUE BALL
-                        pass
-                    elif ball.id == 888 and (len(solids_remaining) > 0): #IF 8 BALL GETS MADE ILLEGALLY
-                        print("PLAYER 2, YOU LOSE")
-                        message = ("PLAYER 2, YOU LOSE")
-                    elif ball.id == 888 and (len(solids_remaining) == 0) and not (ball.id == 1): #IF 8 BALL GETS MADE LEGALLY
-                        print("PLAYER 2, YOU WIN")
-                        message = ("PLAYER 2, YOU WIN")
-                    elif ball.id >= 999 or ball.id == 1: #IF STRIPE GETS MADE OR CUE BALL
-                        turn+=1
-            if player_two_is_stripes:
-                for ball in pocketed_balls:
-                    if ball.id >= 999 and not (ball.id == 1):   #IF IF STRIPE GETS MADE, AND NOT THE CUE BALL
-                        pass
-                    elif ball.id == 888 and (len(stripes_remaining) > 0):    #IF 8 BALL GETS MADE ILLEGALLY
-                        print("PLAYER 2, YOU LOSE")
-                        message = ("PLAYER 2, YOU LOSE")
-                    elif ball.id == 888 and (len(stripes_remaining) == 0) and not (ball.id == 1):    #IF 8 BALL GETS MADE LEGALLY
-                        print("PLAYER 2, YOU WIN")
-                        message = ("PLAYER 2, YOU WIN")
-                    elif ball.id >= 777 or ball.id == 1:   #IF SOLID GETS MADE OR CUE BALL
-                        turn+=1
-    """
-
 
 def check_turn():
     global message
